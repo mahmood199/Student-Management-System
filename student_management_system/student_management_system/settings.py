@@ -53,7 +53,7 @@ ROOT_URLCONF = 'student_management_system.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.templates.backends.django.DjangoTemplates',
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             'templates'
         ],
