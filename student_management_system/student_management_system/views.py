@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.template import Template
 from app.EmailBackend import EmailBackend
 from django.contrib.auth import authenticate, logout, login
+from django.contrib import messages
 
 
 def BASE(request):
