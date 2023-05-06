@@ -15,6 +15,7 @@ urlpatterns = [
     # Login Path
     path('', views.LOGIN, name='login'),
     path('doLogin', views.doLogin, name='doLogin'),
+    path('doLogout', views.doLogout, name='logout'),
 
     #HOD Panel URL
     path('Hod/Home',hod_views.HOME, name='hod_home'),
