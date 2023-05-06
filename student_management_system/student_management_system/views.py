@@ -1,5 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.template import Template
+from app.EmailBackend import EmailBackend
+from django.contrib.auth import authenticate, logout, login
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 
 def BASE(request):
     return render(request, 'base.html')
@@ -7,3 +12,30 @@ def BASE(request):
 
 def LOGIN(request):
     return render(request, 'login.html')
+
+
+def doLogin(request):
+    if request.method == "POST":
+        user = EmailBackend.authenticate(request,
+                                         username=request.POST.get('email'),
+                                         password=request.POST.get('password'), )
+        if user is not None:
+            login(request, user)
+            user_type = user.user_type
+            if user_type == '1':
+                return redirect('hod_home')
+            elif user_type == '2':
+                return HttpResponse('This is Staff Panel')
+            elif user_type == '3':
+                return HttpResponse('This is Student Panel')
+            else:
+                messages.error(request, 'Email and Password Are Invalid !')
+                return redirect('login')
+        else:
+            messages.error(request, 'Email and Password Are Invalid !')
+            return redirect('login')
+
+
+def doLogout(request):
+    logout(request)
+    return redirect('login')

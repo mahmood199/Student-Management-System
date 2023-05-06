@@ -11,6 +11,13 @@ from .import views,hod_views,staff_views,student_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('base/', views.BASE, name='base'),
-    path('login/', views.LOGIN, name='login'),
+
+    # Login Path
+    path('', views.LOGIN, name='login'),
+    path('doLogin', views.doLogin, name='doLogin'),
+    path('doLogout', views.doLogout, name='logout'),
+
+    #HOD Panel URL
+    path('Hod/Home',hod_views.HOME, name='hod_home'),
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
