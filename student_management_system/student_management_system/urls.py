@@ -8,6 +8,11 @@ from django.conf.urls .static import static
 
 from .import views,hod_views,staff_views,student_views
 
+
+class Hod_Views:
+    pass
+
+
 urlpatterns = {
                   path('admin/', admin.site.urls),
                   path('base/', views.BASE, name='base'),
@@ -23,5 +28,6 @@ urlpatterns = {
 
                   # HOD Panel URL
                   path('Hod/Home', hod_views.HOME, name='hod_home'),
+                  path('Hod/Student/Add',hod_views.ADD_STUDENT,name='add_student'),
 
               } + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
