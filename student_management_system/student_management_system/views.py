@@ -73,7 +73,7 @@ def PROFILE_UPDATE(request):
                 customuser.profile_pic = profile_pic
             customuser.save()
             messages.success(request,'Your Profile Updated Successfully !')
-             return redirect('profile')
+             return  redirect('profile')
         except:
             messages.error(request, 'Failed To Update Your Profile')
     return render(request,'profile.html')
