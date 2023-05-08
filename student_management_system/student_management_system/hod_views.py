@@ -148,3 +148,25 @@ def DELETE_STUDENT(request,admin):
     student.delete()
     messages.success(request,'Record Are Successfully Deleted !')
     return redirect('view_student')
+
+
+
+@login_required(login_url='/')
+def ADD_COURSE(request):
+
+    if request.method == "POST":
+        course_name = request.POST.get('course_name')
+
+        course = Course(
+            name = course_name,
+        )
+        course.save()
+        messages.success(request,'Course Are Successfully Created ')
+
+        engine.say("course are successfully added")
+
+        engine.runAndWait()
+        engine.endLoop()
+        return redirect('view_course')
+
+    return render(request,'Hod/add_course.html')
