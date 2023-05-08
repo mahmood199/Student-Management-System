@@ -71,4 +71,9 @@ def ADD_STUDENT(request):
 
 @login_required(login_url='/')
 def VIEW_STUDENT(request):
+    student = Student.objects.all()
+
+    context = {
+        'student': student,
+    }
     return render(request,'Hod/view_student.html',context)
