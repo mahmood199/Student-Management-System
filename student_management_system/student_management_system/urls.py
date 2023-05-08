@@ -35,5 +35,7 @@ urlpatterns = {
                 path('Hod/Student/Delete/<str:admin>',hod_views.DELETE_STUDENT,name='delete_student'),
                 path('Hod/Course/Add',hod_views.ADD_COURSE,name='add_course'),
                 path('Hod/Course/View',hod_views.VIEW_COURSE,name='view_course'),
+                path('Hod/Course/Edit/<str:id>',hod_views.EDIT_COURSE,name='edit_course'),
+                path('Hod/Course/Update',hod_views.UPDATE_COURSE,name='update_course'),
 
               } + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
