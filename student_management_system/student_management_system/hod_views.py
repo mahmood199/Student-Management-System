@@ -68,3 +68,7 @@ def ADD_STUDENT(request):
     }
 
     return render(request,'Hod/add_student.html',context)
+
+@login_required(login_url='/')
+def VIEW_STUDENT(request):
+    return render(request,'Hod/view_student.html',context)

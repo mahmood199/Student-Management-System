@@ -29,5 +29,6 @@ urlpatterns = {
                   # HOD Panel URL
                   path('Hod/Home', hod_views.HOME, name='hod_home'),
                   path('Hod/Student/Add',hod_views.ADD_STUDENT,name='add_student'),
+                  path('Hod/Student/View',hod_views.VIEW_STUDENT,name='view_student'),
 
               } + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
