@@ -1,8 +1,7 @@
-
 from django.shortcuts import render, redirect
 from django.template import context
 from django.contrib.auth.decorators import login_required
-from app.models import Course,Session_Year,CustomUser,Student
+from app.models import Course, Session_Year, CustomUser, Student, Staff
 from django.contrib import messages
 
 
@@ -29,19 +28,19 @@ def ADD_STUDENT(request):
         session_year_id = request.POST.get('session_year_id')
 
         if CustomUser.objects.filter(email=email).exists():
-           messages.warning(request,'Email Is Already Taken')
-           return redirect('add_student')
+            messages.warning(request, 'Email Is Already Taken')
+            return redirect('add_student')
         if CustomUser.objects.filter(username=username).exists():
-           messages.warning(request,'Username Is Already Taken')
-           return redirect('add_student')
+            messages.warning(request, 'Username Is Already Taken')
+            return redirect('add_student')
         else:
             user = CustomUser(
-                first_name = first_name,
-                last_name = last_name,
-                username = username,
-                email = email,
-                profile_pic = profile_pic,
-                user_type = 3
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                email=email,
+                profile_pic=profile_pic,
+                user_type=3
             )
             user.set_password(password)
             user.save()
@@ -50,24 +49,23 @@ def ADD_STUDENT(request):
             session_year = Session_Year.objects.get(id=session_year_id)
 
             student = Student(
-                admin = user,
-                address = address,
-                session_year_id = session_year,
-                course_id = course,
-                gender = gender,
+                admin=user,
+                address=address,
+                session_year_id=session_year,
+                course_id=course,
+                gender=gender,
             )
             student.save()
             messages.success(request, user.first_name + "  " + user.last_name + " Are Successfully Added !")
             return redirect('add_student')
 
-
-
     context = {
-        'course':course,
-        'session_year':session_year,
+        'course': course,
+        'session_year': session_year,
     }
 
-    return render(request,'Hod/add_student.html',context)
+    return render(request, 'Hod/add_student.html', context)
+
 
 @login_required(login_url='/')
 def VIEW_STUDENT(request):
@@ -76,23 +74,21 @@ def VIEW_STUDENT(request):
     context = {
         'student': student,
     }
-    return render(request,'Hod/view_student.html',context)
-
+    return render(request, 'Hod/view_student.html', context)
 
 
 @login_required(login_url='/')
-def EDIT_STUDENT(request,id):
-    student = Student.objects.filter(id = id)
+def EDIT_STUDENT(request, id):
+    student = Student.objects.filter(id=id)
     course = Course.objects.all()
     session_year = Session_Year.objects.all()
 
     context = {
-        'student':student,
-        'course':course,
-        'session_year':session_year,
+        'student': student,
+        'course': course,
+        'session_year': session_year,
     }
-    return render(request,'Hod/edit_student.html',context)
-
+    return render(request, 'Hod/edit_student.html', context)
 
 
 @login_required(login_url='/')
@@ -111,7 +107,7 @@ def UPDATE_STUDENT(request):
         course_id = request.POST.get('course_id')
         session_year_id = request.POST.get('session_year_id')
 
-        user = CustomUser.objects.get(id = student_id)
+        user = CustomUser.objects.get(id=student_id)
 
         user.first_name = first_name
         user.last_name = last_name
@@ -124,44 +120,41 @@ def UPDATE_STUDENT(request):
             user.profile_pic = profile_pic
         user.save()
 
-        student = Student.objects.get(admin = student_id)
+        student = Student.objects.get(admin=student_id)
         student.address = address
         student.gender = gender
 
-        course = Course.objects.get(id = course_id)
+        course = Course.objects.get(id=course_id)
         student.course_id = course
 
-        session_year = Session_Year.objects.get(id = session_year_id)
+        session_year = Session_Year.objects.get(id=session_year_id)
         student.session_year_id = session_year
 
         student.save()
-        messages.success(request,'Record Are Successfully Updated !')
+        messages.success(request, 'Record Are Successfully Updated !')
         return redirect('view_student')
 
-    return render(request,'Hod/edit_student.html')
-
+    return render(request, 'Hod/edit_student.html')
 
 
 @login_required(login_url='/')
-def DELETE_STUDENT(request,admin):
-    student = CustomUser.objects.get(id = admin)
+def DELETE_STUDENT(request, admin):
+    student = CustomUser.objects.get(id=admin)
     student.delete()
-    messages.success(request,'Record Are Successfully Deleted !')
+    messages.success(request, 'Record Are Successfully Deleted !')
     return redirect('view_student')
-
 
 
 @login_required(login_url='/')
 def ADD_COURSE(request):
-
     if request.method == "POST":
         course_name = request.POST.get('course_name')
 
         course = Course(
-            name = course_name,
+            name=course_name,
         )
         course.save()
-        messages.success(request,'Course Are Successfully Created ')
+        messages.success(request, 'Course Are Successfully Created ')
 
         engine.say("course are successfully added")
 
@@ -169,55 +162,86 @@ def ADD_COURSE(request):
         engine.endLoop()
         return redirect('view_course')
 
-    return render(request,'Hod/add_course.html')
-
+    return render(request, 'Hod/add_course.html')
 
 
 @login_required(login_url='/')
 def VIEW_COURSE(request):
     course = Course.objects.all()
     context = {
-        'course':course,
+        'course': course,
     }
-    return render(request,'Hod/view_course.html',context)
-
+    return render(request, 'Hod/view_course.html', context)
 
 
 @login_required(login_url='/')
-def EDIT_COURSE(request,id):
-    course = Course.objects.get(id = id)
+def EDIT_COURSE(request, id):
+    course = Course.objects.get(id=id)
     context = {
         'course': course,
     }
-    return render(request,'Hod/edit_course.html',context)
-
+    return render(request, 'Hod/edit_course.html', context)
 
 
 @login_required(login_url='/')
 def UPDATE_COURSE(request):
-
     if request.method == "POST":
         name = request.POST.get('name')
         course_id = request.POST.get('course_id')
 
-        course = Course.objects.get(id = course_id)
+        course = Course.objects.get(id=course_id)
         course.name = name
         course.save()
-        messages.success(request,'Course Are Successfully Updated ')
+        messages.success(request, 'Course Are Successfully Updated ')
         return redirect('view_course')
 
-    return render(request,'Hod/edit_course.html')
-
+    return render(request, 'Hod/edit_course.html')
 
 
 @login_required(login_url='/')
-def DELETE_COURSE(request,id):
-    course = Course.objects.get(id = id)
+def DELETE_COURSE(request, id):
+    course = Course.objects.get(id=id)
     course.delete()
-    messages.success(request,'Course are Successfully Deleted')
+    messages.success(request, 'Course are Successfully Deleted')
 
     return redirect('view_course')
 
 
+@login_required(login_url='/')
 def ADD_STAFF(request):
-    return render(request, "Hod/add_staff.html")
+    if request.method == "POST":
+        profile_pic = request.FILES.get('profile_pic')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        address = request.POST.get('address')
+        gender = request.POST.get('gender')
+
+        print(profile_pic, first_name, last_name, email, username, password, address, gender)
+
+        if CustomUser.objects.filter(email=email).exists():
+            messages.warning(request, 'Email already taken !')
+            return redirect('add_staff')
+
+        if CustomUser.objects.filter(username=username).exists():
+            messages.warning(request, 'Username already taken !')
+            return redirect('add_staff')
+
+        else:
+            user = CustomUser(first_name=first_name, last_name=last_name, email=email, profile_pic=profile_pic,
+                              username=username,user_type=2)
+            user.set_password(password)
+            user.save()
+
+            staff = Staff(
+                admin=user,
+                address=address,
+                gender=gender
+            )
+            staff.save()
+            messages.success(request, "Staff is successfully added !")
+            return redirect("add_staff")
+
+    return render(request, "hod/add_staff.html")

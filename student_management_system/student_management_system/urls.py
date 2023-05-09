@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 from . import views, hod_views, staff_views, student_views
 
 
-class Hod_Views:
+class hod_Views:
     pass
 
 
