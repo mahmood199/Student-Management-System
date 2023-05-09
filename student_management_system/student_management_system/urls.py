@@ -43,5 +43,6 @@ urlpatterns = [
                   path("Hod/Staff/View", hod_views.VIEW_STAFF, name="view_staff"),
                   path("Hod/Staff/Edit/<str:id>", hod_views.EDIT_STAFF, name="edit_staff")
                   path("Hod/Staff/Update", hod_views.UPDATE_STAFF, name="update_staff")
+                  path("Hod/Staff/Delete/<str:admin>", hod_views.DELETE_STAFF, name="delete_staff")
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
