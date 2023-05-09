@@ -219,3 +219,5 @@ def DELETE_COURSE(request,id):
     return redirect('view_course')
 
 
+def ADD_STAFF(request):
+    return render(request, "Hod/add_staff.html")
