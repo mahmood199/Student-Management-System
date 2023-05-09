@@ -1,8 +1,7 @@
-from django.shortcuts import render, redirect
-from django.template import context
-from django.contrib.auth.decorators import login_required
 from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 
 
 @login_required(login_url='/')
@@ -345,3 +344,13 @@ def ADD_SUBJECT(request):
     }
 
     return render(request, 'hod/add_subject.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_SUBJECT(request):
+    subject = Subject.objects.all()
+    context = {
+        'subject': subject
+    }
+
+    return render(request, 'hod/view_subject.html', context)
