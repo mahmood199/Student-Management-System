@@ -245,3 +245,12 @@ def ADD_STAFF(request):
             return redirect("add_staff")
 
     return render(request, "hod/add_staff.html")
+
+@login_required(login_url='/')
+def VIEW_STAFF(request):
+    staff = Staff.objects.all()
+
+    context = {
+        'staff':staff,
+    }
+    return render(request, "hod/view_staff.html",context)
