@@ -231,7 +231,7 @@ def ADD_STAFF(request):
 
         else:
             user = CustomUser(first_name=first_name, last_name=last_name, email=email, profile_pic=profile_pic,
-                              username=username,user_type=2)
+                              username=username, user_type=2)
             user.set_password(password)
             user.save()
 
@@ -246,21 +246,62 @@ def ADD_STAFF(request):
 
     return render(request, "hod/add_staff.html")
 
+
 @login_required(login_url='/')
 def VIEW_STAFF(request):
     staff = Staff.objects.all()
 
     context = {
-        'staff':staff,
+        'staff': staff,
     }
-    return render(request, "hod/view_staff.html",context)
+    return render(request, "hod/view_staff.html", context)
+
 
 @login_required(login_url='/')
 def EDIT_STAFF(request, id):
     staff = Staff.objects.get(id=id)
 
     context = {
-        'staff':staff
+        'staff': staff
     }
 
     return render(request, "hod/edit_staff.html", context)
+
+
+@login_required(login_url='/')
+def UPDATE_STAFF(request):
+    if request.method == "POST":
+        profile_pic = request.FILES.get('profile_pic')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        address = request.POST.get('address')
+        gender = request.POST.get('gender')
+        staff_id = request.POST.get('staff_id')
+
+        user = CustomUser.objects.get(id=staff_id)
+        user.username = username
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.username = username
+        user.username = username
+
+        if password != None and password != "":
+            user.set_password(password)
+        if profile_pic != None and profile_pic != "":
+            user.profile_pic = profile_pic
+        user.save()
+
+        staff = Staff.objects.get(admin=staff_id)
+        staff.gender = gender
+        staff.address = address
+
+        staff.save()
+
+        messages.success(request, "Staff us successfully updated")
+        return redirect('view_staff')
+
+    return render(request, "hod/edit_staff.html")
