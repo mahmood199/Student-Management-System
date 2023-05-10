@@ -394,3 +394,13 @@ def UPDATE_SUBJECT(request):
         return redirect('view_subject')
 
     return None
+
+@login_required(login_url='/')
+def DELETE_SUBJECT(request,id):
+
+    subject = Subject.objects.filter(id=id)
+    subject.delete()
+
+    messages.success(request, 'Subject deleted successfully')
+
+    return redirect('view_subject')
