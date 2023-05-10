@@ -369,3 +369,28 @@ def EDIT_SUBJECT(request, id):
     }
 
     return render(request, 'edit_subject.html', context)
+
+@login_required(login_url='/')
+def UPDATE_SUBJECT(request):
+
+    if request.method == "POST":
+        subject_id = request.POST.get('subject_id')
+        subject_name = request.POST.get('subject_name')
+        course_id = request.POST.get('course_id')
+        staff_id = request.POST.get('staff_id')
+
+        course = Course.objects.get(id=course_id)
+        staff = Staff.objects.get(id=staff_id)
+
+        subject = Subject(
+            id=subject_id,
+            name=subject_name,
+            course=course,
+            staff=staff
+        )
+
+        subject.save()
+        messages.success(request,'Subject updated successfully')
+        return redirect('view_subject')
+
+    return None
