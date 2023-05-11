@@ -18,7 +18,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{% url 'add_session' %}" method="post">
+                    <form action="{% url 'update_session' %}" method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
@@ -28,6 +28,7 @@
                                 <div class="form-group">
                                     <label>Session Year Start</label>
                                     <div>
+                                        <input type="text" class="form-control" name="session_id" value="{% for i in session %}{{i.id}}{% endfor %}" required hidden>
                                         <input type="date" class="form-control" name="session_year_start" value="{% for i in session %}{{i.session_start}}{% endfor %}" required>
                                     </div>
                                 </div>
@@ -42,7 +43,7 @@
                             </div>
                             <br>
                             <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-primary">Add Session</button>
+                                <button type="submit" class="btn btn-primary">Update Session</button>
                             </div>
                         </div>
                     </form>

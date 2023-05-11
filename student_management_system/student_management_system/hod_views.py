@@ -442,3 +442,23 @@ def EDIT_SESSION(request, id):
     }
 
     return render(request, 'hod/edit_session.html', context)
+
+
+@login_required(login_url='/')
+def UPDATE_SESSION(request):
+    if request.method == "POST":
+        session_id = request.POST.get('session_id')
+        session_year_start = request.POST.get('session_year_start')
+        session_year_end = request.POST.get('session_year_end')
+
+        session = Session_Year(
+            id=session_id,
+            session_start=session_year_start,
+            session_end=session_year_end
+        )
+
+        session.save()
+        messages.success(request, "Session updated successfully")
+        return redirect('view_session')
+
+    return None
