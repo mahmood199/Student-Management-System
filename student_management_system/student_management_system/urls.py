@@ -39,7 +39,6 @@ urlpatterns = [
                   path('Hod/Course/Update', hod_views.UPDATE_COURSE, name='update_course'),
                   path('Hod/Course/Delete/<str:id>', hod_views.DELETE_COURSE, name='delete_course'),
 
-                  # Staff
                   path("Hod/Staff/Add", hod_views.ADD_STAFF, name="add_staff"),
                   path("Hod/Staff/View", hod_views.VIEW_STAFF, name="view_staff"),
                   path("Hod/Staff/Edit/<str:id>", hod_views.EDIT_STAFF, name="edit_staff"),
@@ -57,5 +56,9 @@ urlpatterns = [
                   path("Hod/Session/Edit/<str:id>", hod_views.EDIT_SESSION, name="edit_session"),
                   path("Hod/Session/Update", hod_views.UPDATE_SESSION, name="update_session"),
                   path("Hod/Session/Delete/<str:id>", hod_views.DELETE_SESSION, name="delete_session"),
+
+
+                  #Staff
+                  path("staff/home", staff_views.HOME, name="staff_home"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

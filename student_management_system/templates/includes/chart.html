@@ -7,8 +7,9 @@ $(document).ready(function() {
     var options = {
           series: [{{student_count}}, {{staff_count}}, {{subject_count}}, {{course_count}}],
           chart: {
-          width: 380,
-          type: 'pie',
+	        height: 350,
+		    width: '100%',
+            type: 'pie',
         },
         labels: ['Student', 'Staff', 'Subject', 'Course'],
         responsive: [{
@@ -110,7 +111,8 @@ $(document).ready(function() {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200
+			height: 350,
+			width: '100%',
             },
             legend: {
               position: 'bottom'
@@ -127,7 +129,8 @@ $(document).ready(function() {
     var options = {
           series: [{{course_count}}, {{subject_count}}],
           chart: {
-          width: 380,
+		  height: 350,
+		  width: '100%',
           type: 'donut',
         },
         plotOptions: {
@@ -146,9 +149,6 @@ $(document).ready(function() {
             formatter: function(val, opts) {
                 return val + " - " + opts.w.globals.series[opts.seriesIndex]
           }
-        },
-        title: {
-            text: 'Gradient Donut with custom Start-angle'
         },
         labels: ['Course', 'Subject'],
 
@@ -169,6 +169,7 @@ $(document).ready(function() {
     chart.render();
 
 });
+
 
 
 
