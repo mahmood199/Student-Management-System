@@ -404,3 +404,20 @@ def DELETE_SUBJECT(request,id):
     messages.success(request, 'Subject deleted successfully')
 
     return redirect('view_subject')
+
+@login_required(login_url='/')
+def ADD_SESSION(request):
+
+    if request.method == "POST":
+        session_year_start = request.POST.get('session_year_start')
+        session_year_end = request.POST.get('session_year_end')
+
+        session = Session_Year(
+            session_start=session_year_start,
+            session_end=session_year_end
+        )
+        session.save()
+        messages.success(request, 'Session added successfully')
+        return redirect('add_session')
+
+    return render(request, 'hod/add_session.html')
