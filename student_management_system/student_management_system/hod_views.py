@@ -6,7 +6,25 @@ from django.shortcuts import render, redirect
 
 @login_required(login_url='/')
 def HOME(request):
-    return render(request, 'hod/home.html')
+
+    student_count = Student.objects.all().count()
+    staff_count = Staff.objects.all().count()
+    course_count = Course.objects.all().count()
+    subject_count = Subject.objects.all().count()
+
+    student_gender_male = Student.objects.get(gender='Male').count()
+    student_gender_female = Student.objects.get(gender='Female').count()
+
+    context = {
+        'student_count': student_count,
+        'staff_count': staff_count,
+        'course_count': course_count,
+        'subject_count': subject_count,
+        'student_gender_male': student_gender_male,
+        'student_gender_female': student_gender_female,
+    }
+
+    return render(request, 'hod/home.html', context)
 
 
 @login_required(login_url='/')
