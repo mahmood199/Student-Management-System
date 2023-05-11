@@ -6,7 +6,6 @@ from django.shortcuts import render, redirect
 
 @login_required(login_url='/')
 def HOME(request):
-
     student_count = Student.objects.all().count()
     staff_count = Staff.objects.all().count()
     course_count = Course.objects.all().count()
@@ -483,8 +482,7 @@ def UPDATE_SESSION(request):
 
 
 @login_required(login_url='/')
-def DELETE_SESSION(request,id):
-
+def DELETE_SESSION(request, id):
     session = Session_Year.objects.filter(id=id)
     session.delete()
 
