@@ -431,3 +431,14 @@ def VIEW_SESSION(request):
     }
 
     return render(request, 'hod/view_session.html', context)
+
+
+@login_required(login_url='/')
+def EDIT_SESSION(request, id):
+    session = Session_Year.objects.filter(id=id)
+
+    context = {
+        'session': session
+    }
+
+    return render(request, 'hod/edit_session.html', context)
