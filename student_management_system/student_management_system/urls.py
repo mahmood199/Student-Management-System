@@ -51,6 +51,7 @@ urlpatterns = [
                   path("Hod/Subject/Update", hod_views.UPDATE_SUBJECT, name="update_subject"),
                   path("Hod/Subject/Delete/<str:id>", hod_views.DELETE_SUBJECT, name="delete_subject"),
 
-                  path("Hod/Session/Add", hod_views.ADD_SESSION, name="add_subject"),
+                  path("Hod/Session/Add", hod_views.ADD_SESSION, name="add_session"),
+                  path("Hod/Session/View", hod_views.VIEW_SESSION, name="view_session"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

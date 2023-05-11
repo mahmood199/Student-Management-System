@@ -370,9 +370,9 @@ def EDIT_SUBJECT(request, id):
 
     return render(request, 'edit_subject.html', context)
 
+
 @login_required(login_url='/')
 def UPDATE_SUBJECT(request):
-
     if request.method == "POST":
         subject_id = request.POST.get('subject_id')
         subject_name = request.POST.get('subject_name')
@@ -390,14 +390,14 @@ def UPDATE_SUBJECT(request):
         )
 
         subject.save()
-        messages.success(request,'Subject updated successfully')
+        messages.success(request, 'Subject updated successfully')
         return redirect('view_subject')
 
     return None
 
-@login_required(login_url='/')
-def DELETE_SUBJECT(request,id):
 
+@login_required(login_url='/')
+def DELETE_SUBJECT(request, id):
     subject = Subject.objects.filter(id=id)
     subject.delete()
 
@@ -405,9 +405,9 @@ def DELETE_SUBJECT(request,id):
 
     return redirect('view_subject')
 
+
 @login_required(login_url='/')
 def ADD_SESSION(request):
-
     if request.method == "POST":
         session_year_start = request.POST.get('session_year_start')
         session_year_end = request.POST.get('session_year_end')
@@ -421,3 +421,13 @@ def ADD_SESSION(request):
         return redirect('add_session')
 
     return render(request, 'hod/add_session.html')
+
+
+@login_required(login_url='/')
+def VIEW_SESSION(request):
+    session = Session_Year.objects.all()
+    context = {
+        'session': session
+    }
+
+    return render(request, 'hod/view_session.html', context)
