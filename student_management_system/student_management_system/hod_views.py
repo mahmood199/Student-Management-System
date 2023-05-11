@@ -489,3 +489,9 @@ def DELETE_SESSION(request, id):
     messages.success(request, "Session deleted successfully")
 
     return redirect('view_session')
+
+
+@login_required(login_url='/')
+def STAFF_SEND_NOTIFICATION(request):
+    #Add code here
+    return redirect('')
