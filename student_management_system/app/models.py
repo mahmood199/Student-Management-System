@@ -68,6 +68,6 @@ class Staff_Notifications(models.Model):
     staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
+    status = models.IntegerField(null=True,default=0)
     def __str__(self):
         return self.staff_id.admin.first_name
