@@ -32,13 +32,13 @@ urlpatterns = [
                   path('Hod/Student/Edit/<str:id>', hod_views.EDIT_STUDENT, name='edit_student'),
                   path('Hod/Student/Update', hod_views.UPDATE_STUDENT, name='update_student'),
                   path('Hod/Student/Delete/<str:admin>', hod_views.DELETE_STUDENT, name='delete_student'),
+
                   path('Hod/Course/Add', hod_views.ADD_COURSE, name='add_course'),
                   path('Hod/Course/View', hod_views.VIEW_COURSE, name='view_course'),
                   path('Hod/Course/Edit/<str:id>', hod_views.EDIT_COURSE, name='edit_course'),
                   path('Hod/Course/Update', hod_views.UPDATE_COURSE, name='update_course'),
                   path('Hod/Course/Delete/<str:id>', hod_views.DELETE_COURSE, name='delete_course'),
 
-                  # Staff
                   path("Hod/Staff/Add", hod_views.ADD_STAFF, name="add_staff"),
                   path("Hod/Staff/View", hod_views.VIEW_STAFF, name="view_staff"),
                   path("Hod/Staff/Edit/<str:id>", hod_views.EDIT_STAFF, name="edit_staff"),
@@ -50,5 +50,15 @@ urlpatterns = [
                   path("Hod/Subject/Edit/<str:id>", hod_views.EDIT_SUBJECT, name="edit_subject"),
                   path("Hod/Subject/Update", hod_views.UPDATE_SUBJECT, name="update_subject"),
                   path("Hod/Subject/Delete/<str:id>", hod_views.DELETE_SUBJECT, name="delete_subject"),
+
+                  path("Hod/Session/Add", hod_views.ADD_SESSION, name="add_session"),
+                  path("Hod/Session/View", hod_views.VIEW_SESSION, name="view_session"),
+                  path("Hod/Session/Edit/<str:id>", hod_views.EDIT_SESSION, name="edit_session"),
+                  path("Hod/Session/Update", hod_views.UPDATE_SESSION, name="update_session"),
+                  path("Hod/Session/Delete/<str:id>", hod_views.DELETE_SESSION, name="delete_session"),
+
+
+                  #Staff
+                  path("staff/home", staff_views.HOME, name="staff_home"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
