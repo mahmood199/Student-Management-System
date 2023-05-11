@@ -462,3 +462,14 @@ def UPDATE_SESSION(request):
         return redirect('view_session')
 
     return None
+
+
+@login_required(login_url='/')
+def DELETE_SESSION(request,id):
+
+    session = Session_Year.objects.filter(id=id)
+    session.delete()
+
+    messages.success(request, "Session deleted successfully")
+
+    return redirect('view_session')
