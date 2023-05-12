@@ -98,6 +98,11 @@
                 <li class="{% active_link 'hod_home' 'active' %}">
                     <a href="{% url 'hod_home' %}"><i class="fas fa-comment"></i> <span>Send Feedback</span></a>
                 </li>
+
+                <li class="{% active_link 'notifications' 'active' %}">
+                    <a href="{% url 'notifications' %}"><i class="fas fa-bell"></i> <span>Notifications</span></a>
+                </li>
+
                 <li><i class=""></i>
                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span> Logout</span></a>
                 </li>
