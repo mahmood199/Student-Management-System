@@ -2,7 +2,7 @@ from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from app.models import Staff,Staff_Notifications
+from app.models import Staff,Staff_Notifications,Staff_leave
 
 
 @login_required(login_url='/')
@@ -36,3 +36,21 @@ def STAFF_NOTIFICATION_MARK_AS_DONE(request,status):
 @login_required(login_url='/')
 def STAFF_APPLY_LEAVE(request):
     return render(request,'staff/apply_leave.html')
+
+
+@login_required(login_url='/')
+def STAFF_APPLY_LEAVE_SAVE(request):
+    if request.method == "POST":
+        leave_date = request.POST.get('leave_date')
+        leave_message = request.POST.get('leave_message')
+
+        staff = Staff.objects.get(admin = request.user.id)
+
+        leave = Staff_leave(
+            staff_id = staff,
+            data = leave_date,
+            message = leave_message,
+        )
+        leave.save()
+        messages.success(request,'Leave Successfully Sent')
+        return redirect('staff_apply_leave')
