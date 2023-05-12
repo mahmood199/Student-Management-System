@@ -62,6 +62,13 @@ urlpatterns = [
 
                   path('Hod/Staff/save_notification', hod_views.SAVE_STAFF_NOTIFICATION,
                        name='save_staff_notification'),
+                  path('Hod/Staff/Leave_view', hod_views.Staff_Leave_view, name='staff_leave_view'),
+
+
+
+
+
+
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
@@ -72,6 +79,5 @@ urlpatterns = [
 
                   path('staff/Apply_leave', staff_views.STAFF_APPLY_LEAVE, name='staff_apply_leave'),
                   path('staff/Apply_leave_save', staff_views.STAFF_APPLY_LEAVE_SAVE, name='staff_apply_leave_save'),
-
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
