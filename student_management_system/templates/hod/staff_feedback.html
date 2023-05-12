@@ -143,12 +143,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{% url 'save_staff_notification' %}">
+                <form method="post" action="{% url 'staff_feedback_reply_save' %}">
                     {% csrf_token %}
                     <div class="form-group">
 
                         <input type="text" class="form-control" name="feedback_id" value="{{i.id}}" hidden>
-                        <textarea rows="4" class="form-control" name="feedback"></textarea>
+                        <textarea rows="4" class="form-control" name="feedback_reply"></textarea>
 
                     </div>
 

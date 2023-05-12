@@ -554,3 +554,15 @@ def STAFF_FEEDBACK(request):
         'feedback':feedback,
     }
     return render(request,'Hod/staff_feedback.html',context)
+
+
+@login_required(login_url='/')
+def STAFF_FEEDBACK_SAVE(request):
+    if request.method == "POST":
+        feedback_id = request.POST.get('feedback_id')
+        feedback_reply = request.POST.get('feedback_reply')
+
+        feedback = Staff_Feedback.objects.get(id = feedback_id)
+        feedback.feedback_reply = feedback_reply
+        feedback.save()
+        return redirect('staff_feedback_reply')

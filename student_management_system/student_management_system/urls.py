@@ -67,6 +67,7 @@ urlpatterns = [
                   path('Hod/Staff/disapprove_leave/<str:id>', hod_views.STAFF_DISAPPROVE_LEAVE,
                        name='staff_disapprove_leave'),
                   path('Hod/Staff/feedback', hod_views.STAFF_FEEDBACK, name='staff_feedback_reply'),
+                  path('Hod/Staff/feedback/save', hod_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_reply_save'),
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
