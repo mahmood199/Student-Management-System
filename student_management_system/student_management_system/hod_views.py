@@ -1,4 +1,4 @@
-from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notification, Staff_leave
+from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notification, Staff_leave,Staff_Feedback
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -544,3 +544,13 @@ def STAFF_DISAPPROVE_LEAVE(request,id):
     leave.status = 2
     leave.save()
     return redirect('staff_leave_view')
+
+
+@login_required(login_url='/')
+def STAFF_FEEDBACK(request):
+    feedback = Staff_Feedback.objects.all()
+
+    context = {
+        'feedback':feedback,
+    }
+    return render(request,'Hod/staff_feedback.html',context)
