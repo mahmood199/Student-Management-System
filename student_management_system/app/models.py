@@ -71,3 +71,21 @@ class Staff_Notifications(models.Model):
     status = models.IntegerField(null=True,default=0)
     def __str__(self):
         return self.staff_id.admin.first_name
+
+
+class Staff_leave(models.Model):
+    staff_id = models.ForeignKey(Staff,on_delete=models.CASCADE)
+    data = models.CharField(max_length=100)
+    message = model.TextField()
+    status = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_new_add=True)
+    updated_at = models.DateTimeField(auto_new_add=True)
+
+    def __str__(self):
+        return self.staff_id.admin.first_name + self.staff_id.admin.last_name
+
+
+
+
+
+
