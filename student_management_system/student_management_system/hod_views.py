@@ -1,4 +1,4 @@
-from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject
+from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notification, Staff_leave, Staff_Feedback, Student_Notification
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -6,7 +6,6 @@ from django.shortcuts import render, redirect
 
 @login_required(login_url='/')
 def HOME(request):
-
     student_count = Student.objects.all().count()
     staff_count = Staff.objects.all().count()
     course_count = Course.objects.all().count()
@@ -483,11 +482,122 @@ def UPDATE_SESSION(request):
 
 
 @login_required(login_url='/')
-def DELETE_SESSION(request,id):
-
+def DELETE_SESSION(request, id):
     session = Session_Year.objects.filter(id=id)
     session.delete()
 
     messages.success(request, "Session deleted successfully")
 
     return redirect('view_session')
+
+
+@login_required(login_url='/')
+def STAFF_SEND_NOTIFICATION(request):
+    staff = Staff.objects.all()
+    see_notification = Staff_Notification.objects.all().order_by('-id')[0:5]
+
+    context = {
+        'staff':staff,
+        'see_notification':see_notification,
+    }
+    return render(request,'hod/staff_notification.html',context)
+
+
+
+@login_required(login_url='/')
+def SAVE_STAFF_NOTIFICATION(request):
+    if request.method == "POST":
+        staff_id = request.POST.get('staff_id')
+        message = request.POST.get('message')
+
+        staff = Staff.objects.get(admin = staff_id)
+        notification = Staff_Notification(
+            staff_id = staff,
+            message = message,
+        )
+        notification.save()
+        messages.success(request, 'Notification Are Successfully Sent')
+        return redirect('staff_send_notification')
+
+
+@login_required(login_url='/')
+def Staff_Leave_view(request):
+    staff_leave = Staff_leave.objects.all()
+
+    context = {
+        'staff_leave':staff_leave,
+    }
+    return render(request,'Hod/staff_leave.html',context)
+
+@login_required(login_url='/')
+def STAFF_APPROVE_LEAVE(request,id):
+    leave = Staff_leave.objects.get(id = id)
+    leave.status = 1
+    leave.save()
+    return redirect('staff_leave_view')
+
+
+
+@login_required(login_url='/')
+def STAFF_DISAPPROVE_LEAVE(request,id):
+    leave = Staff_leave.objects.get(id=id)
+    leave.status = 2
+    leave.save()
+    return redirect('staff_leave_view')
+
+
+@login_required(login_url='/')
+def STAFF_FEEDBACK(request):
+    feedback = Staff_Feedback.objects.all()
+
+    context = {
+        'feedback':feedback,
+    }
+    return render(request,'Hod/staff_feedback.html',context)
+
+
+@login_required(login_url='/')
+def STAFF_FEEDBACK_SAVE(request):
+    if request.method == "POST":
+        feedback_id = request.POST.get('feedback_id')
+        feedback_reply = request.POST.get('feedback_reply')
+
+        feedback = Staff_Feedback.objects.get(id = feedback_id)
+        feedback.feedback_reply = feedback_reply
+        feedback.save()
+        return redirect('staff_feedback_reply')
+
+
+
+@login_required(login_url='/')
+def STUDENT_SEND_NOTIFICATION(request):
+    student = Student.objects.all()
+    notification = Student_Notification.objects.all()
+    context = {
+        'student':student,
+        'notification':notification,
+    }
+    return render(request,'hod/student_notification.html',context)
+
+
+@login_required(login_url='/')
+def SAVE_STUDENT_NOTIFICATION(request):
+    if request.method == "POST":
+        message = request.POST.get('message')
+        student_id = request.POST.get('student_id')
+
+        student = Student.objects.get(admin = student_id)
+
+        stud_notification = Student_Notification(
+            student_id = student,
+            message = message,
+        )
+        stud_notification.save()
+        messages.success(request,'Student Notification Are Successfully Sent')
+        return redirect('student_send_notification')
+
+
+
+
+
+

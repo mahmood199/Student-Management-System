@@ -57,8 +57,42 @@ urlpatterns = [
                   path("Hod/Session/Update", hod_views.UPDATE_SESSION, name="update_session"),
                   path("Hod/Session/Delete/<str:id>", hod_views.DELETE_SESSION, name="delete_session"),
 
+                  path('Hod/Staff/Send_Notification', hod_views.STAFF_SEND_NOTIFICATION,
+                       name='staff_send_notification'),
 
-                  #Staff
+                  path('Hod/Staff/save_notification', hod_views.SAVE_STAFF_NOTIFICATION,
+                       name='save_staff_notification'),
+
+                  path('Hod/Student/send_notification', hod_views.STUDENT_SEND_NOTIFICATION,
+                       name='student_send_notification'),
+                  path('Hod/Student/save_notification', hod_views.SAVE_STUDENT_NOTIFICATION,
+                       name='save_student_notification'),
+
+                  path('Hod/Staff/Leave_view', hod_views.Staff_Leave_view, name='staff_leave_view'),
+                  path('Hod/Staff/approve_leave/<str:id>', hod_views.STAFF_APPROVE_LEAVE, name='staff_approve_leave'),
+                  path('Hod/Staff/disapprove_leave/<str:id>', hod_views.STAFF_DISAPPROVE_LEAVE,
+                       name='staff_disapprove_leave'),
+                  path('Hod/Staff/feedback', hod_views.STAFF_FEEDBACK, name='staff_feedback_reply'),
+                  path('Hod/Staff/feedback/save', hod_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_reply_save'),
+
+                  # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
+
+                  path('staff/notifications', staff_views.NOTIFICATIONS, name='notifications'),
+                  path('staff/mark_as_done/<str:status', staff_views.STAFF_NOTIFICATION_MARK_AS_DONE,
+                       name='staff_notification_mark_as_done'),
+
+                  path('staff/Apply_leave', staff_views.STAFF_APPLY_LEAVE, name='staff_apply_leave'),
+                  path('staff/Apply_leave_save', staff_views.STAFF_APPLY_LEAVE_SAVE, name='staff_apply_leave_save'),
+                  path('staff/Feedback', staff_views.STAFF_FEEDBACK, name='staff_feedback'),
+                  path('staff/Feedback/Save', staff_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_save'),
+
+                  # Student urls
+
+                  path('Student/Home', student_views.Home, name='student_home'),
+
+                  path('Student/Notifications', student_views.STUDENT_NOTIFICATION, name='student_notification'),
+path('Student/mark_as_done/<str:status', student_views.STUDENT_NOTIFICATION_MARK_AS_DONE,
+                       name='student_notification_mark_as_done'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
