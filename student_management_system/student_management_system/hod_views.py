@@ -528,3 +528,19 @@ def Staff_Leave_view(request):
         'staff_leave':staff_leave,
     }
     return render(request,'Hod/staff_leave.html',context)
+
+@login_required(login_url='/')
+def STAFF_APPROVE_LEAVE(request,id):
+    leave = Staff_leave.objects.get(id = id)
+    leave.status = 1
+    leave.save()
+    return redirect('staff_leave_view')
+
+
+
+@login_required(login_url='/')
+def STAFF_DISAPPROVE_LEAVE(request,id):
+    leave = Staff_leave.objects.get(id=id)
+    leave.status = 2
+    leave.save()
+    return redirect('staff_leave_view')

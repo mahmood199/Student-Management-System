@@ -35,7 +35,16 @@ def STAFF_NOTIFICATION_MARK_AS_DONE(request,status):
 
 @login_required(login_url='/')
 def STAFF_APPLY_LEAVE(request):
-    return render(request,'staff/apply_leave.html')
+    staff = Staff.objects.filter(admin = request.user.id)
+    for i in staff:
+        staff_id = i.id
+
+        staff_leave_history = Staff_leave.objects.filter(staff_id = staff_id)
+
+        context = {
+            'staff_leave_history':staff_leave_history,
+        }
+    return render(request,'staff/apply_leave.html',context)
 
 
 @login_required(login_url='/')
