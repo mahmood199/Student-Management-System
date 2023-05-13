@@ -1,4 +1,4 @@
-from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notification, Staff_leave, Staff_Feedback, Student_Notification, Student_Feedback
+from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notifications, Staff_leave, Staff_Feedback, Student_Notification, Student_Feedback
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -494,7 +494,7 @@ def DELETE_SESSION(request, id):
 @login_required(login_url='/')
 def STAFF_SEND_NOTIFICATION(request):
     staff = Staff.objects.all()
-    see_notification = Staff_Notification.objects.all().order_by('-id')[0:5]
+    see_notification = Staff_Notifications.objects.all().order_by('-id')[0:5]
 
     context = {
         'staff':staff,
@@ -511,7 +511,7 @@ def SAVE_STAFF_NOTIFICATION(request):
         message = request.POST.get('message')
 
         staff = Staff.objects.get(admin = staff_id)
-        notification = Staff_Notification(
+        notification = Staff_Notifications(
             staff_id = staff,
             message = message,
         )
@@ -549,9 +549,10 @@ def STAFF_DISAPPROVE_LEAVE(request,id):
 @login_required(login_url='/')
 def STAFF_FEEDBACK(request):
     feedback = Staff_Feedback.objects.all()
-
+    feedback_history = Staff_Feedback.objects.all().order_by('-id')[0:5]
     context = {
-        'feedback':feedback,
+        'feedback': feedback,
+        'feedback_history': feedback_history,
     }
     return render(request,'Hod/staff_feedback.html',context)
 
@@ -559,8 +560,10 @@ def STAFF_FEEDBACK(request):
 @login_required(login_url='/')
 def STUDENT_FEEDBACK(request):
     feedback = Student_Feedback.objects.all()
+    feedback_history = Student_Feedback.objects.all().order_by('-id')[0:5]
     context = {
         'feedback': feedback,
+        'feedback_history': feedback_history,
     }
     return render(request, 'hod/student_feedback.html', context)
 
@@ -573,6 +576,9 @@ def STAFF_FEEDBACK_SAVE(request):
 
         feedback = Staff_Feedback.objects.get(id = feedback_id)
         feedback.feedback_reply = feedback_reply
+
+        feedback.status = 1
+
         feedback.save()
         return redirect('staff_feedback_reply')
 
@@ -585,6 +591,9 @@ def REPLY_STUDENT_FEEDBACK(request):
 
         feedback = Student_Feedback.objects.get(id=feedback_id)
         feedback.feedback_reply = feedback_reply
+
+        feedback.status = 1
+
         feedback.save()
         return redirect('get_student_feedback')
 

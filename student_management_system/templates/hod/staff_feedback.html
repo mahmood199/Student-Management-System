@@ -43,7 +43,8 @@
                                 <td>
                                     <h2 class="table-avatar">
                                         <a href="student-details.html" class="avatar avatar-sm mr-2"><img
-                                                class="avatar-img rounded-circle" src="/{{i.staff_id.admin.profile_pic}}"
+                                                class="avatar-img rounded-circle"
+                                                src="/{{i.staff_id.admin.profile_pic}}"
                                                 alt="User Image"></a>
                                         <a href="student-details.html">{{i.staff_id.admin.first_name}}&nbsp;{{i.staff_id.admin.last_name}}</a>
                                     </h2>
@@ -100,15 +101,14 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for i in see_notification %}
+                                        {% for i in feedback_history %}
                                         <tr>
-                                            <td>{{i.message}}</td>
+                                            <td>{{i.feedback}}</td>
 
-
-                                            {% if i.status ==0 %}
-                                            <td><span class="badge badge-danger">Message Unread</span></td>
+                                            {% if i.status == 0 %}
+                                            <td><span class="badge badge-danger">No Reply</span></td>
                                             {% else %}
-                                            <td><span class="badge badge-success">Message Read</span></td>
+                                            <td>{{i.feedback_reply}}</td>
                                             {% endif %}
                                             </td>
                                         </tr>

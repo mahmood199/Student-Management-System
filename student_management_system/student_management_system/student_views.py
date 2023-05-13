@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from app.models import Student_Notification, Student, Student_Feedback
+from django.contrib.auth.decorators import login_required
 
 
 @login_required(login_url='/')
@@ -30,7 +31,12 @@ def STUDENT_NOTIFICATION_MARK_AS_DONE(request, status):
 
 @login_required(login_url='/')
 def STUDENT_FEEDBACK(request):
-    return render(request, 'student/feedback.html')
+    student_id = Student.objects.get(admin=request.user.id)
+    feedback_history = Student_Feedback.objects.filter(student_id=student_id)
+    context = {
+        'feedback_history': feedback_history,
+    }
+    return render(request, 'student/feedback.html', context)
 
 
 @login_required(login_url='/')
