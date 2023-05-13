@@ -1,4 +1,4 @@
-from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notification, Staff_leave, Staff_Feedback, Student_Notification
+from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notification, Staff_leave, Staff_Feedback, Student_Notification, Student_Feedback
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -557,6 +557,15 @@ def STAFF_FEEDBACK(request):
 
 
 @login_required(login_url='/')
+def STUDENT_FEEDBACK(request):
+    feedback = Student_Feedback.objects.all()
+    context = {
+        'feedback': feedback,
+    }
+    return render(request, 'hod/student_feedback.html', context)
+
+
+@login_required(login_url='/')
 def STAFF_FEEDBACK_SAVE(request):
     if request.method == "POST":
         feedback_id = request.POST.get('feedback_id')
@@ -567,6 +576,17 @@ def STAFF_FEEDBACK_SAVE(request):
         feedback.save()
         return redirect('staff_feedback_reply')
 
+
+@login_required(login_url='/')
+def REPLY_STUDENT_FEEDBACK(request):
+    if request.method == "POST":
+        feedback_id = request.POST.get('feedback_id')
+        feedback_reply = request.POST.get('feedback_reply')
+
+        feedback = Student_Feedback.objects.get(id=feedback_id)
+        feedback.feedback_reply = feedback_reply
+        feedback.save()
+        return redirect('get_student_feedback')
 
 
 @login_required(login_url='/')
@@ -595,9 +615,5 @@ def SAVE_STUDENT_NOTIFICATION(request):
         stud_notification.save()
         messages.success(request,'Student Notification Are Successfully Sent')
         return redirect('student_send_notification')
-
-
-
-
 
 
