@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from app.models import Student_Notification, Student, Student_Feedback
+from app.models import Student_Notification, Student, Student_Feedback, Student_leave
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 @login_required(login_url='/')
@@ -54,3 +55,26 @@ def STUDENT_FEEDBACK_SAVE(request):
         feedbacks.save()
         return redirect('student_feedback')
     return None
+
+
+@login_required(login_url='/')
+def STUDENT_LEAVE(request):
+    return render(request, 'student/apply_leave')
+
+
+@login_required(login_url='/')
+def STUDENT_LEAVE_SAVE(request):
+    if request.method == "POST":
+        leave_date = request.POST.get('leave_date')
+        leave_message = request.POST.get('leave_message')
+
+        student_id = Student.objects.get(admin=request.user.id)
+
+        leave = Student_leave(
+            student_id=student_id,
+            data=leave_date,
+            message=leave_message,
+        )
+        leave.save()
+        messages.success(request, 'Leave Successfully Sent')
+        return redirect('student_leave')
