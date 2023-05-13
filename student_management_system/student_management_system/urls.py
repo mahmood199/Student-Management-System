@@ -92,7 +92,11 @@ urlpatterns = [
                   path('Student/Home', student_views.Home, name='student_home'),
 
                   path('Student/Notifications', student_views.STUDENT_NOTIFICATION, name='student_notification'),
-path('Student/mark_as_done/<str:status', student_views.STUDENT_NOTIFICATION_MARK_AS_DONE,
+                  path('Student/mark_as_done/<str:status', student_views.STUDENT_NOTIFICATION_MARK_AS_DONE,
                        name='student_notification_mark_as_done'),
+
+                  path('Student/feedback', student_views.STUDENT_FEEDBACK, name='student_feedback'),
+                  path('Student/feedback/save', student_views.STUDENT_FEEDBACK_SAVE, name='student_feedback_save'),
+
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
