@@ -59,7 +59,14 @@ def STUDENT_FEEDBACK_SAVE(request):
 
 @login_required(login_url='/')
 def STUDENT_LEAVE(request):
-    return render(request, 'student/apply_leave')
+    student = Student.objects.get(admin=request.user.id)
+    student_leave_history = Student_leave.objects.filter(student_id=student)
+
+    context = {
+        'student_leave_history': student_leave_history,
+    }
+
+    return render(request, 'student/apply_leave', context)
 
 
 @login_required(login_url='/')

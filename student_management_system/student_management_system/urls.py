@@ -72,8 +72,16 @@ urlpatterns = [
                   path('Hod/Staff/approve_leave/<str:id>', hod_views.STAFF_APPROVE_LEAVE, name='staff_approve_leave'),
                   path('Hod/Staff/disapprove_leave/<str:id>', hod_views.STAFF_DISAPPROVE_LEAVE,
                        name='staff_disapprove_leave'),
+
+
                   path('Hod/Staff/feedback', hod_views.STAFF_FEEDBACK, name='staff_feedback_reply'),
                   path('Hod/Staff/feedback/save', hod_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_reply_save'),
+
+
+                  path('Hod/Student/leave_view', hod_views.STUDENT_LEAVE_VIEW, name='student_leave_view'),
+                  path('Hod/Student/approve_leave/<str:id>', hod_views.STUDENT_APPROVE_LEAVE, name='student_approve_leave'),
+                  path('Hod/Student/disapprove_leave/<str:id>', hod_views.STUDENT_DISAPPROVE_LEAVE,
+                       name='student_disapprove_leave'),
 
                   path('Hod/Student/feedback', hod_views.STUDENT_FEEDBACK, name='get_student_feedback'),
                   path('Hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK, name='reply_student_feedback'),

@@ -1,4 +1,5 @@
-from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notifications, Staff_leave, Staff_Feedback, Student_Notification, Student_Feedback
+from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notifications, Staff_leave, \
+    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -497,11 +498,10 @@ def STAFF_SEND_NOTIFICATION(request):
     see_notification = Staff_Notifications.objects.all().order_by('-id')[0:5]
 
     context = {
-        'staff':staff,
-        'see_notification':see_notification,
+        'staff': staff,
+        'see_notification': see_notification,
     }
-    return render(request,'hod/staff_notification.html',context)
-
+    return render(request, 'hod/staff_notification.html', context)
 
 
 @login_required(login_url='/')
@@ -510,10 +510,10 @@ def SAVE_STAFF_NOTIFICATION(request):
         staff_id = request.POST.get('staff_id')
         message = request.POST.get('message')
 
-        staff = Staff.objects.get(admin = staff_id)
+        staff = Staff.objects.get(admin=staff_id)
         notification = Staff_Notifications(
-            staff_id = staff,
-            message = message,
+            staff_id=staff,
+            message=message,
         )
         notification.save()
         messages.success(request, 'Notification Are Successfully Sent')
@@ -525,25 +525,50 @@ def Staff_Leave_view(request):
     staff_leave = Staff_leave.objects.all()
 
     context = {
-        'staff_leave':staff_leave,
+        'staff_leave': staff_leave,
     }
-    return render(request,'Hod/staff_leave.html',context)
+    return render(request, 'Hod/staff_leave.html', context)
+
 
 @login_required(login_url='/')
-def STAFF_APPROVE_LEAVE(request,id):
-    leave = Staff_leave.objects.get(id = id)
+def STAFF_APPROVE_LEAVE(request, id):
+    leave = Staff_leave.objects.get(id=id)
     leave.status = 1
     leave.save()
     return redirect('staff_leave_view')
 
 
-
 @login_required(login_url='/')
-def STAFF_DISAPPROVE_LEAVE(request,id):
+def STAFF_DISAPPROVE_LEAVE(request, id):
     leave = Staff_leave.objects.get(id=id)
     leave.status = 2
     leave.save()
     return redirect('staff_leave_view')
+
+
+@login_required(login_url='/')
+def STUDENT_LEAVE_VIEW(request):
+    student_leave = Student_leave.objects.all()
+    context = {
+        'student_leave': student_leave,
+    }
+    return render(request, 'hod/student_leave.html', context)
+
+
+@login_required(login_url='/')
+def STUDENT_APPROVE_LEAVE(request, id):
+    leave = Student_leave.objects.get(id=id)
+    leave.status = 1
+    leave.save()
+    return redirect('student_leave_view')
+
+
+@login_required(login_url='/')
+def STUDENT_DISAPPROVE_LEAVE(request, id):
+    leave = Student_leave.objects.get(id=id)
+    leave.status = 2
+    leave.save()
+    return redirect('student_leave_view')
 
 
 @login_required(login_url='/')
@@ -554,7 +579,7 @@ def STAFF_FEEDBACK(request):
         'feedback': feedback,
         'feedback_history': feedback_history,
     }
-    return render(request,'Hod/staff_feedback.html',context)
+    return render(request, 'Hod/staff_feedback.html', context)
 
 
 @login_required(login_url='/')
@@ -574,7 +599,7 @@ def STAFF_FEEDBACK_SAVE(request):
         feedback_id = request.POST.get('feedback_id')
         feedback_reply = request.POST.get('feedback_reply')
 
-        feedback = Staff_Feedback.objects.get(id = feedback_id)
+        feedback = Staff_Feedback.objects.get(id=feedback_id)
         feedback.feedback_reply = feedback_reply
 
         feedback.status = 1
@@ -603,10 +628,10 @@ def STUDENT_SEND_NOTIFICATION(request):
     student = Student.objects.all()
     notification = Student_Notification.objects.all()
     context = {
-        'student':student,
-        'notification':notification,
+        'student': student,
+        'notification': notification,
     }
-    return render(request,'hod/student_notification.html',context)
+    return render(request, 'hod/student_notification.html', context)
 
 
 @login_required(login_url='/')
@@ -615,14 +640,14 @@ def SAVE_STUDENT_NOTIFICATION(request):
         message = request.POST.get('message')
         student_id = request.POST.get('student_id')
 
-        student = Student.objects.get(admin = student_id)
+        student = Student.objects.get(admin=student_id)
 
         stud_notification = Student_Notification(
-            student_id = student,
-            message = message,
+            student_id=student,
+            message=message,
         )
         stud_notification.save()
-        messages.success(request,'Student Notification Are Successfully Sent')
+        messages.success(request, 'Student Notification Are Successfully Sent')
         return redirect('student_send_notification')
 
 
