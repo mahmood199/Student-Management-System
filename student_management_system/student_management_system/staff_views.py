@@ -94,10 +94,33 @@ def STAFF_FEEDBACK_SAVE(request):
 @login_required(login_url='/')
 def STAFF_TAKE_ATTENDANCE(request):
     staff_id = Staff.objects.get(admin=request.user.id)
-    subject = Subject.object.filter(staff=staff_id)
+    subject = Subject.objects.filter(staff=staff_id)
     session_year = Session_Year.objects.all()
+    action = request.GET.get('action')
+
+    get_subject = None
+    get_session_year = None
+    students = None
+    if action is not None:
+        if request.method == "POST":
+            subject_id = request.POST.get('subject_id')
+            session_year_id = request.POST.get('session_year_id')
+
+            get_subject = Subject.objects.get(id=subject_id)
+            get_session_year = Session_Year.objects.get(id=session_year_id)
+
+            subjects = Subject.objects.filter(id=subject_id)
+
+            for i in subjects:
+                student_id = i.coruse_id.id
+                students = Student.objects.filter(course=student_id)
+
     context = {
         'subject': subject,
         'session_year': session_year,
+        'get_subject': get_subject,
+        'get_session_year': get_session_year,
+        'action': action,
+        'students': students,
     }
     return render(request, 'staff/take_attendance.html', context)
