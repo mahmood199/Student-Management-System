@@ -135,7 +135,7 @@ class Student_Feedback(models.Model):
 
 class Attendance(models.Model):
     subject_id = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
-    attendance = models.DateField()
+    attendance_data = models.DateField()
     session_year_id = models.ForeignKey(Session_Year, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)

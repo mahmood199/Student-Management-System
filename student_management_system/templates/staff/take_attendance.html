@@ -51,7 +51,7 @@
                         </div>
                     </form>
                     {% else %}
-                    <form action="{% url 'add_subject' %}" method="post">
+                    <form action="{% url 'staff_save_attendance' %}" method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
@@ -59,13 +59,13 @@
                             </div>
                             <div class="col-12 col-sm-6">
                                 <label>Subject</label>
-                                <select class="form-control" name="course_id" required>
+                                <select class="form-control" name="subject_id" required>
                                     <option value="{{get_subject.id}}">{{get_subject}}</option>
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <label>Staff</label>
-                                <select class="form-control" name="staff_id" required>
+                                <select class="form-control" name="session_year_id" required>
                                     <option value="{{get_session_year.id}}">{{get_session_year}}</option>
                                 </select>
                             </div>
@@ -74,14 +74,14 @@
                             <div class="col-12 col-sm-6 nt-4">
                                 <div class="form-group">
                                     <label>Attendance Date</label>
-                                    <input type="date" class="form-control" name="subject_name" required>
+                                    <input type="date" class="form-control" name="attendance_date" required>
                                 </div>
                             </div>
 
                             {% for i in students %}
                             <div class="col-12 nt-4 nt-4">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" value="{{i.id}}" name="student_id">
                                     <label class="form-check-label" for="exampleCheck1">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</label>
                                 </div>
                             </div>

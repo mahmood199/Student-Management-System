@@ -2,7 +2,7 @@ from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback
+from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendace_Report
 
 
 @login_required(login_url='/')
@@ -124,3 +124,36 @@ def STAFF_TAKE_ATTENDANCE(request):
         'students': students,
     }
     return render(request, 'staff/take_attendance.html', context)
+
+
+@login_required(login_url='/')
+def STAFF_SAVE_ATTENDANCE(request):
+    if request.method == "POST":
+        subject_id = request.POST.get('subject_id')
+        session_year_id = request.POST.get('session_year_id')
+        attendance_date = request.POST.get('attendance_date')
+        student_id = request.POST.getlist('student_id')
+
+        get_subject = Subject.objects.get(id=subject_id)
+        get_session_year = Session_Year.objects.get(id=session_year_id)
+
+        attendance = Attendance(
+            subject_id=get_subject,
+            attendance_data=attendance_date,
+            session_year_id=get_session_year,
+        )
+
+        attendance.save()
+
+        for i in student_id:
+            stud_id = i
+            int_stud = int(stud_id)
+
+            p_students = Student.objects.get(id=int_stud)
+            attendance_report = Attendace_Report(
+                student_id=p_students,
+                attendance_id=attendance,
+            )
+            attendance_report.save()
+
+    return redirect('take_attendance')
