@@ -97,6 +97,7 @@ urlpatterns = [
                   path('staff/Apply_leave_save', staff_views.STAFF_APPLY_LEAVE_SAVE, name='staff_apply_leave_save'),
                   path('staff/Feedback', staff_views.STAFF_FEEDBACK, name='staff_feedback'),
                   path('staff/Feedback/Save', staff_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_save'),
+                  path('staff/Take_Attendance', staff_views.STAFF_TAKE_ATTENDANCE, name='staff_take_attendance'),
 
                   # Student urls
 
