@@ -157,3 +157,43 @@ def STAFF_SAVE_ATTENDANCE(request):
             attendance_report.save()
 
     return redirect('take_attendance')
+
+
+@login_required(login_url='/')
+def STAFF_VIEW_ATTENDANCE(request):
+    staff_id = Staff.objects.get(admin=request.user.id)
+
+    subject = Subject.objects.filter(staff_id=staff_id)
+    session_year = Session_Year.objects.all()
+
+    action = request.Get.get('action')
+
+    get_subject = None
+    attendance_date = None
+    get_session_year = None
+    attendance_report = None
+    if action is not None:
+        if request.method == "POST":
+            subject_id = request.POST.get('subject_id')
+            session_year_id = request.POST.get('session_year_id')
+            attendance_date = request.POST.get('attendance_date')
+
+            get_subject = Subject.objects.get(id=subject_id)
+            get_session_year = Session_Year.objects.get(id=session_year_id)
+            attendance = Attendance.objects.filter(subject_id=get_subject, attendance_data=attendance_date)
+
+            for i in attendance:
+                attendance_id = i.id
+                attendance_report = Attendace_Report.objects.filter(attendance_id=attendance_id)
+
+    context = {
+        'subject': subject,
+        'session_year': session_year,
+        'action': action,
+        'attendance_date': attendance_date,
+        'get_subject': get_subject,
+        'get_session_year': get_session_year,
+        'attendance_report': attendance_report,
+    }
+
+    return render(request, 'Staff/view_attendance.html', context)
