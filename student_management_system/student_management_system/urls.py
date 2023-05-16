@@ -85,6 +85,7 @@ urlpatterns = [
 
                   path('Hod/Student/feedback', hod_views.STUDENT_FEEDBACK, name='get_student_feedback'),
                   path('Hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK, name='reply_student_feedback'),
+                  path('Hod/View/Attendance', hod_views.VIEW_ATTENDANCE, name='view_attendance'),
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),

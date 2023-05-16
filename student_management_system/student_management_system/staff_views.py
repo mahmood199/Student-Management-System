@@ -2,7 +2,7 @@ from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendace_Report
+from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report
 
 
 @login_required(login_url='/')
@@ -184,7 +184,7 @@ def STAFF_VIEW_ATTENDANCE(request):
 
             for i in attendance:
                 attendance_id = i.id
-                attendance_report = Attendace_Report.objects.filter(attendance_id=attendance_id)
+                attendance_report = Attendance_Report.objects.filter(attendance_id=attendance_id)
 
     context = {
         'subject': subject,

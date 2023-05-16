@@ -1,5 +1,5 @@
 from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notifications, Staff_leave, \
-    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave
+    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -651,3 +651,40 @@ def SAVE_STUDENT_NOTIFICATION(request):
         return redirect('student_send_notification')
 
 
+@login_required(login_url='/')
+def VIEW_ATTENDANCE(request):
+    staff_id = Staff.objects.get(admin=request.user.id)
+
+    subject = Subject.objects.filter(staff_id=staff_id)
+    session_year = Session_Year.objects.all()
+
+    action = request.Get.get('action')
+
+    get_subject = None
+    attendance_date = None
+    get_session_year = None
+    attendance_report = None
+    if action is not None:
+        if request.method == "POST":
+            subject_id = request.POST.get('subject_id')
+            session_year_id = request.POST.get('session_year_id')
+            attendance_date = request.POST.get('attendance_date')
+
+            get_subject = Subject.objects.get(id=subject_id)
+            get_session_year = Session_Year.objects.get(id=session_year_id)
+            attendance = Attendance.objects.filter(subject_id=get_subject, attendance_data=attendance_date)
+
+            for i in attendance:
+                attendance_id = i.id
+                attendance_report = Attendance_Report.objects.filter(attendance_id=attendance_id)
+
+    context = {
+        'subject': subject,
+        'session_year': session_year,
+        'action': action,
+        'attendance_date': attendance_date,
+        'get_subject': get_subject,
+        'get_session_year': get_session_year,
+        'attendance_report': attendance_report,
+    }
+    return render(request)
