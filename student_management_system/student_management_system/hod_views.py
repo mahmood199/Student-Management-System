@@ -687,4 +687,4 @@ def VIEW_ATTENDANCE(request):
         'get_session_year': get_session_year,
         'attendance_report': attendance_report,
     }
-    return render(request)
+    return render(request, 'hod/view_attendance/html', context)
