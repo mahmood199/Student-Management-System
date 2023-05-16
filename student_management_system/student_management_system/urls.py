@@ -101,6 +101,7 @@ urlpatterns = [
                   path('staff/Take_Attendance', staff_views.STAFF_TAKE_ATTENDANCE, name='staff_take_attendance'),
                   path('staff/Save_Attendance', staff_views.STAFF_SAVE_ATTENDANCE, name='staff_save_attendance'),
                   path('staff/View_Attendance', staff_views.STAFF_VIEW_ATTENDANCE, name='staff_view_attendance'),
+                  path('staff/Add_Result', staff_views.STAFF_ADD_RESULT, name='staff_add_result'),
 
                   # Student urls
 
