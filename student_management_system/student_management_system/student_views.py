@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from app.models import Student_Notification, Student, Student_Feedback, Student_leave
+from app.models import Student_Notification, Student, Student_Feedback, Student_leave, Subject, Attendance, \
+    Attendance_Report
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -85,3 +86,28 @@ def STUDENT_LEAVE_SAVE(request):
         leave.save()
         messages.success(request, 'Leave Successfully Sent')
         return redirect('student_leave')
+
+
+@login_required(login_url='/')
+def VIEW_ATTENDANCE(request):
+    student = Student.objects.get(admin=request.user.id)
+    subjects = Subject.objects.filter(course=student.course_id)
+
+    action = request.GET.get('action')
+
+    get_subject = None
+    attendance_report = None
+    if action is not None:
+        if request.method == "POST":
+            subject_id = request.POST.get('subject_id')
+            get_subject = Subject.objects.get(id=subject_id)
+            attendance_report = Attendance_Report.objects.filter(student_id=student, subject_id=subject_id)
+
+    context = {
+        'subjects': subjects,
+        'action': action,
+        'get_subject': get_subject,
+        'attendance_report': attendance_report,
+    }
+
+    return render(request, "student/view_attendance.html", context)
