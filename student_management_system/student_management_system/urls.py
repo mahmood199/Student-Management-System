@@ -72,8 +72,20 @@ urlpatterns = [
                   path('Hod/Staff/approve_leave/<str:id>', hod_views.STAFF_APPROVE_LEAVE, name='staff_approve_leave'),
                   path('Hod/Staff/disapprove_leave/<str:id>', hod_views.STAFF_DISAPPROVE_LEAVE,
                        name='staff_disapprove_leave'),
+
+
                   path('Hod/Staff/feedback', hod_views.STAFF_FEEDBACK, name='staff_feedback_reply'),
                   path('Hod/Staff/feedback/save', hod_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_reply_save'),
+
+
+                  path('Hod/Student/leave_view', hod_views.STUDENT_LEAVE_VIEW, name='student_leave_view'),
+                  path('Hod/Student/approve_leave/<str:id>', hod_views.STUDENT_APPROVE_LEAVE, name='student_approve_leave'),
+                  path('Hod/Student/disapprove_leave/<str:id>', hod_views.STUDENT_DISAPPROVE_LEAVE,
+                       name='student_disapprove_leave'),
+
+                  path('Hod/Student/feedback', hod_views.STUDENT_FEEDBACK, name='get_student_feedback'),
+                  path('Hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK, name='reply_student_feedback'),
+                  path('Hod/View/Attendance', hod_views.VIEW_ATTENDANCE, name='view_attendance'),
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
@@ -86,13 +98,28 @@ urlpatterns = [
                   path('staff/Apply_leave_save', staff_views.STAFF_APPLY_LEAVE_SAVE, name='staff_apply_leave_save'),
                   path('staff/Feedback', staff_views.STAFF_FEEDBACK, name='staff_feedback'),
                   path('staff/Feedback/Save', staff_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_save'),
+                  path('staff/Take_Attendance', staff_views.STAFF_TAKE_ATTENDANCE, name='staff_take_attendance'),
+                  path('staff/Save_Attendance', staff_views.STAFF_SAVE_ATTENDANCE, name='staff_save_attendance'),
+                  path('staff/View_Attendance', staff_views.STAFF_VIEW_ATTENDANCE, name='staff_view_attendance'),
+                  path('staff/Add/Result', staff_views.STAFF_ADD_RESULT, name='staff_add_result'),
+                  path('staff/Save/Result', staff_views.STAFF_SAVE_RESULT, name='staff_save_result'),
 
                   # Student urls
 
                   path('Student/Home', student_views.Home, name='student_home'),
 
                   path('Student/Notifications', student_views.STUDENT_NOTIFICATION, name='student_notification'),
-path('Student/mark_as_done/<str:status', student_views.STUDENT_NOTIFICATION_MARK_AS_DONE,
+                  path('Student/mark_as_done/<str:status', student_views.STUDENT_NOTIFICATION_MARK_AS_DONE,
                        name='student_notification_mark_as_done'),
+
+                  path('Student/feedback', student_views.STUDENT_FEEDBACK, name='student_feedback'),
+                  path('Student/feedback/save', student_views.STUDENT_FEEDBACK_SAVE, name='student_feedback_save'),
+
+
+                  path('Student/apply_for_leave', student_views.STUDENT_LEAVE, name='student_leave'),
+                  path('Student/Leave_save', student_views.STUDENT_LEAVE_SAVE, name='student_leave_save'),
+
+                  path('Student/View_attendance', student_views.VIEW_ATTENDANCE, name='student_view_attendance'),
+                  path('Student/view_result', student_views.VIEW_RESULT, name='view_result'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

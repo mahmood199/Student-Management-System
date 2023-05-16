@@ -4,15 +4,15 @@
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
-            <h3 class="page-title">Feedback</h3>
+            <h3 class="page-title">Students</h3>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                <li class="breadcrumb-item active">Feedback</li>
+                <li class="breadcrumb-item active">Students</li>
             </ul>
         </div>
         <div class="col-auto text-right float-right ml-auto">
             <button class="btn btn-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button"><i
-                    class="fas fa-comment"></i>&nbsp;Feedback Histroy
+                    class="fas fa-pray"></i>&nbsp;Leave Apply Histroy
             </button>
 
         </div>
@@ -24,23 +24,31 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="{% url 'staff_feedback_save' %}">
+                <form method="post" action="{% url 'student_leave_save' %}">
                     {% csrf_token %}
                     <div class="col-12">
-                        <h5 class="form-title"><span>Send Feedback</span></h5>
+                        <h5 class="form-title"><span>Apply For Leave</span></h5>
                     </div>
                     {% include 'includes/messages.html' %}
 
 
                     <div class="col-sm-11">
                         <div class="form-group">
+                            <label>Leave Date</label>
+                            <input type="date" class="form-control" name="leave_date" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-11">
+                        <div class="form-group">
                             <label>Leave Message</label>
-                            <textarea class="form-control" name="feedback" styel="height:250px;" required></textarea>
+                            <textarea class="form-control" name="leave_message" styel="height:250px;"
+                                      required></textarea>
                         </div>
                     </div>
 
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Send Feedback</button>
+                        <button type="submit" class="btn btn-primary">Apply For Leave</button>
                     </div>
                 </form>
             </div>
@@ -72,28 +80,28 @@
                                     <thead>
                                     <tr>
 
-                                        <th>ID</th>
-                                        <th>Feedback</th>
-                                        <th>Reply</th>
-
+                                        <th>Date</th>
+                                        <th>Message</th>
+                                        <th class="text-right">Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for i in feedback_history %}
+                                    {% for i in student_leave_history %}
                                     <tr>
-                                        <td>{{i.id}}</td>
-                                        <td>{{i.feedback}}</td>
+                                        <td>{{i.data}}</td>
+                                        <td>{{i.message}}</td>
 
-
-                                        {% if i.feedback_reply == "" %}
-                                        <td>
-                                            <span class="badge badge-danger">No Reply</span>
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                {% if i.status == 0 %}
+                                                <span class="badge badge-info">Requests are Pending</span>
+                                                {% elif i.status == 1 %}
+                                                <span class="badge badge-success">Accepted</span>
+                                                {% else %}
+                                                <span class="badge badge-danger">Rejected</span>
+                                                {% endif %}
+                                            </div>
                                         </td>
-                                        {% else %}
-                                        <td>
-                                            {{i.feedback_reply}}
-                                        </td>
-                                        {% endif %}
                                     </tr>
                                     {% endfor %}
                                     </tbody>
