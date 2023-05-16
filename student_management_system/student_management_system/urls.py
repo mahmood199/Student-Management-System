@@ -120,5 +120,6 @@ urlpatterns = [
                   path('Student/Leave_save', student_views.STUDENT_LEAVE_SAVE, name='student_leave_save'),
 
                   path('Student/View_attendance', student_views.VIEW_ATTENDANCE, name='student_view_attendance'),
+                  path('Student/view_result', student_views.VIEW_RESULT, name='view_result'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
