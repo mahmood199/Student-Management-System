@@ -154,7 +154,7 @@ class Attendance_Report(models.Model):
         return self.student_id.admin.first_name
 
 
-class Student_Result(models.Model):
+class StudentResult(models.Model):
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
     subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
     assignment_mark = models.IntegerField()

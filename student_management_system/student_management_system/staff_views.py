@@ -2,7 +2,7 @@ from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report. Student_Result
+from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report. StudentResult
 
 
 @login_required(login_url='/')
@@ -234,6 +234,7 @@ def STAFF_ADD_RESULT(request):
     return render(request, 'staff/add_result.html', context)
 
 
+@login_required(login_url='/')
 def STAFF_SAVE_RESULT(request):
     if request.method == "POST":
         subject_id = request.POST.get('subject_id')
@@ -245,17 +246,19 @@ def STAFF_SAVE_RESULT(request):
         get_student = Student.objects.get(admin=student_id)
         get_subject = Subject.objects.get(id=subject_id)
 
-        check_exist = Student_Result.objects.filter(subject_id=get_subject, student_id=get_student).exists()
+        check_exist = StudentResult.objects.filter(subject_id=get_subject, student_id=get_student).exists()
         if check_exist:
-            result = Student_Result.objects.get(subject_id=get_subject, student_id=get_student)
-            result.subject_assignment_marks = assignment_mark
-            result.subject_exam_marks = Exam_mark
+            result = StudentResult.objects.get(subject_id=get_subject, student_id=get_student)
+            result.assignment_mark = assignment_mark
+            result.exam_mark = Exam_mark
             result.save()
             messages.success(request, "Successfully Updated Result")
             return redirect('staff_add_result')
         else:
-            result = Student_Result(student_id=get_student, subject_id=get_subject, subject_exam_marks=Exam_mark,
-                                   subject_assignment_marks=assignment_mark)
+            result = StudentResult(student_id=get_student,
+                                   subject_id=get_subject,
+                                   exam_marks=Exam_mark,
+                                   assignment_mark=assignment_mark)
             result.save()
             messages.success(request, "Successfully Added Result")
             return redirect('staff_add_result')
