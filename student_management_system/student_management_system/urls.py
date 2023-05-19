@@ -26,66 +26,66 @@ urlpatterns = [
                   path('Profile/update', views.PROFILE_UPDATE, name='profile_update'),
 
                   # HOD Panel URL
-                  path('Hod/Home', hod_views.HOME, name='hod_home'),
-                  path('Hod/Student/Add', hod_views.ADD_STUDENT, name='add_student'),
-                  path('Hod/Student/View', hod_views.VIEW_STUDENT, name='view_student'),
-                  path('Hod/Student/Edit/<str:id>', hod_views.EDIT_STUDENT, name='edit_student'),
-                  path('Hod/Student/Update', hod_views.UPDATE_STUDENT, name='update_student'),
-                  path('Hod/Student/Delete/<str:admin>', hod_views.DELETE_STUDENT, name='delete_student'),
+                  path('hod/home', hod_views.HOME, name='hod_home'),
+                  path('hod/student/Add', hod_views.ADD_STUDENT, name='add_student'),
+                  path('hod/student/View', hod_views.VIEW_STUDENT, name='view_student'),
+                  path('hod/student/Edit/<str:id>', hod_views.EDIT_STUDENT, name='edit_student'),
+                  path('hod/student/Update', hod_views.UPDATE_STUDENT, name='update_student'),
+                  path('hod/student/Delete/<str:admin>', hod_views.DELETE_STUDENT, name='delete_student'),
 
-                  path('Hod/Course/Add', hod_views.ADD_COURSE, name='add_course'),
-                  path('Hod/Course/View', hod_views.VIEW_COURSE, name='view_course'),
-                  path('Hod/Course/Edit/<str:id>', hod_views.EDIT_COURSE, name='edit_course'),
-                  path('Hod/Course/Update', hod_views.UPDATE_COURSE, name='update_course'),
-                  path('Hod/Course/Delete/<str:id>', hod_views.DELETE_COURSE, name='delete_course'),
+                  path('hod/course/Add', hod_views.ADD_COURSE, name='add_course'),
+                  path('hod/course/View', hod_views.VIEW_COURSE, name='view_course'),
+                  path('hod/course/Edit/<str:id>', hod_views.EDIT_COURSE, name='edit_course'),
+                  path('hod/course/Update', hod_views.UPDATE_COURSE, name='update_course'),
+                  path('hod/course/Delete/<str:id>', hod_views.DELETE_COURSE, name='delete_course'),
 
-                  path("Hod/Staff/Add", hod_views.ADD_STAFF, name="add_staff"),
-                  path("Hod/Staff/View", hod_views.VIEW_STAFF, name="view_staff"),
-                  path("Hod/Staff/Edit/<str:id>", hod_views.EDIT_STAFF, name="edit_staff"),
-                  path("Hod/Staff/Update", hod_views.UPDATE_STAFF, name="update_staff"),
-                  path("Hod/Staff/Delete/<str:admin>", hod_views.DELETE_STAFF, name="delete_staff"),
+                  path("hod/staff/Add", hod_views.ADD_STAFF, name="add_staff"),
+                  path("hod/staff/View", hod_views.VIEW_STAFF, name="view_staff"),
+                  path("hod/staff/Edit/<str:id>", hod_views.EDIT_STAFF, name="edit_staff"),
+                  path("hod/staff/Update", hod_views.UPDATE_STAFF, name="update_staff"),
+                  path("hod/staff/Delete/<str:admin>", hod_views.DELETE_STAFF, name="delete_staff"),
 
-                  path("Hod/Subject/Add", hod_views.ADD_SUBJECT, name="add_subject"),
-                  path("Hod/Subject/View", hod_views.VIEW_SUBJECT, name="view_subject"),
-                  path("Hod/Subject/Edit/<str:id>", hod_views.EDIT_SUBJECT, name="edit_subject"),
-                  path("Hod/Subject/Update", hod_views.UPDATE_SUBJECT, name="update_subject"),
-                  path("Hod/Subject/Delete/<str:id>", hod_views.DELETE_SUBJECT, name="delete_subject"),
+                  path("hod/subject/Add", hod_views.ADD_SUBJECT, name="add_subject"),
+                  path("hod/subject/View", hod_views.VIEW_SUBJECT, name="view_subject"),
+                  path("hod/subject/Edit/<str:id>", hod_views.EDIT_SUBJECT, name="edit_subject"),
+                  path("hod/subject/Update", hod_views.UPDATE_SUBJECT, name="update_subject"),
+                  path("hod/subject/Delete/<str:id>", hod_views.DELETE_SUBJECT, name="delete_subject"),
 
-                  path("Hod/Session/Add", hod_views.ADD_SESSION, name="add_session"),
-                  path("Hod/Session/View", hod_views.VIEW_SESSION, name="view_session"),
-                  path("Hod/Session/Edit/<str:id>", hod_views.EDIT_SESSION, name="edit_session"),
-                  path("Hod/Session/Update", hod_views.UPDATE_SESSION, name="update_session"),
-                  path("Hod/Session/Delete/<str:id>", hod_views.DELETE_SESSION, name="delete_session"),
+                  path("hod/session/Add", hod_views.ADD_SESSION, name="add_session"),
+                  path("hod/session/View", hod_views.VIEW_SESSION, name="view_session"),
+                  path("hod/session/Edit/<str:id>", hod_views.EDIT_SESSION, name="edit_session"),
+                  path("hod/session/Update", hod_views.UPDATE_SESSION, name="update_session"),
+                  path("hod/session/Delete/<str:id>", hod_views.DELETE_SESSION, name="delete_session"),
 
-                  path('Hod/Staff/Send_Notification', hod_views.STAFF_SEND_NOTIFICATION,
+                  path('hod/staff/Send_Notification', hod_views.STAFF_SEND_NOTIFICATION,
                        name='staff_send_notification'),
 
-                  path('Hod/Staff/save_notification', hod_views.SAVE_STAFF_NOTIFICATION,
+                  path('hod/staff/save_notification', hod_views.SAVE_STAFF_NOTIFICATION,
                        name='save_staff_notification'),
 
-                  path('Hod/Student/send_notification', hod_views.STUDENT_SEND_NOTIFICATION,
+                  path('hod/student/send_notification', hod_views.STUDENT_SEND_NOTIFICATION,
                        name='student_send_notification'),
                   path('Hod/Student/save_notification', hod_views.SAVE_STUDENT_NOTIFICATION,
                        name='save_student_notification'),
 
-                  path('Hod/Staff/Leave_view', hod_views.Staff_Leave_view, name='staff_leave_view'),
-                  path('Hod/Staff/approve_leave/<str:id>', hod_views.STAFF_APPROVE_LEAVE, name='staff_approve_leave'),
-                  path('Hod/Staff/disapprove_leave/<str:id>', hod_views.STAFF_DISAPPROVE_LEAVE,
+                  path('hod/Staff/Leave_view', hod_views.Staff_Leave_view, name='staff_leave_view'),
+                  path('hod/Staff/approve_leave/<str:id>', hod_views.STAFF_APPROVE_LEAVE, name='staff_approve_leave'),
+                  path('hod/Staff/disapprove_leave/<str:id>', hod_views.STAFF_DISAPPROVE_LEAVE,
                        name='staff_disapprove_leave'),
 
 
-                  path('Hod/Staff/feedback', hod_views.STAFF_FEEDBACK, name='staff_feedback_reply'),
-                  path('Hod/Staff/feedback/save', hod_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_reply_save'),
+                  path('hod/Staff/feedback', hod_views.STAFF_FEEDBACK, name='staff_feedback_reply'),
+                  path('hod/Staff/feedback/save', hod_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_reply_save'),
 
 
-                  path('Hod/Student/leave_view', hod_views.STUDENT_LEAVE_VIEW, name='student_leave_view'),
-                  path('Hod/Student/approve_leave/<str:id>', hod_views.STUDENT_APPROVE_LEAVE, name='student_approve_leave'),
-                  path('Hod/Student/disapprove_leave/<str:id>', hod_views.STUDENT_DISAPPROVE_LEAVE,
+                  path('hod/Student/leave_view', hod_views.STUDENT_LEAVE_VIEW, name='student_leave_view'),
+                  path('hod/Student/approve_leave/<str:id>', hod_views.STUDENT_APPROVE_LEAVE, name='student_approve_leave'),
+                  path('hod/Student/disapprove_leave/<str:id>', hod_views.STUDENT_DISAPPROVE_LEAVE,
                        name='student_disapprove_leave'),
 
-                  path('Hod/Student/feedback', hod_views.STUDENT_FEEDBACK, name='get_student_feedback'),
-                  path('Hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK, name='reply_student_feedback'),
-                  path('Hod/View/Attendance', hod_views.VIEW_ATTENDANCE, name='view_attendance'),
+                  path('hod/Student/feedback', hod_views.STUDENT_FEEDBACK, name='get_student_feedback'),
+                  path('hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK, name='reply_student_feedback'),
+                  path('hod/View/Attendance', hod_views.VIEW_ATTENDANCE, name='view_attendance'),
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
@@ -106,20 +106,20 @@ urlpatterns = [
 
                   # Student urls
 
-                  path('Student/Home', student_views.Home, name='student_home'),
+                  path('student/Home', student_views.Home, name='student_home'),
 
-                  path('Student/Notifications', student_views.STUDENT_NOTIFICATION, name='student_notification'),
-                  path('Student/mark_as_done/<str:status', student_views.STUDENT_NOTIFICATION_MARK_AS_DONE,
+                  path('student/Notifications', student_views.STUDENT_NOTIFICATION, name='student_notification'),
+                  path('student/mark_as_done/<str:status', student_views.STUDENT_NOTIFICATION_MARK_AS_DONE,
                        name='student_notification_mark_as_done'),
 
-                  path('Student/feedback', student_views.STUDENT_FEEDBACK, name='student_feedback'),
-                  path('Student/feedback/save', student_views.STUDENT_FEEDBACK_SAVE, name='student_feedback_save'),
+                  path('student/feedback', student_views.STUDENT_FEEDBACK, name='student_feedback'),
+                  path('student/feedback/save', student_views.STUDENT_FEEDBACK_SAVE, name='student_feedback_save'),
 
 
-                  path('Student/apply_for_leave', student_views.STUDENT_LEAVE, name='student_leave'),
-                  path('Student/Leave_save', student_views.STUDENT_LEAVE_SAVE, name='student_leave_save'),
+                  path('student/apply_for_leave', student_views.STUDENT_LEAVE, name='student_leave'),
+                  path('student/Leave_save', student_views.STUDENT_LEAVE_SAVE, name='student_leave_save'),
 
-                  path('Student/View_attendance', student_views.VIEW_ATTENDANCE, name='student_view_attendance'),
-                  path('Student/view_result', student_views.VIEW_RESULT, name='view_result'),
+                  path('student/View_attendance', student_views.VIEW_ATTENDANCE, name='student_view_attendance'),
+                  path('student/view_result', student_views.VIEW_RESULT, name='view_result'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
