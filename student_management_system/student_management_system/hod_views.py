@@ -87,7 +87,7 @@ def ADD_STUDENT(request):
         'session_year': session_year,
     }
 
-    return render(request, 'Hod/add_student.html', context)
+    return render(request, 'hod/add_student.html', context)
 
 
 @login_required(login_url='/')
@@ -97,7 +97,7 @@ def VIEW_STUDENT(request):
     context = {
         'student': student,
     }
-    return render(request, 'Hod/view_student.html', context)
+    return render(request, 'hod/view_student.html', context)
 
 
 @login_required(login_url='/')
@@ -111,7 +111,7 @@ def EDIT_STUDENT(request, id):
         'course': course,
         'session_year': session_year,
     }
-    return render(request, 'Hod/edit_student.html', context)
+    return render(request, 'hod/edit_student.html', context)
 
 
 @login_required(login_url='/')
@@ -157,7 +157,7 @@ def UPDATE_STUDENT(request):
         messages.success(request, 'Record Are Successfully Updated !')
         return redirect('view_student')
 
-    return render(request, 'Hod/edit_student.html')
+    return render(request, 'hod/edit_student.html')
 
 
 @login_required(login_url='/')
@@ -179,13 +179,9 @@ def ADD_COURSE(request):
         course.save()
         messages.success(request, 'Course Are Successfully Created ')
 
-        engine.say("course are successfully added")
-
-        engine.runAndWait()
-        engine.endLoop()
         return redirect('view_course')
 
-    return render(request, 'Hod/add_course.html')
+    return render(request, 'hod/add_course.html')
 
 
 @login_required(login_url='/')
@@ -194,7 +190,7 @@ def VIEW_COURSE(request):
     context = {
         'course': course,
     }
-    return render(request, 'Hod/view_course.html', context)
+    return render(request, 'hod/view_course.html', context)
 
 
 @login_required(login_url='/')
@@ -203,7 +199,7 @@ def EDIT_COURSE(request, id):
     context = {
         'course': course,
     }
-    return render(request, 'Hod/edit_course.html', context)
+    return render(request, 'hod/edit_course.html', context)
 
 
 @login_required(login_url='/')
@@ -218,7 +214,7 @@ def UPDATE_COURSE(request):
         messages.success(request, 'Course Are Successfully Updated ')
         return redirect('view_course')
 
-    return render(request, 'Hod/edit_course.html')
+    return render(request, 'hod/edit_course.html')
 
 
 @login_required(login_url='/')
@@ -533,7 +529,7 @@ def Staff_Leave_view(request):
     context = {
         'staff_leave': staff_leave,
     }
-    return render(request, 'Hod/staff_leave.html', context)
+    return render(request, 'hod/staff_leave.html', context)
 
 
 @login_required(login_url='/')
@@ -585,7 +581,7 @@ def STAFF_FEEDBACK(request):
         'feedback': feedback,
         'feedback_history': feedback_history,
     }
-    return render(request, 'Hod/staff_feedback.html', context)
+    return render(request, 'hod/staff_feedback.html', context)
 
 
 @login_required(login_url='/')

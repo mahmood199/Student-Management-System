@@ -196,7 +196,7 @@ def STAFF_VIEW_ATTENDANCE(request):
         'attendance_report': attendance_report,
     }
 
-    return render(request, 'Staff/view_attendance.html', context)
+    return render(request, 'staff/view_attendance.html', context)
 
 
 @login_required(login_url='/')
