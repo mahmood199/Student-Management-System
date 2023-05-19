@@ -7,7 +7,7 @@ from django.contrib import messages
 
 @login_required(login_url='/')
 def Home(request):
-    return render(request, 'Student/home.html')
+    return render(request, 'student/home.html')
 
 
 @login_required(login_url='/')
@@ -20,7 +20,7 @@ def STUDENT_NOTIFICATION(request):
         context = {
             'notification': notification,
         }
-        return render(request, 'Student/notification.html', context)
+        return render(request, 'student/notification.html', context)
 
 
 @login_required(login_url='/')
