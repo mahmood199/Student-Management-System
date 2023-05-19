@@ -8,12 +8,18 @@ from django.shortcuts import render, redirect
 @login_required(login_url='/')
 def HOME(request):
     student_count = Student.objects.all().count()
+    print("student_count = " + str(student_count))
     staff_count = Staff.objects.all().count()
+    print("staff_count = " + str(staff_count))
     course_count = Course.objects.all().count()
+    print("course_count = " + str(course_count))
     subject_count = Subject.objects.all().count()
+    print("subject_count = " + str(subject_count))
 
-    student_gender_male = Student.objects.get(gender='Male').count()
-    student_gender_female = Student.objects.get(gender='Female').count()
+    student_gender_male = Student.objects.filter(gender='Male').count()
+    print("student_gender_male = " + str(student_gender_male))
+    student_gender_female = Student.objects.filter(gender='Female').count()
+    print("student_gender_female = " + str(student_gender_female))
 
     context = {
         'student_count': student_count,
