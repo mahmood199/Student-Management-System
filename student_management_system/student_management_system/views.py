@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from app.models import CustomUser
 
+
 def BASE(request):
     return render(request, 'base.html')
 
@@ -40,16 +41,16 @@ def doLogout(request):
     logout(request)
     return redirect('login')
 
+
 @login_required(login_url='/')
 def PROFILE(request):
-    user = CustomUser.objects.get(id = request.user.id)
-
-
+    user = CustomUser.objects.get(id=request.user.id)
 
     context = {
-        "user":user,
+        "user": user,
     }
-    return render(request,'profile.html',context)
+    return render(request, 'profile.html', context)
+
 
 @login_required(login_url='/')
 def PROFILE_UPDATE(request):
@@ -62,18 +63,18 @@ def PROFILE_UPDATE(request):
         password = request.FILES.get('password')
 
         try:
-            customuser = CustomUser.object.get(id = request.user.id)
+            customuser = CustomUser.object.get(id=request.user.id)
 
             customuser.first_name = first_name
             customuser.last_name = last_name
 
-            if password != None and password !="":
+            if password != None and password != "":
                 customuser.set_password(password)
             if profile_pic != None and profile_pic != "":
                 customuser.profile_pic = profile_pic
             customuser.save()
-            messages.success(request,'Your Profile Updated Successfully !')
-            return  redirect('profile')
+            messages.success(request, 'Your Profile Updated Successfully !')
+            return redirect('profile')
         except:
             messages.error(request, 'Failed To Update Your Profile')
-    return render(request,'profile.html')
+    return render(request, 'profile.html')
