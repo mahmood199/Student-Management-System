@@ -655,6 +655,9 @@ def SAVE_STUDENT_NOTIFICATION(request):
 
 @login_required(login_url='/')
 def VIEW_ATTENDANCE(request):
+    print(request)
+    print(request.user)
+    print(request.user.id)
     staff_id = Staff.objects.get(admin=request.user.id)
 
     subject = Subject.objects.filter(staff_id=staff_id)
@@ -690,3 +693,8 @@ def VIEW_ATTENDANCE(request):
         'attendance_report': attendance_report,
     }
     return render(request, 'hod/view_attendance/html', context)
+
+
+@login_required(login_url='/')
+def PROFILE(request):
+    return render(request, 'hod/profile.html')
