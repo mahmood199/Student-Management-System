@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from app.models import Student_Notification, Student, Student_Feedback, Student_leave, Subject, Attendance, \
-    Attendance_Report
+    Attendance_Report, StudentResult
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -67,7 +67,7 @@ def STUDENT_LEAVE(request):
         'student_leave_history': student_leave_history,
     }
 
-    return render(request, 'student/apply_leave', context)
+    return render(request, 'student/apply_leave.html', context)
 
 
 @login_required(login_url='/')
