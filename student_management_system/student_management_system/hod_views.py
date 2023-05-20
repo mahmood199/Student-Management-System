@@ -320,7 +320,7 @@ def UPDATE_STAFF(request):
 
         staff.save()
 
-        messages.success(request, "Staff us successfully updated")
+        messages.success(request, "Staff is updated successfully")
         return redirect('view_staff')
 
     return render(request, "hod/edit_staff.html")
@@ -697,4 +697,4 @@ def VIEW_ATTENDANCE(request):
 
 @login_required(login_url='/')
 def PROFILE(request):
-    return render(request, 'hod/profile.html')
+    return render(request, 'profile.html')
