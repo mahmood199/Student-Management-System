@@ -166,7 +166,7 @@ def STAFF_VIEW_ATTENDANCE(request):
     subject = Subject.objects.filter(staff_id=staff_id)
     session_year = Session_Year.objects.all()
 
-    action = request.Get.get('action')
+    action = request.POST.get('action')
 
     get_subject = None
     attendance_date = None
