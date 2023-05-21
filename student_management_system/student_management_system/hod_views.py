@@ -1,5 +1,5 @@
 from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notifications, Staff_leave, \
-    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report
+    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report, QuestionPaper
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -692,9 +692,23 @@ def VIEW_ATTENDANCE(request):
         'get_session_year': get_session_year,
         'attendance_report': attendance_report,
     }
-    return render(request, 'hod/view_attendance/html', context)
+    return render(request, 'hod/view_attendance.html', context)
 
 
 @login_required(login_url='/')
 def PROFILE(request):
-    return render(request, 'profile.html')
+    return render(request, 'hod/profile.html')
+
+
+@login_required(login_url='/')
+def VIEW_QUESTION_PAPERS(request):
+    question_papers = QuestionPaper.objects.all()
+    student = Student.objects.all()
+
+    context = {
+        'student': student,
+        'question_papers': question_papers,
+    }
+
+    return render(request, 'hod/view_question_papers.html', context)
+
