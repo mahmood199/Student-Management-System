@@ -263,3 +263,18 @@ def STAFF_SAVE_RESULT(request):
             messages.success(request, "Successfully Added Result")
             return redirect('staff_add_result')
     return render(request, 'staff/add_result.html')
+
+
+@login_required(login_url='/')
+def STAFF_UPLOAD_QUESTION_PAPER(request):
+    subject = Subject.objects.all()
+    staff = Staff.objects.all()
+    session_year = Session_Year.objects.all()
+
+    context = {
+        'subject': subject,
+        'staff': staff,
+        'session_year': session_year,
+    }
+
+    return render(request, 'staff/upload_question_paper.html', context)

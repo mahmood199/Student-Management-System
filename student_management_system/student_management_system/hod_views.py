@@ -704,9 +704,15 @@ def PROFILE(request):
 def VIEW_QUESTION_PAPERS(request):
     question_papers = QuestionPaper.objects.all()
     student = Student.objects.all()
+    subject = Subject.objects.all()
+    staff = Staff.objects.all()
+    session_year = Session_Year.objects.all()
 
     context = {
         'student': student,
+        'subject': subject,
+        'staff': staff,
+        'session_year': session_year,
         'question_papers': question_papers,
     }
 
