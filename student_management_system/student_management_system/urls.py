@@ -29,7 +29,6 @@ urlpatterns = [
                   path('hod/home', hod_views.HOME, name='hod_home'),
                   path('hod/profile', hod_views.PROFILE, name='hod_profile'),
 
-
                   path('hod/student/Add', hod_views.ADD_STUDENT, name='add_student'),
                   path('hod/student/View', hod_views.VIEW_STUDENT, name='view_student'),
                   path('hod/student/Edit/<str:id>', hod_views.EDIT_STUDENT, name='edit_student'),
@@ -76,19 +75,20 @@ urlpatterns = [
                   path('hod/Staff/disapprove_leave/<str:id>', hod_views.STAFF_DISAPPROVE_LEAVE,
                        name='staff_disapprove_leave'),
 
-
                   path('hod/Staff/feedback', hod_views.STAFF_FEEDBACK, name='staff_feedback_reply'),
                   path('hod/Staff/feedback/save', hod_views.STAFF_FEEDBACK_SAVE, name='staff_feedback_reply_save'),
 
-
                   path('hod/Student/leave_view', hod_views.STUDENT_LEAVE_VIEW, name='student_leave_view'),
-                  path('hod/Student/approve_leave/<str:id>', hod_views.STUDENT_APPROVE_LEAVE, name='student_approve_leave'),
+                  path('hod/Student/approve_leave/<str:id>', hod_views.STUDENT_APPROVE_LEAVE,
+                       name='student_approve_leave'),
                   path('hod/Student/disapprove_leave/<str:id>', hod_views.STUDENT_DISAPPROVE_LEAVE,
                        name='student_disapprove_leave'),
 
+                  path('hod/view_question_papers', hod_views.VIEW_QUESTION_PAPERS, name='view_question_papers'),
+
                   path('hod/Student/feedback', hod_views.STUDENT_FEEDBACK, name='get_student_feedback'),
-                  path('hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK, name='reply_student_feedback'),
-                  path('hod/View/Attendance', hod_views.VIEW_ATTENDANCE, name='view_attendance'),
+                  path('hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK,
+                       name='reply_student_feedback'),
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
@@ -117,7 +117,6 @@ urlpatterns = [
 
                   path('student/feedback', student_views.STUDENT_FEEDBACK, name='student_feedback'),
                   path('student/feedback/save', student_views.STUDENT_FEEDBACK_SAVE, name='student_feedback_save'),
-
 
                   path('student/apply_for_leave', student_views.STUDENT_LEAVE, name='student_leave'),
                   path('student/Leave_save', student_views.STUDENT_LEAVE_SAVE, name='student_leave_save'),
