@@ -1,8 +1,9 @@
-from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject
+from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, QuestionPaper
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report, StudentResult
+from django.db.models import Q
 
 
 @login_required(login_url='/')
@@ -150,7 +151,7 @@ def STAFF_SAVE_ATTENDANCE(request):
             int_stud = int(stud_id)
 
             p_students = Student.objects.get(id=int_stud)
-            attendance_report = Attendace_Report(
+            attendance_report = Attendance_Report(
                 student_id=p_students,
                 attendance_id=attendance,
             )
@@ -267,14 +268,53 @@ def STAFF_SAVE_RESULT(request):
 
 @login_required(login_url='/')
 def STAFF_UPLOAD_QUESTION_PAPER(request):
-    subject = Subject.objects.all()
+    subjects = Subject.objects.all()
     staff = Staff.objects.all()
-    session_year = Session_Year.objects.all()
+    session_years = Session_Year.objects.all()
+
+    if request.method == "POST":
+        subject_id = request.POST.get('subject_id')
+        subject = Subject.objects.get(id=subject_id)
+
+        session_year_id = request.POST.get('session_year_id')
+        session_year = Session_Year.objects.get(id=session_year_id)
+
+        question_setter_staff = Staff.objects.get(id=request.user.id)
+        print("Question Paper Setter id --> " + str(request.user.id))
+        print("Question Paper Setter --> " + str(question_setter_staff))
+
+        reviewer_staff_id = request.POST.get('reviewer_staff_id')
+        print("Reviewer id -> " + str(reviewer_staff_id))
+
+        reviewer_staff = Staff.objects.get(id=reviewer_staff_id)
+        print("Reviewer -> " + str(reviewer_staff))
+
+        question_paper_pdf = request.POST.get('question_paper')
+
+        filtered_papers = QuestionPaper.objects.filter(Q(question_setter_staff_id=reviewer_staff_id) | Q(reviewer_staff_id=request.user.id))
+
+        question_paper = QuestionPaper(
+            subject_id=subject,
+            session_year_id=session_year,
+            question_setter_staff_id=question_setter_staff,
+            reviewer_staff_id=reviewer_staff,
+            status=0,
+            pdf=question_paper_pdf,
+            review_comments=""
+        )
+        question_paper.save()
+        messages.success(request, "Question Paper added successfully")
+        return redirect('upload_question_paper')
 
     context = {
-        'subject': subject,
+        'subject': subjects,
         'staff': staff,
-        'session_year': session_year,
+        'session_year': session_years,
     }
 
     return render(request, 'staff/upload_question_paper.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_QUESTION_PAPER(request,id):
+    return None

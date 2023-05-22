@@ -84,7 +84,7 @@ urlpatterns = [
                   path('hod/Student/disapprove_leave/<str:id>', hod_views.STUDENT_DISAPPROVE_LEAVE,
                        name='student_disapprove_leave'),
 
-                  path('hod/view_question_papers', hod_views.VIEW_QUESTION_PAPERS, name='view_question_papers'),
+                  path('hod/view_all_question_papers', hod_views.VIEW_QUESTION_PAPERS, name='view_all_question_papers'),
 
                   path('hod/Student/feedback', hod_views.STUDENT_FEEDBACK, name='get_student_feedback'),
                   path('hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK,
@@ -106,7 +106,12 @@ urlpatterns = [
                   path('staff/View_Attendance', staff_views.STAFF_VIEW_ATTENDANCE, name='staff_view_attendance'),
                   path('staff/Add/Result', staff_views.STAFF_ADD_RESULT, name='staff_add_result'),
                   path('staff/Save/Result', staff_views.STAFF_SAVE_RESULT, name='staff_save_result'),
-                  path('staff/upload_question_paper',staff_views.STAFF_UPLOAD_QUESTION_PAPER, name='upload_question_paper'),
+
+                  # Question Papers
+                  path('staff/upload_question_paper', staff_views.STAFF_UPLOAD_QUESTION_PAPER,
+                       name='upload_question_paper'),
+                  path('staff/view_question_paper/<str:id>', staff_views.VIEW_QUESTION_PAPER,
+                       name='view_question_paper'),
 
                   # Student urls
 

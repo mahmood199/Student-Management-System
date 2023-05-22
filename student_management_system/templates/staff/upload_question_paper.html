@@ -20,8 +20,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-
-                    <form action="upload_question_paper" method="post">
+                    <form action="upload_question_paper" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
@@ -30,7 +29,6 @@
                             <div class="col-12 col-sm-6">
                                 <label>Subject</label>
                                 <select class="form-control" name="subject_id" required>
-                                    <option>Select Subject</option>
                                     {% for i in subject %}
                                     <option value="{{i.id}}">{{i.name}}</option>
                                     {% endfor %}
@@ -39,9 +37,8 @@
                             <div class="col-12 col-sm-6">
                                 <label>Session Year</label>
                                 <select class="form-control" name="session_year_id" required>
-                                    <option>Select Session</option>
                                     {% for i in session_year %}
-                                    <option value="{{i.id}}">{{i.session_start}} to&nbsp;{{i.session_end}}</option>
+                                    <option value="{{i.id}}">{{i.session_start}}to&nbsp;{{i.session_end}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -49,8 +46,7 @@
 
                             <div class="col-12 col-sm-6 mt-4">
                                 <label>Reviewer</label>
-                                <select class="form-control" name="subject_id" required>
-                                    <option>Select Reviewer</option>
+                                <select class="form-control" name="reviewer_staff_id" required>
                                     {% for i in staff %}
                                     <option value="{{i.id}}">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</option>
                                     {% endfor %}
