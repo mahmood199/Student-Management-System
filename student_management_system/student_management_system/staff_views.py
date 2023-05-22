@@ -303,7 +303,7 @@ def STAFF_UPLOAD_QUESTION_PAPER(request):
             review_comments=""
         )
         question_paper.save()
-        messages.success("Question Paper added successfully")
+        messages.success(request, "Question Paper added successfully")
         return redirect('upload_question_paper')
 
     context = {

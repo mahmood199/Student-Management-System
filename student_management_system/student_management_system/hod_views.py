@@ -3,6 +3,7 @@ from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.db.models import Q
 
 
 @login_required(login_url='/')
@@ -708,6 +709,10 @@ def VIEW_QUESTION_PAPERS(request):
     staff = Staff.objects.all()
     session_year = Session_Year.objects.all()
 
+    logged_in_user = Staff.objects.get(id=request.user.id)
+    filtered_papers = QuestionPaper.objects.filter(
+        Q(question_setter_staff_id=logged_in_user) | Q(reviewer_staff_id=logged_in_user))
+
     context = {
         'student': student,
         'subject': subject,
@@ -717,4 +722,3 @@ def VIEW_QUESTION_PAPERS(request):
     }
 
     return render(request, 'hod/view_all_question_papers.html', context)
-
