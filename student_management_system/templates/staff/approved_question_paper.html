@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Approved Question Paper</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="subjects.html">Question Paper</a></li>
+                    <li class="breadcrumb-item active">Approved Question Paper</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% include 'includes/messages.html' %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form action="approved_question_paper" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="form-title"><span>Question Paper Details</span></h5>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label>Subject</label>
+                                <select class="form-control" name="subject_id" required readonly>
+                                    <!--        <option value="{{ subject_id }}">{{ subject_name }}</option>-->
+                                    <option value="" disabled selected>NO SUBJECT</option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-12 col-sm-6">
+                                <label>Session Year</label>
+                                <select class="form-control" name="session_year_id" required readonly>
+                                    <!--                                    <option>Select Session</option>-->
+                                    <!--                                    {% for i in session_year %}-->
+                                    <!--                                    <option value="{{i.id}}">{{i.session_start}} to&nbsp;{{i.session_end}}</option>-->
+                                    <!--                                    {% endfor %}-->
+                                    <option value="" disabled selected>NO SESSION</option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-12 col-sm-6 mt-4">
+                                <label>Setter</label>
+                                <select class="form-control" name="subject_id" required readonly>
+                                    <!--                                    <option>Select Reviewer</option>-->
+                                    <!--                                    {% for i in staff %}-->
+                                    <!--                                    <option value="{{i.id}}">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</option>-->
+                                    <!--                                    {% endfor %}-->
+                                    <option value="" disabled selected>NO SETTER</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-6 mt-4">
+                                <label>Reviewer</label>
+                                <select class="form-control" name="subject_id" required readonly>
+                                    <!--                                    <option>Select Reviewer</option>-->
+                                    <!--                                    {% for i in staff %}-->
+                                    <!--                                    <option value="{{i.id}}">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</option>-->
+                                    <!--                                    {% endfor %}-->
+                                    <option value="" disabled selected>NO REVIEWER</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-6 mt-5">
+                                <div class="form-group">
+                                    <label>Question Paper</label> <br>
+                                    <a href="{{ pdf_file_url }}" target="_blank">Download PDF file</a>
+                                    <small class="form-text text-muted">Approved Question Paper.</small>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
