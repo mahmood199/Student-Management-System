@@ -716,5 +716,5 @@ def VIEW_QUESTION_PAPERS(request):
         'question_papers': question_papers,
     }
 
-    return render(request, 'hod/view_question_papers.html', context)
+    return render(request, 'hod/view_all_question_papers.html', context)
 

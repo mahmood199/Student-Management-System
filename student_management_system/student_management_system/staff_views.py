@@ -313,3 +313,8 @@ def STAFF_UPLOAD_QUESTION_PAPER(request):
     }
 
     return render(request, 'staff/upload_question_paper.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_QUESTION_PAPER(request,id):
+    return None
