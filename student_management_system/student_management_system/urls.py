@@ -112,6 +112,8 @@ urlpatterns = [
                        name='upload_question_paper'),
                   path('staff/view_question_paper/<str:id>', staff_views.VIEW_QUESTION_PAPER,
                        name='view_question_paper'),
+                  path('staff/view_all_question_papers', staff_views.VIEW_ALL_QUESTION_PAPERS,
+                       name='staff_view_all_question_papers'),
 
                   # Student urls
 

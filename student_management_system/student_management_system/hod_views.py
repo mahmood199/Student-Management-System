@@ -703,22 +703,12 @@ def PROFILE(request):
 
 @login_required(login_url='/')
 def VIEW_QUESTION_PAPERS(request):
-    question_papers = QuestionPaper.objects.all()
-    student = Student.objects.all()
-    subject = Subject.objects.all()
-    staff = Staff.objects.all()
-    session_year = Session_Year.objects.all()
-
-    logged_in_user = Staff.objects.get(id=request.user.id)
+    logged_in_user = Staff.objects.get(admin=request.user.id)
     filtered_papers = QuestionPaper.objects.filter(
         Q(question_setter_staff_id=logged_in_user) | Q(reviewer_staff_id=logged_in_user))
 
     context = {
-        'student': student,
-        'subject': subject,
-        'staff': staff,
-        'session_year': session_year,
-        'question_papers': question_papers,
+        'question_papers': filtered_papers,
     }
 
     return render(request, 'hod/view_all_question_papers.html', context)

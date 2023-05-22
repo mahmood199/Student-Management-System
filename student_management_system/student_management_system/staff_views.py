@@ -2,7 +2,8 @@ from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report, StudentResult
+from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report, \
+    StudentResult
 from django.db.models import Q
 
 
@@ -269,7 +270,7 @@ def STAFF_SAVE_RESULT(request):
 @login_required(login_url='/')
 def STAFF_UPLOAD_QUESTION_PAPER(request):
     subjects = Subject.objects.all()
-    staff = Staff.objects.all()
+    staff = Staff.objects.exclude(id=request.user.id)
     session_years = Session_Year.objects.all()
 
     if request.method == "POST":
@@ -279,19 +280,13 @@ def STAFF_UPLOAD_QUESTION_PAPER(request):
         session_year_id = request.POST.get('session_year_id')
         session_year = Session_Year.objects.get(id=session_year_id)
 
-        question_setter_staff = Staff.objects.get(id=request.user.id)
-        print("Question Paper Setter id --> " + str(request.user.id))
-        print("Question Paper Setter --> " + str(question_setter_staff))
+        question_setter_staff = Staff.objects.get(admin=request.user.id)
 
         reviewer_staff_id = request.POST.get('reviewer_staff_id')
-        print("Reviewer id -> " + str(reviewer_staff_id))
 
         reviewer_staff = Staff.objects.get(id=reviewer_staff_id)
-        print("Reviewer -> " + str(reviewer_staff))
 
         question_paper_pdf = request.POST.get('question_paper')
-
-        filtered_papers = QuestionPaper.objects.filter(Q(question_setter_staff_id=reviewer_staff_id) | Q(reviewer_staff_id=request.user.id))
 
         question_paper = QuestionPaper(
             subject_id=subject,
@@ -316,5 +311,18 @@ def STAFF_UPLOAD_QUESTION_PAPER(request):
 
 
 @login_required(login_url='/')
-def VIEW_QUESTION_PAPER(request,id):
+def VIEW_ALL_QUESTION_PAPERS(request):
+    logged_in_user = Staff.objects.get(admin=request.user.id)
+    filtered_papers = QuestionPaper.objects.filter(
+        Q(question_setter_staff_id=logged_in_user) | Q(reviewer_staff_id=logged_in_user))
+
+    context = {
+        'question_papers': filtered_papers,
+    }
+
+    return render(request, 'staff/view_all_question_papers.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_QUESTION_PAPER(request, id):
     return None

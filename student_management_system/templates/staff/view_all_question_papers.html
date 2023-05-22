@@ -41,7 +41,7 @@
                             <tbody>
                             {% for i in question_papers %}
                             <tr>
-                                <td>{{i.subject_id.id}}</td>
+                                <td>{{i.id}}</td>
                                 <td>{{i.subject_id.name}}</td>
                                 <td>{{i.session_year_id.session_start}} To {{i.session_year_id.session_end}}</td>
                                 <td>{{i.question_setter_staff_id.admin.first_name}}&nbsp;{{i.question_setter_staff_id.admin.last_name}}</td>

@@ -38,12 +38,10 @@
                                 <label>Session Year</label>
                                 <select class="form-control" name="session_year_id" required>
                                     {% for i in session_year %}
-                                    <option value="{{i.id}}">{{i.session_start}}to&nbsp;{{i.session_end}}</option>
+                                    <option value="{{i.id}}">{{i.session_start}} to&nbsp;{{i.session_end}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-
-
                             <div class="col-12 col-sm-6 mt-4">
                                 <label>Reviewer</label>
                                 <select class="form-control" name="reviewer_staff_id" required>
