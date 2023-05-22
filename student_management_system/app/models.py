@@ -169,7 +169,7 @@ class StudentResult(models.Model):
 class QuestionPaper(models.Model):
     subject_id = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
     session_year_id = models.ForeignKey(Session_Year, on_delete=models.DO_NOTHING)
-    question_setter_by_staff_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, related_name="question_setter_by_staff_id")
+    question_setter_staff_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, related_name="question_setter_staff_id")
     reviewer_staff_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, related_name="reviewer_staff_id")
     status = models.IntegerField()
     pdf = models.FileField(upload_to='pdf.files/')

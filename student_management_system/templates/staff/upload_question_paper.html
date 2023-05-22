@@ -20,8 +20,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-
-                    <form action="upload_question_paper" method="post">
+                    <form action="upload_question_paper" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
@@ -49,7 +48,7 @@
 
                             <div class="col-12 col-sm-6 mt-4">
                                 <label>Reviewer</label>
-                                <select class="form-control" name="subject_id" required>
+                                <select class="form-control" name="reviewer_staff_id" required>
                                     <option>Select Reviewer</option>
                                     {% for i in staff %}
                                     <option value="{{i.id}}">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</option>

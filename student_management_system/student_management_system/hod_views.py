@@ -355,7 +355,7 @@ def ADD_SUBJECT(request):
             staff=staff,
         )
         subject.save()
-        messages.success("Subject added successfully")
+        messages.success(request, "Subject added successfully")
         return redirect('add_subject')
 
     context = {
