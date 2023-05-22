@@ -30,6 +30,7 @@
                                 <th class="text-center">ID</th>
                                 <th class="text-center">Subject Name</th>
                                 <th class="text-center">Session Year</th>
+                                <th class="text-center">Course</th>
                                 <th class="text-center">Setter</th>
                                 <th class="text-center">Reviewer</th>
                                 <th class="text-center">Status</th>
@@ -44,6 +45,7 @@
                                 <td>{{i.id}}</td>
                                 <td>{{i.subject_id.name}}</td>
                                 <td>{{i.session_year_id.session_start}} To {{i.session_year_id.session_end}}</td>
+                                <td>{{i.subject_id.course.name}}</td>
                                 <td>{{i.question_setter_staff_id.admin.first_name}}&nbsp;{{i.question_setter_staff_id.admin.last_name}}</td>
                                 <td>{{i.reviewer_staff_id.admin.first_name}}&nbsp;{{i.reviewer_staff_id.admin.last_name}}</td>
                                 <td>{{i.status}}</td>
@@ -51,13 +53,17 @@
                                 <td>{{i.updated_at}}</td>
                                 <td class="text-right">
                                     <div class="actions">
-                                        <a href="{% url 'edit_student' i.id %}"
+                                        <a href="{% url 'staff_edit_question_paper' i.id %}"
                                            class="btn btn-sm bg-success-light mr-2">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a href="{% url 'delete_student' i.id %}"
-                                           class="btn btn-sm bg-danger-light">
-                                            <i class="fas fa-trash"></i>
+                                        <a href="{% url 'staff_review_question_paper' i.id %}"
+                                           class="btn btn-sm bg-success-light mr-2">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a href="{% url 'staff_view_question_paper' i.id %}"
+                                           class="btn btn-sm bg-success-light mr-2">
+                                            <i class="fas fa-pen"></i>
                                         </a>
                                     </div>
                                 </td>
