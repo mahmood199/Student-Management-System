@@ -5,10 +5,10 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Edit Question Paper</h3>
+                <h3 class="page-title">Approved Question Paper</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="subjects.html">Question Paper</a></li>
-                    <li class="breadcrumb-item active">Edit Question Paper</li>
+                    <li class="breadcrumb-item active">Approved Question Paper</li>
                 </ul>
             </div>
         </div>
@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="edit_question_paper" method="post">
+                    <form action="approved_question_paper" method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
@@ -49,6 +49,17 @@
 
 
                             <div class="col-12 col-sm-6 mt-4">
+                                <label>Setter</label>
+                                <select class="form-control" name="subject_id" required readonly>
+                                    <!--                                    <option>Select Reviewer</option>-->
+                                    <!--                                    {% for i in staff %}-->
+                                    <!--                                    <option value="{{i.id}}">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</option>-->
+                                    <!--                                    {% endfor %}-->
+                                    <option value="" disabled selected>NO SETTER</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-6 mt-4">
                                 <label>Reviewer</label>
                                 <select class="form-control" name="subject_id" required readonly>
                                     <!--                                    <option>Select Reviewer</option>-->
@@ -59,26 +70,14 @@
                                 </select>
                             </div>
 
-                            <div class="col-12 col-sm-6 mt-4">
+                            <div class="col-12 col-sm-6 mt-5">
                                 <div class="form-group">
-                                    <label>Question Paper</label>
-                                    <input type="file" class="form-control" name="question_paper" accept=".pdf"
-                                           required>
-                                    <small class="form-text text-muted">Please upload the new Question Paper PDF file.</small>
+                                    <label>Question Paper</label> <br>
+                                    <a href="{{ pdf_file_url }}" target="_blank">Download PDF file</a>
+                                    <small class="form-text text-muted">Approved Question Paper.</small>
                                 </div>
                             </div>
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label>Comment</label>
-                                    <textarea class="form-control" name="leave_message" style="height:250px;"
-                                              required readonly></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                            
                         </div>
                     </form>
                 </div>
