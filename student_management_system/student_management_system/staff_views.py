@@ -372,7 +372,7 @@ def REVIEW_QUESTION_PAPER(request, id):
 
 
 @login_required(login_url='/')
-def APPROVE_QUESTION_PAPER(request):
+def APPROVE_QUESTION_PAPER(request,id):
     if request.method == "POST":
         id = request.POST.get('id')
         question_paper = QuestionPaper.objects.get(id=id)
@@ -380,7 +380,7 @@ def APPROVE_QUESTION_PAPER(request):
         question_paper.status = 2
         question_paper.save()
 
-        messages.success(request, 'Review added for question paper')
+        messages.success(request, 'Question Paper approved!')
         return redirect('staff_view_all_question_papers')
 
     return render(request, 'staff/review_question_paper.html')

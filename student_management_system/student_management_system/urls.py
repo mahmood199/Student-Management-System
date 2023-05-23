@@ -124,7 +124,7 @@ urlpatterns = [
                   path('staff/add_comments_on_question_paper', staff_views.ADD_COMMENTS_ON_QUESTION_PAPER,
                        name='staff_add_comments_on_question_paper'),
 
-                  path('staff/approve_question_paper', staff_views.APPROVE_QUESTION_PAPER,
+                  path('staff/approve_question_paper/<str:id>', staff_views.APPROVE_QUESTION_PAPER,
                        name='staff_approve_question_paper'),
 
                   path('staff/view_question_paper/<str:id>', staff_views.VIEW_QUESTION_PAPER,
