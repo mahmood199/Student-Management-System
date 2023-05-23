@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report, \
     StudentResult
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 
 
 @login_required(login_url='/')
@@ -268,7 +269,7 @@ def STAFF_SAVE_RESULT(request):
 
 
 @login_required(login_url='/')
-def STAFF_UPLOAD_QUESTION_PAPER(request):
+def STAFF_ADD_QUESTION_PAPER(request):
     subjects = Subject.objects.all()
     staff = Staff.objects.exclude(id=request.user.id)
     session_years = Session_Year.objects.all()
@@ -307,16 +308,21 @@ def STAFF_UPLOAD_QUESTION_PAPER(request):
         'session_year': session_years,
     }
 
-    return render(request, 'staff/upload_question_paper.html', context)
+    return render(request, 'staff/add_question_paper.html', context)
 
 
 @login_required(login_url='/')
 def VIEW_ALL_QUESTION_PAPERS(request):
-    logged_in_user = Staff.objects.get(admin=request.user.id)
-    filtered_papers = QuestionPaper.objects.filter(
-        Q(question_setter_staff_id=logged_in_user) | Q(reviewer_staff_id=logged_in_user))
+    logged_in_user = Staff.objects.filter(id=request.user.id).first()
+
+    if logged_in_user is not None:
+        filtered_papers = QuestionPaper.objects.filter(
+            Q(question_setter_staff_id=logged_in_user) | Q(reviewer_staff_id=logged_in_user))
+    else:
+        filtered_papers = QuestionPaper.objects.all()
 
     context = {
+        'logged_in_user': logged_in_user,
         'question_papers': filtered_papers,
     }
 
@@ -324,5 +330,83 @@ def VIEW_ALL_QUESTION_PAPERS(request):
 
 
 @login_required(login_url='/')
+def EDIT_QUESTION_PAPER(request, id):
+    question_paper = QuestionPaper.objects.get(id=id)
+    context = {
+        'question_paper': question_paper,
+    }
+    return render(request, 'staff/edit_question_paper.html', context)
+
+
+@login_required(login_url='/')
+def UPDATE_QUESTION_PAPER(request):
+    if request.method == "POST":
+        id = request.POST.get('id')
+        question_paper_pdf_file = request.POST.get('question_paper')
+
+        question_paper = QuestionPaper.objects.get(id=id)
+        question_paper.pdf = question_paper_pdf_file
+
+        question_paper.save()
+        messages.success(request, 'Question paper updated successfully')
+        return redirect('view_all_question_papers')
+
+    return render(request, 'staff/edit_question_paper.html')
+
+
+@login_required(login_url='/')
+def REVIEW_QUESTION_PAPER(request, id):
+    question_paper = QuestionPaper.objects.get(id=id)
+    context = {
+        'question_paper': question_paper,
+    }
+    return render(request, 'staff/review_question_paper.html', context)
+
+@login_required(login_url='/')
+def REVIEW_QUESTION_PAPER(request, id):
+    question_paper = QuestionPaper.objects.get(id=id)
+    context = {
+        'question_paper': question_paper,
+    }
+    return render(request, 'staff/review_question_paper.html', context)
+
+
+@login_required(login_url='/')
+def APPROVE_QUESTION_PAPER(request):
+    if request.method == "POST":
+        id = request.POST.get('id')
+        question_paper = QuestionPaper.objects.get(id=id)
+
+        question_paper.status = 1
+        question_paper.save()
+
+        messages.success(request, 'Review added for question paper')
+        return redirect('view_all_question_papers')
+
+    return render(request, 'staff/review_question_paper.html')
+
+
+@login_required(login_url='/')
+def ADD_COMMENTS_ON_QUESTION_PAPER(request):
+    if request.method == "POST":
+        review_comments = request.POST.get('review_comments')
+        question_paper = QuestionPaper.objects.get(id=id)
+
+        question_paper.review_comments = review_comments
+        question_paper.save()
+
+        messages.success(request, 'Review added for question paper')
+        return redirect('view_all_question_papers')
+
+    return render(request, 'staff/review_question_paper.html')
+
+
+@login_required(login_url='/')
 def VIEW_QUESTION_PAPER(request, id):
-    return None
+    question_paper = QuestionPaper.objects.get(id=id)
+    context = {
+        'question_paper': question_paper,
+    }
+    return render(request, 'staff/view_question_paper.html', context)
+
+
