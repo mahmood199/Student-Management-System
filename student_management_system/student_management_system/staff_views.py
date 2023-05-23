@@ -1,4 +1,4 @@
-from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, QuestionPaper
+from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, QuestionPaper, QuestionPaperForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -6,6 +6,9 @@ from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, 
     StudentResult
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
+from django.http import HttpResponseNotFound
+from django.http import FileResponse
 
 
 @login_required(login_url='/')
@@ -290,7 +293,7 @@ def STAFF_ADD_QUESTION_PAPER(request):
         print(reviewer_staff.admin.first_name)
         print(reviewer_staff.admin.last_name)
 
-        question_paper_pdf = request.POST.get('question_paper')
+        question_paper_pdf = request.FILES.get('question_paper')
 
         question_paper = QuestionPaper(
             subject_id=subject,
@@ -372,7 +375,7 @@ def REVIEW_QUESTION_PAPER(request, id):
 
 
 @login_required(login_url='/')
-def APPROVE_QUESTION_PAPER(request,id):
+def APPROVE_QUESTION_PAPER(request, id):
     if request.method == "POST":
         id = request.POST.get('id')
         question_paper = QuestionPaper.objects.get(id=id)
@@ -401,7 +404,7 @@ def ADD_COMMENTS_ON_QUESTION_PAPER(request):
         question_paper.status = 1
         question_paper.save()
 
-        messages.success(request, 'Review added for question paper')
+        messages.success(request, 'Review added for question paper!')
         return redirect('staff_view_all_question_papers')
 
     return render(request, 'staff/review_question_paper.html')
@@ -416,3 +419,18 @@ def VIEW_QUESTION_PAPER(request, id):
     return render(request, 'staff/view_question_paper.html', context)
 
 
+@login_required(login_url='/')
+def DOWNLOAD_QUESTION_PAPER_PDF(request, id):
+    try:
+        question_paper = QuestionPaper.objects.get(id=id)
+        file_path = question_paper.pdf.path
+        subject_name = question_paper.subject_id.name
+        session_year_name = question_paper.session_year_id.session_start + "_to_" + question_paper.session_year_id.session_end
+        file_name = subject_name + "_" + session_year_name + "_" + str(id) + ".pdf"
+
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'inline; filename="{file_name}"'
+            return response
+    except QuestionPaper.DoesNotExist:
+        return HttpResponseNotFound("Question paper not found")

@@ -130,6 +130,9 @@ urlpatterns = [
                   path('staff/view_question_paper/<str:id>', staff_views.VIEW_QUESTION_PAPER,
                        name='staff_view_question_paper'),
 
+                  path('staff/view_question_paper_pdf/<str:id>', staff_views.DOWNLOAD_QUESTION_PAPER_PDF,
+                       name='staff_view_question_paper_pdf'),
+
                   # Student urls
 
                   path('student/Home', student_views.Home, name='student_home'),
