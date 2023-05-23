@@ -322,6 +322,7 @@ def VIEW_ALL_QUESTION_PAPERS(request):
         filtered_papers = QuestionPaper.objects.all()
 
     context = {
+        'logged_in_user': logged_in_user,
         'question_papers': filtered_papers,
     }
 
