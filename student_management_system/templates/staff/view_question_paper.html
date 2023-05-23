@@ -5,10 +5,10 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Review Question Paper</h3>
+                <h3 class="page-title">View Question Paper</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="subjects.html">Question Paper</a></li>
-                    <li class="breadcrumb-item active">Review Question Paper</li>
+                    <li class="breadcrumb-item active">View Question Paper</li>
                 </ul>
             </div>
         </div>
@@ -29,41 +29,31 @@
 
                             <div class="col-12 col-sm-6">
                                 <label>Subject</label>
-                                <select class="form-control" name="subject_id" required readonly>
-                                    <!--        <option value="{{ subject_id }}">{{ subject_name }}</option>-->
-                                    <option value="" disabled selected>NO SUBJECT</option>
-                                </select>
+                                <input type="text" class="form-control" name="subject_name"
+                                       value="{{ question_paper.subject_id.name }}" disabled readonly>
                             </div>
-
 
                             <div class="col-12 col-sm-6">
                                 <label>Session Year</label>
-                                <select class="form-control" name="session_year_id" required readonly>
-                                    <!--                                    <option>Select Session</option>-->
-                                    <!--                                    {% for i in session_year %}-->
-                                    <!--                                    <option value="{{i.id}}">{{i.session_start}} to&nbsp;{{i.session_end}}</option>-->
-                                    <!--                                    {% endfor %}-->
-                                    <option value="" disabled selected>NO SESSION</option>
-                                </select>
+                                <input type="text" class="form-control" name="session_year"
+                                       value="{{question_paper.session_year_id.session_start}}&nbsp;{{question_paper.session_year_id.session_end}}"
+                                       disabled readonly>
                             </div>
-
 
                             <div class="col-12 col-sm-6 mt-4">
                                 <label>Reviewer</label>
-                                <select class="form-control" name="subject_id" required readonly>
-                                    <!--                                    <option>Select Reviewer</option>-->
-                                    <!--                                    {% for i in staff %}-->
-                                    <!--                                    <option value="{{i.id}}">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</option>-->
-                                    <!--                                    {% endfor %}-->
-                                    <option value="" disabled selected>NO REVIEWER</option>
-                                </select>
+                                <input type="text" class="form-control" name="question_paper_reviewer"
+                                       value="{{question_paper.reviewer_staff_id.admin.first_name}}&nbsp;{{question_paper.reviewer_staff_id.admin.last_name}}"
+                                       disabled readonly>
                             </div>
 
                             <div class="col-12 col-sm-6 mt-5">
                                 <div class="form-group">
                                     <label>Question Paper</label> <br>
-                                    <a href="{{ pdf_file_url }}" target="_blank">Download PDF file</a>
-                                    <small class="form-text text-muted">Please download the Question Paper to be reviewed.</small>
+                                    <a href="{% url 'staff_view_question_paper_pdf' id=question_paper.id %}"
+                                       target="_blank">Open PDF file in a new tab</a>
+                                    <small class="form-text text-muted">Please download the Question Paper to be
+                                        reviewed.</small>
                                 </div>
                             </div>
                         </div>

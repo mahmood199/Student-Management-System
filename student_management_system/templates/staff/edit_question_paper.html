@@ -20,39 +20,34 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="update_question_paper" method="post">
+                    <form method="post" action="{% url 'staff_edit_question_paper' question_paper.id %}">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
                                 <h5 class="form-title"><span>Question Paper Details</span></h5>
                             </div>
 
+                            <input type="hidden" name="id" value="{{ question_paper.id }}">
                             <div class="col-12 col-sm-6">
                                 <label>Subject</label>
-                                <select class="form-control" name="subject_id" required readonly>
-                                    <option value="{{ subject_id }}" disabled selected readonly>
-                                        {{question_paper.subject_id.name}}
-                                    </option>
-                                </select>
+                                <input type="text" class="form-control" name="subject_name"
+                                       value="{{ question_paper.subject_id.name }}" disabled readonly>
+
                             </div>
 
                             <div class="col-12 col-sm-6">
                                 <label>Session Year</label>
-                                <select class="form-control" name="session_year_id" required readonly>
-                                    <option value="{{ session_year_id }}" disabled selected readonly>
-                                        {{question_paper.session_year_id.session_start}}&nbsp;{{question_paper.session_year_id.session_end}}
-                                    </option>
-                                </select>
+                                <input type="text" class="form-control" name="session_year"
+                                       value="{{question_paper.session_year_id.session_start}}&nbsp;{{question_paper.session_year_id.session_end}}"
+                                       disabled readonly>
                             </div>
 
 
                             <div class="col-12 col-sm-6 mt-4">
                                 <label>Reviewer</label>
-                                <select class="form-control" name="subject_id" required readonly>
-                                    <option value="{{ reviewer_id }}" readonly>
-                                        {{question_paper.reviewer_staff_id.admin.first_name}}&nbsp;{{question_paper.reviewer_staff_id.admin.last_name}}
-                                    </option>
-                                </select>
+                                <input type="text" class="form-control" name="question_paper_reviewer"
+                                       value="{{question_paper.reviewer_staff_id.admin.first_name}}&nbsp;{{question_paper.reviewer_staff_id.admin.last_name}}"
+                                       disabled readonly>
                             </div>
 
                             <div class="col-12 col-sm-6 mt-4">
@@ -70,8 +65,14 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Comment</label>
-                                    <textarea class="form-control" name="leave_message" style="height:250px;"
-                                              required readonly></textarea>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Review Comments</label>
+                                            <textarea class="form-control" name="review_comments"
+                                                      style="height:250px; resize:none; padding:10px; text-align: left;"
+                                                      required readonly>{{ question_paper.review_comments }}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

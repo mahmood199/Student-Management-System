@@ -49,14 +49,15 @@
                         <li><a href="{% url 'view_session' %}">View Session </a></li>
                     </ul>
                 </li>
-                <li class="submenu {% active_link 'staff_add_question_paper' 'active' %} {% active_link 'staff_view_all_question_papers' 'active' %}">
+<!--
+                <li class="submenu {% active_link 'staff_view_all_question_papers' 'active' %}">
                     <a href="#"><i class="fas fa-clock"></i> <span>Question Paper</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{% url 'staff_add_question_paper' %}">Add Question Paper</a></li>
                         <li><a href="{% url 'staff_view_all_question_papers' %}">View All Question Papers</a></li>
                     </ul>
                 </li>
+-->
                 <li class="{% active_link 'staff_send_notification' 'active' %}">
                     <a href="{% url 'staff_send_notification' %}"><i class="fa fa-bell"></i> <span> Send Staff Notification</span></a>
                 </li>

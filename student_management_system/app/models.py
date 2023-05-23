@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django import forms
 
 
 class CustomUser(AbstractUser):
@@ -181,7 +182,10 @@ class QuestionPaper(models.Model):
         return self.subject_id.name
 
 
+class QuestionPaperForm(forms.ModelForm):
+    pdf = forms.FileField()
 
-
-
-
+    class Meta:
+        model = QuestionPaper
+        fields = ['subject_id', 'session_year_id', 'question_setter_staff_id', 'reviewer_staff_id', 'status', 'pdf',
+                  'review_comments']
