@@ -700,15 +700,3 @@ def VIEW_ATTENDANCE(request):
 def PROFILE(request):
     return render(request, 'hod/profile.html')
 
-
-@login_required(login_url='/')
-def VIEW_QUESTION_PAPERS(request):
-    logged_in_user = Staff.objects.get(admin=request.user.id)
-    filtered_papers = QuestionPaper.objects.filter(
-        Q(question_setter_staff_id=logged_in_user) | Q(reviewer_staff_id=logged_in_user))
-
-    context = {
-        'question_papers': filtered_papers,
-    }
-
-    return render(request, 'hod/view_all_question_papers.html', context)
