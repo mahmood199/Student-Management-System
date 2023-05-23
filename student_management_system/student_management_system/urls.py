@@ -108,6 +108,7 @@ urlpatterns = [
                   # Question Papers
                   path('staff/add_question_paper', staff_views.STAFF_ADD_QUESTION_PAPER,
                        name='staff_add_question_paper'),
+
                   path('staff/view_all_question_papers', staff_views.VIEW_ALL_QUESTION_PAPERS,
                        name='staff_view_all_question_papers'),
 
@@ -123,11 +124,14 @@ urlpatterns = [
                   path('staff/add_comments_on_question_paper', staff_views.ADD_COMMENTS_ON_QUESTION_PAPER,
                        name='staff_add_comments_on_question_paper'),
 
-                  path('staff/approve_question_paper', staff_views.APPROVE_QUESTION_PAPER,
+                  path('staff/approve_question_paper/<str:id>', staff_views.APPROVE_QUESTION_PAPER,
                        name='staff_approve_question_paper'),
 
                   path('staff/view_question_paper/<str:id>', staff_views.VIEW_QUESTION_PAPER,
                        name='staff_view_question_paper'),
+
+                  path('staff/view_question_paper_pdf/<str:id>', staff_views.DOWNLOAD_QUESTION_PAPER_PDF,
+                       name='staff_view_question_paper_pdf'),
 
                   # Student urls
 
