@@ -108,6 +108,7 @@ urlpatterns = [
                   # Question Papers
                   path('staff/add_question_paper', staff_views.STAFF_ADD_QUESTION_PAPER,
                        name='staff_add_question_paper'),
+
                   path('staff/view_all_question_papers', staff_views.VIEW_ALL_QUESTION_PAPERS,
                        name='staff_view_all_question_papers'),
 

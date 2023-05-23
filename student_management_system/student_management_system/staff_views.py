@@ -271,7 +271,7 @@ def STAFF_SAVE_RESULT(request):
 @login_required(login_url='/')
 def STAFF_ADD_QUESTION_PAPER(request):
     subjects = Subject.objects.all()
-    staff = Staff.objects.exclude(id=request.user.id)
+    staff = Staff.objects.exclude(admin=request.user.id)
     session_years = Session_Year.objects.all()
 
     if request.method == "POST":
@@ -284,8 +284,11 @@ def STAFF_ADD_QUESTION_PAPER(request):
         question_setter_staff = Staff.objects.get(admin=request.user.id)
 
         reviewer_staff_id = request.POST.get('reviewer_staff_id')
+        print(reviewer_staff_id)
 
         reviewer_staff = Staff.objects.get(id=reviewer_staff_id)
+        print(reviewer_staff.admin.first_name)
+        print(reviewer_staff.admin.last_name)
 
         question_paper_pdf = request.POST.get('question_paper')
 
@@ -300,7 +303,7 @@ def STAFF_ADD_QUESTION_PAPER(request):
         )
         question_paper.save()
         messages.success(request, "Question Paper added successfully")
-        return redirect('upload_question_paper')
+        return redirect('staff_view_all_question_papers')
 
     context = {
         'subject': subjects,
@@ -313,11 +316,16 @@ def STAFF_ADD_QUESTION_PAPER(request):
 
 @login_required(login_url='/')
 def VIEW_ALL_QUESTION_PAPERS(request):
-    logged_in_user = Staff.objects.filter(id=request.user.id).first()
+    logged_in_user = Staff.objects.get(admin=request.user.id)
 
     if logged_in_user is not None:
+        print("Debugging starts here")
+        print(str(logged_in_user))
+        print(str(logged_in_user.admin.first_name))
+        print(str(logged_in_user.admin.last_name))
         filtered_papers = QuestionPaper.objects.filter(
-            Q(question_setter_staff_id=logged_in_user) | Q(reviewer_staff_id=logged_in_user))
+            Q(question_setter_staff_id=logged_in_user) | Q(reviewer_staff_id=logged_in_user)
+        )
     else:
         filtered_papers = QuestionPaper.objects.all()
 

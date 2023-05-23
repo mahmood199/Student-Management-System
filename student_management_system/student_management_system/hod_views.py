@@ -262,7 +262,7 @@ def ADD_STAFF(request):
             )
             staff.save()
             messages.success(request, "Staff is successfully added !")
-            return redirect("add_staff")
+            return redirect("view_staff")
 
     return render(request, "hod/add_staff.html")
 
@@ -357,7 +357,7 @@ def ADD_SUBJECT(request):
         )
         subject.save()
         messages.success(request, "Subject added successfully")
-        return redirect('add_subject')
+        return redirect('view_subject')
 
     context = {
         'course': course,
@@ -439,7 +439,7 @@ def ADD_SESSION(request):
         )
         session.save()
         messages.success(request, 'Session added successfully')
-        return redirect('add_session')
+        return redirect('view_session')
 
     return render(request, 'hod/add_session.html')
 
