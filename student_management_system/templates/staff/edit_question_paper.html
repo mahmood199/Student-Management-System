@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="edit_question_paper" method="post">
+                    <form action="update_question_paper" method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
@@ -30,20 +30,18 @@
                             <div class="col-12 col-sm-6">
                                 <label>Subject</label>
                                 <select class="form-control" name="subject_id" required readonly>
-                                    <!--        <option value="{{ subject_id }}">{{ subject_name }}</option>-->
-                                    <option value="" disabled selected>NO SUBJECT</option>
+                                    <option value="{{ subject_id }}" disabled selected readonly>
+                                        {{question_paper.subject_id.name}}
+                                    </option>
                                 </select>
                             </div>
-
 
                             <div class="col-12 col-sm-6">
                                 <label>Session Year</label>
                                 <select class="form-control" name="session_year_id" required readonly>
-                                    <!--                                    <option>Select Session</option>-->
-                                    <!--                                    {% for i in session_year %}-->
-                                    <!--                                    <option value="{{i.id}}">{{i.session_start}} to&nbsp;{{i.session_end}}</option>-->
-                                    <!--                                    {% endfor %}-->
-                                    <option value="" disabled selected>NO SESSION</option>
+                                    <option value="{{ session_year_id }}" disabled selected readonly>
+                                        {{question_paper.session_year_id.session_start}}&nbsp;{{question_paper.session_year_id.session_end}}
+                                    </option>
                                 </select>
                             </div>
 
@@ -51,11 +49,9 @@
                             <div class="col-12 col-sm-6 mt-4">
                                 <label>Reviewer</label>
                                 <select class="form-control" name="subject_id" required readonly>
-                                    <!--                                    <option>Select Reviewer</option>-->
-                                    <!--                                    {% for i in staff %}-->
-                                    <!--                                    <option value="{{i.id}}">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</option>-->
-                                    <!--                                    {% endfor %}-->
-                                    <option value="" disabled selected>NO REVIEWER</option>
+                                    <option value="{{ reviewer_id }}" readonly>
+                                        {{question_paper.reviewer_staff_id.admin.first_name}}&nbsp;{{question_paper.reviewer_staff_id.admin.last_name}}
+                                    </option>
                                 </select>
                             </div>
 
@@ -64,10 +60,13 @@
                                     <label>Question Paper</label>
                                     <input type="file" class="form-control" name="question_paper" accept=".pdf"
                                            required>
-                                    <small class="form-text text-muted">Please upload the new Question Paper PDF file.</small>
+                                    <small class="form-text text-muted">Please upload the new Question Paper PDF
+                                        file.</small>
                                 </div>
                             </div>
 
+
+                            {% if question_paper.review_comments|length != 0 %}
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Comment</label>
@@ -79,6 +78,14 @@
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
+
+                            {% else %}
+
+                            <div class="col-12 col-sm-6">
+                                <a href="{{ pdf_file_url }}" target="_blank">Download Question Paper as PDF file</a>
+                            </div>
+
+                            {% endif %}
                         </div>
                     </form>
                 </div>
