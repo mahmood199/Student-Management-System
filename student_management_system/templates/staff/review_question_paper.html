@@ -38,7 +38,7 @@
                             <div class="col-12 col-sm-6">
                                 <label>Session Year</label>
                                 <input type="text" class="form-control" name="session_year_id"
-                                       value="{{question_paper.session_year_id.session_start}} To {{question_paper.session_year_id.session_end}}"
+                                       value="{{question_paper.session_year_id.session_start}}  ||  {{question_paper.session_year_id.session_end}}"
                                        required readonly>
                             </div>
 
@@ -53,9 +53,9 @@
                             <div class="col-12 col-sm-6 mt-5">
                                 <div class="form-group">
                                     <label>Question Paper</label> <br>
-                                    <a href="{{ pdf_file_url }}" target="_blank">Download PDF file</a>
-                                    <small class="form-text text-muted">Please download the Question Paper to be
-                                        reviewed.</small>
+                                    <a href="{% url 'staff_view_question_paper_pdf' id=question_paper.id %}"
+                                       target="_blank">View Question Paper</a>
+                                    <small class="form-text text-muted">Click the above link to Review Question Paper.</small>
                                 </div>
                             </div>
 
