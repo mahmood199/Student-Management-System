@@ -370,14 +370,6 @@ def REVIEW_QUESTION_PAPER(request, id):
     }
     return render(request, 'staff/review_question_paper.html', context)
 
-@login_required(login_url='/')
-def REVIEW_QUESTION_PAPER(request, id):
-    question_paper = QuestionPaper.objects.get(id=id)
-    context = {
-        'question_paper': question_paper,
-    }
-    return render(request, 'staff/review_question_paper.html', context)
-
 
 @login_required(login_url='/')
 def APPROVE_QUESTION_PAPER(request):
@@ -385,11 +377,11 @@ def APPROVE_QUESTION_PAPER(request):
         id = request.POST.get('id')
         question_paper = QuestionPaper.objects.get(id=id)
 
-        question_paper.status = 1
+        question_paper.status = 2
         question_paper.save()
 
         messages.success(request, 'Review added for question paper')
-        return redirect('view_all_question_papers')
+        return redirect('staff_view_all_question_papers')
 
     return render(request, 'staff/review_question_paper.html')
 
@@ -398,13 +390,19 @@ def APPROVE_QUESTION_PAPER(request):
 def ADD_COMMENTS_ON_QUESTION_PAPER(request):
     if request.method == "POST":
         review_comments = request.POST.get('review_comments')
+        id = request.POST.get('id')
+
+        print("Question paper ---> " + str(id))
+        print("Question review comments ---> " + str(review_comments))
+
         question_paper = QuestionPaper.objects.get(id=id)
 
         question_paper.review_comments = review_comments
+        question_paper.status = 1
         question_paper.save()
 
         messages.success(request, 'Review added for question paper')
-        return redirect('view_all_question_papers')
+        return redirect('staff_view_all_question_papers')
 
     return render(request, 'staff/review_question_paper.html')
 
