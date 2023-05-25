@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Set Question Paper</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="subjects.html">Question Paper</a></li>
+                    <li class="breadcrumb-item active">Upload Question Paper</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% include 'includes/messages.html' %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="staff_setter" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="form-title"><span>Question Paper</span></h5>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label>Subject</label>
+                                <select class="form-control" name="subject_id" required>
+                                    {% for i in subject %}
+                                    <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label>Session Year</label>
+                                <select class="form-control" name="session_year_id" required>
+                                    {% for i in session_year %}
+                                    <option value="{{i.id}}">{{i.session_start}}  ||  {{i.session_end}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6 mt-4">
+                                <label>Reviewer</label>
+                                <select class="form-control" name="reviewer_staff_id" required>
+                                    {% for i in staff %}
+                                    <option value="{{i.id}}">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6 mt-4">
+                                <div class="form-group">
+                                    <label>Question Paper</label>
+                                    <input type="file" class="form-control" name="question_paper" accept=".pdf"
+                                           required>
+                                    <small class="form-text text-muted">Please upload a PDF file.</small>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

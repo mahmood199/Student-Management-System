@@ -87,6 +87,8 @@ urlpatterns = [
                   path('hod/Student/feedback', hod_views.STUDENT_FEEDBACK, name='get_student_feedback'),
                   path('hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK,
                        name='reply_student_feedback'),
+    path('hod/assign_exam_roles', hod_views.ASSIGN_EXAM_ROLE,name='assign_exam_roles'),
+                  path('hod/view_all_exam_roles', hod_views.VIEW_ALL_EXAM_ROLES, name='view_all_exam_roles'),
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
@@ -132,6 +134,17 @@ urlpatterns = [
 
                   path('staff/view_question_paper_pdf/<str:id>', staff_views.DOWNLOAD_QUESTION_PAPER_PDF,
                        name='staff_view_question_paper_pdf'),
+                  # setter url
+                  path('staff/staff_setter', staff_views.STAFF_SETTER, name='staff_setter'),
+                  # moderator url
+                  path('staff/staff_moderator', staff_views.STAFF_MODERATOR, name='staff_moderator'),
+
+                  path('staff/staff_examiner', staff_views.STAFF_EXAMINER, name='staff_examiner'),
+
+                  path('staff/staff_scrutinizer', staff_views.STAFF_SCRUTINIZER, name='staff_scrutinizer'),
+
+                  path('staff/staff_head_examiner', staff_views.STAFF_HEAD_EXAMINER,
+                       name='staff_head_examiner'),
 
                   # Student urls
 
