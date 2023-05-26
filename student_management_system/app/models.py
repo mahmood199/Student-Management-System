@@ -193,7 +193,7 @@ class QuestionPaper(models.Model):
 ## Exam Central
 
 class Semester(models.Model):
-    name = models.CharField(10)
+    name = models.CharField(max_length=10)
 
     def __str__(self):
         return self.name
@@ -210,7 +210,7 @@ class Department(models.Model):
 # Refer notes for usage. Lines 3-15.
 class CourseV2(models.Model):
     name = models.CharField(max_length=50)
-    duration = models.CharField(20)
+    duration = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name + "-" + self.duration
@@ -242,4 +242,3 @@ class Subject_Semester(models.Model):
 
     def __str__(self):
         return self.subject + "_" + self.semester + "_" + self.department + "_" + self.session
-
