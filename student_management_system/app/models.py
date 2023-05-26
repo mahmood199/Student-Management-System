@@ -235,10 +235,91 @@ class SubjectV2(models.Model):
 
 
 class Subject_Semester(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    subject = models.ForeignKey(SubjectV2, on_delete=models.CASCADE)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     session = models.ForeignKey(SessionV2, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.subject + "_" + self.semester + "_" + self.department + "_" + self.session
+
+
+class Exam_Type(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+
+class Faculty_Designation(models.Model):
+    name = models.CharField(max_length=100)
+    level = models.IntegerField()
+
+    def __str__(self):
+        return str(self.name) + "_" + str(self.level)
+
+
+class Faculty(models.Model):
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    address = models.TextField()
+    gender = models.CharField(max_length=10)
+    faculty_designation = models.ForeignKey(Faculty_Designation, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.admin) + "_" + str(self.address) + "_" + str(self.gender) + "_" + str(self.faculty_designation)
+
+
+class Exam(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    exam_type = models.ForeignKey(Exam_Type, on_delete=models.CASCADE)
+    marks_total = models.IntegerField()
+
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    course = models.ForeignKey(CourseV2, on_delete=models.CASCADE)
+
+    session = models.ForeignKey(SessionV2, on_delete=models.CASCADE)
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+    # Roles
+    paper_setter_faculty = models.ManyToManyField(Faculty, related_name='paper_setter_faculty')
+    examiner_faculty = models.ManyToManyField(Faculty, 'examiner_faculty')
+    moderator_faculty = models.ManyToManyField(Faculty, 'moderator_faculty')
+    scrutinizer_faculty = models.ManyToManyField(Faculty, 'scrutinizer_faculty')
+    head_examiner_faculty = models.ManyToManyField(Faculty, 'head_examiner_faculty')
+
+    # Exam Papers
+    question_paper_from_paper_setter = models.FileField(upload_to='pdf.files/', null=True)
+    question_paper_from_moderator = models.FileField(upload_to='pdf.files/', null=True)
+    status = models.IntegerField()
+
+    def __str__(self):
+        return (
+                str(self.subject) + "_" + str(self.department) + "_" + str(self.course) + "_" +
+                str(self.session) + "_" + str(self.semester)
+        )
+
+
+class Student_Marks(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    exam_type = models.ForeignKey(Exam_Type, on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    marks_obtained = models.IntegerField()
+    status = models.IntegerField()
+
+    def __str__(self):
+        return str(self.exam) + "_" + str(self.student) + "_" + str(self.subject) + "_" + \
+               str(self.exam_type) + "_" + str(self.marks_obtained) + "_" + str(self.status)
+
+
+
+
+class Faculty_Subjects(models.Model):
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    subject_semester = models.ForeignKey(Subject_Semester, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.faculty) + "_" + str(self.subject_semester)
+
+
+
+
