@@ -700,3 +700,12 @@ def VIEW_ATTENDANCE(request):
 def PROFILE(request):
     return render(request, 'hod/profile.html')
 
+
+
+@login_required(login_url='/')
+def VIEW_ALL_EXAM_ROLES(request):
+    return render(request,'hod/view_all_exam_roles.html')
+
+@login_required(login_url='/')
+def ASSIGN_EXAM_ROLE(request):
+    return render(request,'hod/assign_exam_roles.html')
