@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
         (2, 'STAFF'),
         (3, 'STUDENT'),
     )
+    # Add common fields for users in here
 
     user_type = models.CharField(choices=USER, max_length=50, default=1)
     profile_pic = models.ImageField(upload_to='media/profile_pic')
@@ -37,6 +38,8 @@ class Student(models.Model):
     gender = models.CharField(max_length=100)
     course_id = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
     session_year_id = models.ForeignKey(Session_Year, on_delete=models.DO_NOTHING)
+
+    # these 2 Not required
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -44,10 +47,14 @@ class Student(models.Model):
         return self.admin.first_name + " " + self.admin.last_name
 
 
+# Not a good practice
+
 class Staff(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     address = models.TextField()
     gender = models.CharField(max_length=100)
+
+    # these 2 Not required.Add designation, joining date etc etc
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -170,7 +177,8 @@ class StudentResult(models.Model):
 class QuestionPaper(models.Model):
     subject_id = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
     session_year_id = models.ForeignKey(Session_Year, on_delete=models.DO_NOTHING)
-    question_setter_staff_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, related_name="question_setter_staff_id")
+    question_setter_staff_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING,
+                                                 related_name="question_setter_staff_id")
     reviewer_staff_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, related_name="reviewer_staff_id")
     status = models.IntegerField()
     pdf = models.FileField(upload_to='pdf.files/')
@@ -180,12 +188,3 @@ class QuestionPaper(models.Model):
 
     def __str__(self):
         return self.subject_id.name
-
-
-class QuestionPaperForm(forms.ModelForm):
-    pdf = forms.FileField()
-
-    class Meta:
-        model = QuestionPaper
-        fields = ['subject_id', 'session_year_id', 'question_setter_staff_id', 'reviewer_staff_id', 'status', 'pdf',
-                  'review_comments']
