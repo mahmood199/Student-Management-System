@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Review Question Paper</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="subjects.html">Question Paper</a></li>
+                    <li class="breadcrumb-item active">Review Question Paper</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% include 'includes/messages.html' %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{% url 'staff_moderator' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="form-title"><span>Question Paper Details</span></h5>
+                            </div>
+
+                            <input type="hidden" name="id" value="{{ question_paper.id }}">
+
+                            <div class="col-12 col-sm-6">
+                                <label>Subject</label>
+                                <input type="text" class="form-control" name="subject_id"
+                                       value="{{question_paper.subject_id.name}}"
+                                       required readonly>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label>Session Year</label>
+                                <input type="text" class="form-control" name="session_year_id"
+                                       value="{{question_paper.session_year_id.session_start}}  ||  {{question_paper.session_year_id.session_end}}"
+                                       required readonly>
+                            </div>
+
+
+                            <div class="col-12 col-sm-6 mt-4">
+                                <label>Reviewer</label>
+                                <input type="text" class="form-control" name="review_staff_id"
+                                       value="{{question_paper.reviewer_staff_id.admin.first_name}}&nbsp;{{question_paper.reviewer_staff_id.admin.last_name}}"
+                                       required readonly>
+                            </div>
+
+                            <div class="col-12 col-sm-6 mt-5">
+                                <div class="form-group">
+                                    <label>Question Paper</label> <br>
+                                    <a href="{% url 'staff_view_question_paper_pdf' id=question_paper.id %}"
+                                       target="_blank">View Question Paper</a>
+                                    <small class="form-text text-muted">Click the above link to Review Question Paper.</small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Comment</label>
+                                        <textarea class="form-control" name="review_comments"
+                                                  style="height:250px; resize:none; padding:10px; text-align: left;"
+                                                  required>{{ question_paper.review_comments }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-6 d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-primary">Add Comments</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <form action="{% url 'staff_approve_question_paper' question_paper.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ question_paper.id }}">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-6 d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-primary">Approve Question Paper</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

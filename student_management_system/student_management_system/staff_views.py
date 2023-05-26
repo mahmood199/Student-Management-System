@@ -434,3 +434,30 @@ def DOWNLOAD_QUESTION_PAPER_PDF(request, id):
             return response
     except QuestionPaper.DoesNotExist:
         return HttpResponseNotFound("Question paper not found")
+
+
+
+
+
+# this staff will set ques paper
+@login_required(login_url='/')
+def STAFF_SETTER(request):
+    return render(request, 'staff/staff_setter.html')
+
+@login_required(login_url='/')
+def STAFF_MODERATOR(request):
+    return render(request, 'staff/staff_moderator.html')
+
+@login_required(login_url='/')
+def STAFF_EXAMINER(requesrt):
+    return render(requesrt,'staff/staff_examiner.html')
+
+
+@login_required(login_url='/')
+def STAFF_SCRUTINIZER(requesrt):
+    return render(requesrt,'staff/staff_scrutinizer.html')
+
+
+@login_required(login_url='/')
+def STAFF_HEAD_EXAMINER(requesrt):
+    return render(requesrt,'staff/staff_head_examiner.html')

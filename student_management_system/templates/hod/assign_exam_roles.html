@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'add_staff' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <h5 class="form-title"><span>Assign Staffs to their Examination Roles</span></h5>
+                    </div>
+
+                    {% include 'includes/messages.html' %}
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Session Year</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>From  ||  To</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Department</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Dept.</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Semester</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Sem</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Subject</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Subject</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Setter</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Name_Staff_id</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Setter</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Name_Staff_id</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Setter</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Name_Staff_id</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Moderator</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Name_Staff_id</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Examiner</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Name_Staff_id</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Scrutinizer</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Name_Staff_id</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-sm-6">
+                        <label>Select Head Examiner</label>
+                        <select class="form-control" name="course_id" required>
+                            <option>Name_Staff_id</option>
+                            {% for i in course %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+
+
+
+                    <br>
+                    <br>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
