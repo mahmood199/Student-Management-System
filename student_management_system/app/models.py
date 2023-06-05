@@ -193,7 +193,7 @@ class QuestionPaper(models.Model):
 ## Exam Central
 
 class Semester(models.Model):
-    name = models.CharField(10)
+    name = models.CharField(max_length=10)
 
     def __str__(self):
         return self.name
@@ -210,7 +210,7 @@ class Department(models.Model):
 # Refer notes for usage. Lines 3-15.
 class CourseV2(models.Model):
     name = models.CharField(max_length=50)
-    duration = models.CharField(20)
+    duration = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name + "-" + self.duration
@@ -218,12 +218,12 @@ class CourseV2(models.Model):
 
 # Refer notes for usage. Lines 3-15.
 class SessionV2(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(CourseV2, on_delete=models.CASCADE)
     session_start = models.DateTimeField(max_length=100)
     session_end = models.DateTimeField(max_length=100)
 
     def __str__(self):
-        return self.course + "_" + self.session_start + "_" + self.session_end
+        return str(self.course.name) + "_" + str(self.session_start) + "_" + str(self.session_end)
 
 
 class SubjectV2(models.Model):
@@ -235,11 +235,87 @@ class SubjectV2(models.Model):
 
 
 class Subject_Semester(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    subject = models.ForeignKey(SubjectV2, on_delete=models.CASCADE)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     session = models.ForeignKey(SessionV2, on_delete=models.CASCADE)
+    credits = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.subject + "_" + self.semester + "_" + self.department + "_" + self.session
+        subject_str = str(self.subject) if self.subject.name else "N/A"
+        semester_str = str(self.semester) if self.semester.name else "N/A"
+        department_str = str(self.department) if self.department.name else "N/A"
+        session_str = str(self.session) if self.session.name else "N/A"
+        return subject_str + "_" + semester_str + "_" + department_str + "_" + session_str
+
+
+class Exam_Type(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+
+class Faculty_Designation(models.Model):
+    name = models.CharField(max_length=100)
+    level = models.IntegerField()
+
+    def __str__(self):
+        return str(self.name) + "_" + str(self.level)
+
+
+class Faculty(models.Model):
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    address = models.TextField()
+    gender = models.CharField(max_length=10)
+    faculty_designation = models.ForeignKey(Faculty_Designation, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.admin.first_name) + "_" + str(self.address) + "_" + str(self.gender) + "_" + str(self.faculty_designation.name)
+
+
+class Exam(models.Model):
+    subject_semester = models.ForeignKey(Subject_Semester, on_delete=models.CASCADE, default=None)
+    exam_type = models.ForeignKey(Exam_Type, on_delete=models.CASCADE)
+
+    # Roles
+    paper_setter_faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='paper_setter_faculty', default=0)
+    examiner_faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='examiner_faculty', default=0)
+    moderator_faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='moderator_faculty', default=0)
+    scrutinizer_faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='scrutinizer_faculty', default=0)
+    head_examiner_faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='head_examiner_faculty', default=0)
+
+    # Exam Papers
+    question_paper_from_paper_setter = models.FileField(upload_to='pdf.files/', null=True)
+    question_paper_from_moderator = models.FileField(upload_to='pdf.files/', null=True)
+    status = models.IntegerField()
+    marks_total = models.IntegerField()
+
+    def __str__(self):
+        return str(self.subject_semester.subject.name) + "_" + str(self.exam_type.name)
+
+
+class Student_Marks(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    exam_type = models.ForeignKey(Exam_Type, on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    marks_obtained = models.IntegerField()
+    status = models.IntegerField()
+
+    def __str__(self):
+        return self.exam_type.name
+##        return str(self.exam) + "_" + str(self.student) + "_" + str(self.subject) + "_" + \
+##               str(self.exam_type) + "_" + str(self.marks_obtained) + "_" + str(self.status)
+
+
+class Faculty_Subjects(models.Model):
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    subject_semester = models.ForeignKey(Subject_Semester, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.faculty.admin.first_name) + "_" + str(self.subject_semester.subject.name)
+
+
+
 

@@ -66,6 +66,7 @@ def STAFF_APPLY_LEAVE_SAVE(request):
             message=leave_message,
         )
         leave.save()
+        messages.get_messages(request).consume()
         messages.success(request, 'Leave Successfully Sent')
         return redirect('staff_apply_leave')
 
@@ -258,6 +259,7 @@ def STAFF_SAVE_RESULT(request):
             result.assignment_mark = assignment_mark
             result.exam_mark = Exam_mark
             result.save()
+            messages.get_messages(request).consume()
             messages.success(request, "Successfully Updated Result")
             return redirect('staff_add_result')
         else:
@@ -266,6 +268,7 @@ def STAFF_SAVE_RESULT(request):
                                    exam_marks=Exam_mark,
                                    assignment_mark=assignment_mark)
             result.save()
+            messages.get_messages(request).consume()
             messages.success(request, "Successfully Added Result")
             return redirect('staff_add_result')
     return render(request, 'staff/add_result.html')
@@ -305,6 +308,7 @@ def STAFF_ADD_QUESTION_PAPER(request):
             review_comments=""
         )
         question_paper.save()
+        messages.get_messages(request).consume()
         messages.success(request, "Question Paper added successfully")
         return redirect('staff_view_all_question_papers')
 
@@ -359,6 +363,7 @@ def UPDATE_QUESTION_PAPER(request):
         question_paper.pdf = question_paper_pdf_file
 
         question_paper.save()
+        messages.get_messages(request).consume()
         messages.success(request, 'Question paper updated successfully')
         return redirect('view_all_question_papers')
 
