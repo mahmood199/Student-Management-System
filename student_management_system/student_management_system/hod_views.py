@@ -709,3 +709,28 @@ def VIEW_ALL_EXAM_ROLES(request):
 @login_required(login_url='/')
 def ASSIGN_EXAM_ROLE(request):
     return render(request,'hod/assign_exam_roles.html')
+
+
+@login_required(login_url='/')
+def ADD_SEMESTER(request):
+    return render(request,'hod/add_semester.html')
+
+@login_required(login_url='/')
+def ADD_DEPARTMENT(request):
+    return render(request,'hod/add_department.html')
+
+@login_required(login_url='/')
+def ADD_EXAM_TYPE(request):
+    return render(request,'hod/add_exam_type.html')
+
+@login_required(login_url='/')
+def ADD_SESSION_V2(request):
+    return render(request,'hod/add_session_v2.html')
+
+@login_required(login_url='/')
+def ADD_COURSE_V2(request):
+    return render(request,'hod/add_course_v2.html')
+
+@login_required(login_url='/')
+def ADD_SUBJECT_V2(request):
+    return render(request,'hod/add_subject_v2.html')
