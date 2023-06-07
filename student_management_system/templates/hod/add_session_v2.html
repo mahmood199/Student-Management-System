@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label>Session Year Start</label>
                                     <div>
-                                        <input type="date" class="form-control" name="session_year_start">
+                                        <input type="date" class="form-control" name="session_start">
                                     </div>
                                 </div>
                             </div>
@@ -36,14 +36,14 @@
                                 <div class="form-group">
                                     <label>Session Year End</label>
                                     <div>
-                                        <input type="date" class="form-control" name="session_year_end">
+                                        <input type="date" class="form-control" name="session_end">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <label>Course</label>
-                                <select class="form-control" name="course_id" required>
-                                    <option>Select Course</option>
+                                <select class="form-control" name="course_v2" required>
+                                    <option disabled selected>Select Course</option>
                                     {% for i in course %}
                                     <option value="{{i.id}}">{{i.name}}</option>
                                     {% endfor %}

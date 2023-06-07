@@ -1,5 +1,6 @@
 from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notifications, Staff_leave, \
-    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report, QuestionPaper
+    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report, CourseV2, QuestionPaper, \
+    Semester, Department, Exam_Type, SessionV2, SubjectV2
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -12,7 +13,7 @@ def HOME(request):
     print("student_count = " + str(student_count))
     staff_count = Staff.objects.all().count()
     print("staff_count = " + str(staff_count))
-    course_count = Course.objects.all().count()
+    course_count = CourseV2.objects.all().count()
     print("course_count = " + str(course_count))
     subject_count = Subject.objects.all().count()
     print("subject_count = " + str(subject_count))
@@ -187,7 +188,7 @@ def ADD_COURSE(request):
 
 @login_required(login_url='/')
 def VIEW_COURSE(request):
-    course = Course.objects.all()
+    course = CourseV2.objects.all()
     context = {
         'course': course,
     }
@@ -713,24 +714,81 @@ def ASSIGN_EXAM_ROLE(request):
 
 @login_required(login_url='/')
 def ADD_SEMESTER(request):
+    if request.method == "POST":
+        name = request.POST.get('semester')
+        semester = Semester(
+            name=name,
+        )
+        semester.save()
+        messages.success(request, 'Semester Entry Successful ')
     return render(request,'hod/add_semester.html')
 
 @login_required(login_url='/')
 def ADD_DEPARTMENT(request):
+    if request.method == "POST":
+        name = request.POST.get('department_name')
+        abbreviation = request.POST.get('department_abbreviation')
+        department = Department(
+            name = name,
+            abbreviation = abbreviation,
+        )
+        department.save()
+        messages.success(request, 'Department Entry Successful ')
     return render(request,'hod/add_department.html')
 
 @login_required(login_url='/')
 def ADD_EXAM_TYPE(request):
+    if request.method == "POST":
+        name = request.POST.get('exam_type')
+        exam_type = Exam_Type(
+            name=name,
+        )
+        exam_type.save()
+        messages.success(request, 'Exam Type Entry Successful ')
     return render(request,'hod/add_exam_type.html')
 
 @login_required(login_url='/')
 def ADD_SESSION_V2(request):
-    return render(request,'hod/add_session_v2.html')
+    if request.method == "POST":
+        session_start = request.POST.get('session_start')
+        session_end = request.POST.get('session_end')
+        course_v2 = request.POST.get('courseV2')
+        session_v2 = SessionV2(
+            session_start = session_start,
+            session_end = session_end,
+            course_v2 = course_v2,
+        )
+        session_v2.save()
+        messages.success(request, 'Session Entry Successful ')
+    courses = CourseV2.objects.all()
+    context = {
+        'course' : courses
+    }
+    return render(request,'hod/add_session_v2.html',context)
 
 @login_required(login_url='/')
 def ADD_COURSE_V2(request):
+    if request.method == "POST":
+        name = request.POST.get('course_name_v2')
+        duration = request.POST.get('duration')
+        course = CourseV2(
+            name=name,
+            duration=duration,
+        )
+        course.save()
+        messages.success(request, 'Course Entry Successful ')
+        redirect('add_course_v2')
     return render(request,'hod/add_course_v2.html')
 
 @login_required(login_url='/')
 def ADD_SUBJECT_V2(request):
+    if request.method == "POST":
+        code = request.POST.get('code')
+        name = request.POST.get('name')
+        subject_v2 = SubjectV2(
+            code = code,
+            name = name,
+        )
+        subject_v2.save()
+        messages.success(request, 'Subject Entry Successful ')
     return render(request,'hod/add_subject_v2.html')
