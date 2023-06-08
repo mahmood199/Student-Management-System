@@ -95,8 +95,12 @@ urlpatterns = [
                   path('hod/view_department', hod_views.VIEW_DEPARTMENT, name='view_department'),
                   path('hod/add_exam_type', hod_views.ADD_EXAM_TYPE, name='add_exam_type'),
                   path('hod/add_session_v2', hod_views.ADD_SESSION_V2, name='add_session_v2'),
+                  path('hod/view_session_v2', hod_views.VIEW_SESSION_V2, name='view_session_v2'),
                   path('hod/add_course_v2', hod_views.ADD_COURSE_V2, name='add_course_v2'),
                   path('hod/add_subject_v2', hod_views.ADD_SUBJECT_V2, name='add_subject_v2'),
+                  path('hod/view_subject_v2', hod_views.VIEW_SUBJECT_V2, name='view_subject_v2'),
+                  path('hod/add_faculty', hod_views.ADD_FACULTY, name='add_faculty'),
+                  path('hod/view_faculty', hod_views.VIEW_FACULTY, name='view_faculty'),
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
