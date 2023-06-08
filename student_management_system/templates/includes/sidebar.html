@@ -11,19 +11,21 @@
                     <a href="{% url 'hod_home' %}"><i class="fas fa-holly-berry"></i> <span>Dashboard</span></a>
                 </li>
 
-                <li class="submenu {% active_link 'add_semester' 'active' %} {% active_link 'add_semester' 'active' %}">
+                <li class="submenu {% active_link 'add_semester' 'active' %} {% active_link 'view_semester' 'active' %}">
                     <a href="#"><i class="fas fa-user-clock"></i> <span> Semester</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="{% url 'add_semester' %}">Add Semester</a></li>
+                        <li><a href="{% url 'view_semester' %}">View Semester</a></li>
                     </ul>
                 </li>
 
-                <li class="submenu {% active_link 'add_department' 'active' %} {% active_link 'add_department' 'active' %}">
+                <li class="submenu {% active_link 'add_department' 'active' %} {% active_link 'view_department' 'active' %}">
                     <a href="#"><i class="fas fa-building"></i> <span> Department</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="{% url 'add_department' %}">Add Department</a></li>
+                        <li><a href="{% url 'view_department' %}">View Department</a></li>
                     </ul>
                 </li>
 

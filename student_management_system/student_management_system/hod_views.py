@@ -723,6 +723,15 @@ def ADD_SEMESTER(request):
         messages.success(request, 'Semester Entry Successful ')
     return render(request,'hod/add_semester.html')
 
+
+@login_required(login_url='/')
+def VIEW_SEMESTER(request):
+    semester = Semester.objects.all()
+    context = {
+        'semester': semester,
+    }
+    return render(request, 'hod/view_semester.html',context)
+
 @login_required(login_url='/')
 def ADD_DEPARTMENT(request):
     if request.method == "POST":
@@ -735,6 +744,14 @@ def ADD_DEPARTMENT(request):
         department.save()
         messages.success(request, 'Department Entry Successful ')
     return render(request,'hod/add_department.html')
+
+@login_required(login_url='/')
+def VIEW_DEPARTMENT(request):
+    department = Department.objects.all()
+    context = {
+        'department' : department,
+    }
+    return render(request,'hod/view_department.html',context)
 
 @login_required(login_url='/')
 def ADD_EXAM_TYPE(request):
@@ -792,3 +809,13 @@ def ADD_SUBJECT_V2(request):
         subject_v2.save()
         messages.success(request, 'Subject Entry Successful ')
     return render(request,'hod/add_subject_v2.html')
+
+
+@login_required(login_url='/')
+def VIEW_SEMESTER(request):
+
+    return render(request,'hod/view_semester.html')
+
+
+def VIEW_DEPARTMENT():
+    return None
