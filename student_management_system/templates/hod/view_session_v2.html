@@ -5,7 +5,8 @@
    <div class="page-header">
       <div class="row align-items-center">
          <div class="col">
-            <h3 class="page-title">Semester</h3>
+            <h3 class="page-title">View SubjectsV2</h3>
+
          </div>
          <div class="col-auto text-right float-right ml-auto">
 <!--            <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>-->
@@ -23,14 +24,18 @@
                      <thead>
                         <tr>
                            <th>Serial No.</th>
-                           <th>Semester</th>
+                           <th>Course Name</th>
+                           <th>Session Start</th>
+                           <th>Session End</th>
                         </tr>
                      </thead>
                      <tbody>
-                        {% for i in semester %}
+                        {% for i in sessions %}
                         <tr>
-                           <td>{{ forloop.counter }}</td>
-                           <td>{{i.name}}</td>
+                           <td>{{forloop.counter}}</td>
+                           <td>{{i.courseV2.name}}</td>
+                           <td>{{i.session_start}}</td>
+                           <td>{{i.session_end}}</td>
                         </tr>
                         {% endfor %}
                      </tbody>
