@@ -1,6 +1,7 @@
 from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notifications, Staff_leave, \
-    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report, CourseV2, QuestionPaper, \
-    Semester, Department, Exam_Type, SessionV2, SubjectV2
+    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report, CourseV2, \
+    QuestionPaper, \
+    Semester, Department, Exam_Type, SessionV2, SubjectV2, Faculty_Designation
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -15,7 +16,7 @@ def HOME(request):
     print("staff_count = " + str(staff_count))
     course_count = CourseV2.objects.all().count()
     print("course_count = " + str(course_count))
-    subject_count = Subject.objects.all().count()
+    subject_count = SubjectV2.objects.all().count()
     print("subject_count = " + str(subject_count))
 
     student_gender_male = Student.objects.filter(gender='Male').count()
@@ -702,14 +703,14 @@ def PROFILE(request):
     return render(request, 'hod/profile.html')
 
 
-
 @login_required(login_url='/')
 def VIEW_ALL_EXAM_ROLES(request):
-    return render(request,'hod/view_all_exam_roles.html')
+    return render(request, 'hod/view_all_exam_roles.html')
+
 
 @login_required(login_url='/')
 def ASSIGN_EXAM_ROLE(request):
-    return render(request,'hod/assign_exam_roles.html')
+    return render(request, 'hod/assign_exam_roles.html')
 
 
 @login_required(login_url='/')
@@ -721,7 +722,8 @@ def ADD_SEMESTER(request):
         )
         semester.save()
         messages.success(request, 'Semester Entry Successful ')
-    return render(request,'hod/add_semester.html')
+        return redirect('view_semester')
+    return render(request, 'hod/add_semester.html')
 
 
 @login_required(login_url='/')
@@ -730,7 +732,8 @@ def VIEW_SEMESTER(request):
     context = {
         'semester': semester,
     }
-    return render(request, 'hod/view_semester.html',context)
+    return render(request, 'hod/view_semester.html', context)
+
 
 @login_required(login_url='/')
 def ADD_DEPARTMENT(request):
@@ -738,20 +741,23 @@ def ADD_DEPARTMENT(request):
         name = request.POST.get('department_name')
         abbreviation = request.POST.get('department_abbreviation')
         department = Department(
-            name = name,
-            abbreviation = abbreviation,
+            name=name,
+            abbreviation=abbreviation,
         )
         department.save()
         messages.success(request, 'Department Entry Successful ')
-    return render(request,'hod/add_department.html')
+        return redirect('view_department')
+    return render(request, 'hod/add_department.html')
+
 
 @login_required(login_url='/')
 def VIEW_DEPARTMENT(request):
     department = Department.objects.all()
     context = {
-        'department' : department,
+        'department': department,
     }
-    return render(request,'hod/view_department.html',context)
+    return render(request, 'hod/view_department.html', context)
+
 
 @login_required(login_url='/')
 def ADD_EXAM_TYPE(request):
@@ -762,7 +768,8 @@ def ADD_EXAM_TYPE(request):
         )
         exam_type.save()
         messages.success(request, 'Exam Type Entry Successful ')
-    return render(request,'hod/add_exam_type.html')
+    return render(request, 'hod/add_exam_type.html')
+
 
 @login_required(login_url='/')
 def ADD_SESSION_V2(request):
@@ -771,17 +778,27 @@ def ADD_SESSION_V2(request):
         session_end = request.POST.get('session_end')
         course_v2 = request.POST.get('courseV2')
         session_v2 = SessionV2(
-            session_start = session_start,
-            session_end = session_end,
-            course_v2 = course_v2,
+            session_start=session_start,
+            session_end=session_end,
+            course_v2=course_v2,
         )
         session_v2.save()
         messages.success(request, 'Session Entry Successful ')
     courses = CourseV2.objects.all()
     context = {
-        'course' : courses
+        'course': courses
     }
-    return render(request,'hod/add_session_v2.html',context)
+    return render(request, 'hod/add_session_v2.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_SESSION_V2(request):
+    sessions = SessionV2.objects.all()
+    context = {
+        'sessions': sessions,
+    }
+    return render(request, 'hod/view_session_v2.html', context)
+
 
 @login_required(login_url='/')
 def ADD_COURSE_V2(request):
@@ -795,7 +812,8 @@ def ADD_COURSE_V2(request):
         course.save()
         messages.success(request, 'Course Entry Successful ')
         redirect('add_course_v2')
-    return render(request,'hod/add_course_v2.html')
+    return render(request, 'hod/add_course_v2.html')
+
 
 @login_required(login_url='/')
 def ADD_SUBJECT_V2(request):
@@ -803,19 +821,44 @@ def ADD_SUBJECT_V2(request):
         code = request.POST.get('code')
         name = request.POST.get('name')
         subject_v2 = SubjectV2(
-            code = code,
-            name = name,
+            code=code,
+            name=name,
         )
         subject_v2.save()
         messages.success(request, 'Subject Entry Successful ')
-    return render(request,'hod/add_subject_v2.html')
+    return render(request, 'hod/add_subject_v2.html')
 
 
 @login_required(login_url='/')
-def VIEW_SEMESTER(request):
+def VIEW_SUBJECT_V2(request):
+    subjects = SubjectV2.objects.all()
+    context = {
+        'subjects': subjects,
+    }
+    return render(request, 'hod/view_subject_v2.html', context)
 
-    return render(request,'hod/view_semester.html')
+
+@login_required(login_url='/')
+def ADD_FACULTY(request):
+    if request.method == "POST":
+        name = request.POST.get('faculty_designation_name')
+        level = request.POST.get('faculty_designation_level')
+        print("Name:" + str(name))
+        print("Level:" + str(level))
+        faculty = Faculty_Designation(
+            name=name,
+            level=level,
+        )
+        faculty.save()
+        messages.success(request, 'Faculty Entry Successful ')
+        return redirect('view_faculty')
+    return render(request, 'hod/add_faculty.html')
 
 
-def VIEW_DEPARTMENT():
-    return None
+@login_required(login_url='/')
+def VIEW_FACULTY(request):
+    faculty_designations = Faculty_Designation.objects.all()
+    context = {
+        'faculty_designations': faculty_designations
+    }
+    return render(request, 'hod/view_faculty.html', context)
