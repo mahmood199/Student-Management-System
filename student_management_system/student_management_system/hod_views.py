@@ -837,7 +837,7 @@ def ADD_COURSE_V2(request):
         )
         course.save()
         messages.success(request, 'Course Entry Successful ')
-        redirect('add_course_v2')
+        return redirect('view_course_v2')
     return render(request, 'hod/add_course_v2.html')
 
 
@@ -852,6 +852,7 @@ def ADD_SUBJECT_V2(request):
         )
         subject_v2.save()
         messages.success(request, 'Subject Entry Successful ')
+        return redirect('view_subject_v2')
     return render(request, 'hod/add_subject_v2.html')
 
 
