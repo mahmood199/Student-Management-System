@@ -42,11 +42,6 @@ urlpatterns = [
                   path("hod/staff/Update", hod_views.UPDATE_STAFF, name="update_staff"),
                   path("hod/staff/Delete/<str:admin>", hod_views.DELETE_STAFF, name="delete_staff"),
 
-                  path("hod/subject/Add", hod_views.ADD_SUBJECT, name="add_subject"),
-                  path("hod/subject/View", hod_views.VIEW_SUBJECT, name="view_subject"),
-                  path("hod/subject/Edit/<str:id>", hod_views.EDIT_SUBJECT, name="edit_subject"),
-                  path("hod/subject/Update", hod_views.UPDATE_SUBJECT, name="update_subject"),
-                  path("hod/subject/Delete/<str:id>", hod_views.DELETE_SUBJECT, name="delete_subject"),
 
                   path("hod/session/Add", hod_views.ADD_SESSION, name="add_session"),
                   path("hod/session/View", hod_views.VIEW_SESSION, name="view_session"),
@@ -111,6 +106,13 @@ urlpatterns = [
 
                   path('hod/add_subject_v2', hod_views.ADD_SUBJECT_V2, name='add_subject_v2'),
                   path('hod/view_subject_v2', hod_views.VIEW_SUBJECT_V2, name='view_subject_v2'),
+                  path("hod/edit_subject_v2/<str:id>", hod_views.EDIT_SUBJECT, name="edit_subject"),
+                  path("hod/update_subject_v2", hod_views.UPDATE_SUBJECT, name="update_subject"),
+                  path("hod/delete_subject_v2/<str:id>", hod_views.DELETE_SUBJECT, name="delete_subject"),
+
+
+
+
                   path('hod/add_faculty', hod_views.ADD_FACULTY, name='add_faculty'),
                   path('hod/view_faculty', hod_views.VIEW_FACULTY, name='view_faculty'),
 

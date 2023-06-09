@@ -373,17 +373,13 @@ def VIEW_SUBJECT(request):
 
 @login_required(login_url='/')
 def EDIT_SUBJECT(request, id):
-    subject = Subject.objects.get(id=id)
-    course = Course.objects.all()
-    staff = Staff.objects.all()
+    subject = SubjectV2.objects.get(id=id)
 
     context = {
         'subject': subject,
-        'course': course,
-        'staff': staff,
     }
 
-    return render(request, 'edit_subject.html', context)
+    return render(request, 'hod/edit_subject.html', context)
 
 
 @login_required(login_url='/')
@@ -391,22 +387,15 @@ def UPDATE_SUBJECT(request):
     if request.method == "POST":
         subject_id = request.POST.get('subject_id')
         subject_name = request.POST.get('subject_name')
-        course_id = request.POST.get('course_id')
-        staff_id = request.POST.get('staff_id')
+        subject_code = request.POST.get('subject_code')
 
-        course = Course.objects.get(id=course_id)
-        staff = Staff.objects.get(id=staff_id)
-
-        subject = Subject(
-            id=subject_id,
-            name=subject_name,
-            course=course,
-            staff=staff
-        )
-
+        subject = SubjectV2.objects.get(id=subject_id)
+        subject.name = subject_name
+        subject.code = subject_code
         subject.save()
+
         messages.success(request, 'Subject updated successfully')
-        return redirect('view_subject')
+        return redirect('view_subject_v2')
 
     return None
 
