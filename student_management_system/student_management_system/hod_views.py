@@ -172,19 +172,18 @@ def DELETE_STUDENT(request, admin):
 
 
 @login_required(login_url='/')
-def ADD_COURSE(request):
+def ADD_COURSE_V2(request):
     if request.method == "POST":
-        course_name = request.POST.get('course_name')
-
-        course = Course(
-            name=course_name,
+        name = request.POST.get('course_name_v2')
+        duration = request.POST.get('duration')
+        course = CourseV2(
+            name=name,
+            duration=duration,
         )
         course.save()
-        messages.success(request, 'Course Are Successfully Created ')
-
-        return redirect('view_course')
-
-    return render(request, 'hod/add_course.html')
+        messages.success(request, 'Course Entry Successful ')
+        return redirect('view_course_v2')
+    return render(request, 'hod/add_course_v2.html')
 
 
 @login_required(login_url='/')
@@ -198,7 +197,7 @@ def VIEW_COURSE(request):
 
 @login_required(login_url='/')
 def EDIT_COURSE(request, id):
-    course = Course.objects.get(id=id)
+    course = CourseV2.objects.get(id=id)
     context = {
         'course': course,
     }
@@ -210,23 +209,16 @@ def UPDATE_COURSE(request):
     if request.method == "POST":
         name = request.POST.get('name')
         course_id = request.POST.get('course_id')
+        duration = request.POST.get('duration')
 
-        course = Course.objects.get(id=course_id)
+        course = CourseV2.objects.get(id=course_id)
         course.name = name
+        course.duration = duration
         course.save()
         messages.success(request, 'Course Are Successfully Updated ')
-        return redirect('view_course')
+        return redirect('view_course_v2')
 
     return render(request, 'hod/edit_course.html')
-
-
-@login_required(login_url='/')
-def DELETE_COURSE(request, id):
-    course = Course.objects.get(id=id)
-    course.delete()
-    messages.success(request, 'Course are Successfully Deleted')
-
-    return redirect('view_course')
 
 
 @login_required(login_url='/')
@@ -825,20 +817,6 @@ def VIEW_SESSION_V2(request):
     }
     return render(request, 'hod/view_session_v2.html', context)
 
-
-@login_required(login_url='/')
-def ADD_COURSE_V2(request):
-    if request.method == "POST":
-        name = request.POST.get('course_name_v2')
-        duration = request.POST.get('duration')
-        course = CourseV2(
-            name=name,
-            duration=duration,
-        )
-        course.save()
-        messages.success(request, 'Course Entry Successful ')
-        return redirect('view_course_v2')
-    return render(request, 'hod/add_course_v2.html')
 
 
 @login_required(login_url='/')
