@@ -783,14 +783,17 @@ def ADD_SESSION_V2(request):
     if request.method == "POST":
         session_start = request.POST.get('session_start')
         session_end = request.POST.get('session_end')
-        course_v2 = request.POST.get('courseV2')
+        selected_course_id = request.POST.get('course_v2')
+        course = CourseV2.objects.get(id=selected_course_id)
+
         session_v2 = SessionV2(
             session_start=session_start,
             session_end=session_end,
-            course_v2=course_v2,
+            courseV2=course,
         )
         session_v2.save()
         messages.success(request, 'Session Entry Successful ')
+        return redirect('view_session_v2')
     courses = CourseV2.objects.all()
     context = {
         'course': courses
