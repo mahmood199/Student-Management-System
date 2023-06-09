@@ -73,7 +73,8 @@
                 </li>
 
                 <li class="submenu {% active_link 'add_session_v2' 'active' %} {% active_link 'view_session_v2' 'active' %}">
-                    <a href="#"><i class="fas fa-clock"></i> <span> SessionV2</span> <span class="menu-arrow"></span></a>
+                    <a href="#"><i class="fas fa-clock"></i> <span> SessionV2</span> <span
+                            class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="{% url 'add_session_v2' %}">Add SessionV2 </a></li>
                         <li><a href="{% url 'view_session_v2' %}">View SessionV2 </a></li>
@@ -88,22 +89,43 @@
                     </ul>
                 </li>
 
-                <li class="{% active_link 'assign_exam_roles' 'active' %}">
-                    <a href="{% url 'assign_exam_roles' %}"><i class="fa fa-bell"></i> <span>Assign Exam Roles</span></a>
-                </li>
-                <li class="{% active_link 'view_all_exam_roles' 'active' %}">
-                    <a href="{% url 'view_all_exam_roles' %}"><i class="fa fa-bell"></i> <span> View all Exam Roles</span></a>
-                </li>
-
-<!--
-                <li class="submenu {% active_link 'staff_view_all_question_papers' 'active' %}">
-                    <a href="#"><i class="fas fa-clock"></i> <span>Question Paper</span> <span
+                <li class="submenu {% active_link 'add_subject_semester' 'active' %} {% active_link 'view_subject_semester' 'active' %}">
+                    <a href="#"><i class="fas fa-clock"></i> <span> Subject & Semester</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{% url 'staff_view_all_question_papers' %}">View All Question Papers</a></li>
+                        <li><a href="{% url 'add_subject_semester' %}">Add Subject & Session </a></li>
+                        <li><a href="{% url 'view_subject_semester' %}">View Subject & Session </a></li>
                     </ul>
                 </li>
--->
+
+                <li class="submenu {% active_link 'add_faculty_subject_semester' 'active' %} {% active_link 'view_faculty_subject_semester' 'active' %}">
+                    <a href="#"><i class="fas fa-clock"></i> <span>Faculty, Subject & Semester</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{% url 'add_faculty_subject_semester' %}">Add Faculty, Subject & Session </a></li>
+                        <li><a href="{% url 'view_faculty_subject_semester' %}">View Faculty, Subject & Session </a></li>
+                    </ul>
+                </li>
+
+
+                <li class="{% active_link 'assign_exam_roles' 'active' %}">
+                    <a href="{% url 'assign_exam_roles' %}"><i class="fa fa-bell"></i>
+                        <span>Assign Exam Roles</span></a>
+                </li>
+                <li class="{% active_link 'view_all_exam_roles' 'active' %}">
+                    <a href="{% url 'view_all_exam_roles' %}"><i class="fa fa-bell"></i>
+                        <span> View all Exam Roles</span></a>
+                </li>
+
+                <!--
+                                <li class="submenu {% active_link 'staff_view_all_question_papers' 'active' %}">
+                                    <a href="#"><i class="fas fa-clock"></i> <span>Question Paper</span> <span
+                                            class="menu-arrow"></span></a>
+                                    <ul>
+                                        <li><a href="{% url 'staff_view_all_question_papers' %}">View All Question Papers</a></li>
+                                    </ul>
+                                </li>
+                -->
                 <li class="{% active_link 'staff_send_notification' 'active' %}">
                     <a href="{% url 'staff_send_notification' %}"><i class="fa fa-bell"></i> <span> Send Staff Notification</span></a>
                 </li>

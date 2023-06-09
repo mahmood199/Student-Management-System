@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Add Faculty, Subject and Semester</h3>
+
+            </div>
+        </div>
+    </div>
+    {% include 'includes/messages.html' %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{% url 'add_faculty_subject_semester' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="form-title"><span>Faculty, Subject & Semester Information</span></h5>
+                            </div>
+
+
+                            <br>
+                            <div class="col-12 col-sm-6">
+                                <label>Subject</label>
+                                <select class="form-control" name="subject" required>
+                                    <option disabled selected>Select Subject</option>
+                                    {% for i in subjects %}
+                                    <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="col-12 col-sm-6">
+                                <label>Semester</label>
+                                <select class="form-control" name="semester" required>
+                                    <option disabled selected>Select Semester</option>
+                                    {% for i in semesters %}
+                                    <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="col-12 col-sm-6">
+                                <label>Faculty</label>
+                                <select class="form-control" name="faculties" required>
+                                    <option disabled selected>Select Faculty</option>
+                                    {% for i in departments %}
+                                    <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <br>
+
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-primary">Add Subject_Session</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

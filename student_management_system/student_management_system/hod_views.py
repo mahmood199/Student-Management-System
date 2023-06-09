@@ -1,7 +1,7 @@
 from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notifications, Staff_leave, \
     Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report, CourseV2, \
-    QuestionPaper, \
-    Semester, Department, Exam_Type, SessionV2, SubjectV2, Faculty_Designation
+    QuestionPaper, Faculty, \
+    Semester, Department, Exam_Type, SessionV2, SubjectV2, Faculty_Designation, Subject_Semester, Faculty_Subjects
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -859,4 +859,80 @@ def VIEW_FACULTY(request):
         'faculty_designations': faculty_designations
     }
     return render(request, 'hod/view_faculty.html', context)
+
+
+@login_required(login_url='/')
+def ADD_SUBJECT_SEMESTER(request):
+    if request.method == "POST":
+        selected_subject_id = request.POST.get('subject')
+        selected_semester_id = request.POST.get('semester')
+        selected_department_id = request.POST.get('department')
+        selected_session_id = request.POST.get('session')
+        subject = SubjectV2.objects.get(id=selected_subject_id)
+        semester = Semester.objects.get(id=selected_semester_id)
+        department = Department.objects.get(id=selected_department_id)
+        session = SessionV2.objects.get(id=selected_session_id)
+        subject_semester = Subject_Semester(
+            subject = subject,
+            semester = semester,
+            department = department,
+            session = session,
+        )
+        subject_semester.save()
+        messages.success(request, 'Subject_Session Entry Successful ')
+        return redirect('view_subject_semester')
+    subjects = SubjectV2.objects.all()
+    semesters = Semester.objects.all()
+    departments = Department.objects.all()
+    sessions = SessionV2.objects.all()
+    context = {
+        'subjects' : subjects,
+        'semesters' : semesters,
+        'departments' : departments,
+        'sessions' : sessions,
+    }
+    return render(request, 'hod/add_subject_semester.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_SUBJECT_SEMESTER(request):
+    subject_semester = Subject_Semester.objects.all()
+    context = {
+        'subject_semester': subject_semester,
+    }
+    return render(request, 'hod/view_subject_semester.html',context)
+
+
+
+@login_required(login_url='/')
+def ADD_FACULTY_SUBJECT_SEMESTER(request):
+    if request.method == "POST":
+        selected_subject_id = request.POST.get('subject')
+        selected_semester_id = request.POST.get('semester')
+        selected_faculty_id = request.POST.get('faculty')
+        subject_semester_id = Subject_Semester.objects.get(id=selected_semester_id)
+        faculty = Faculty.objects.get(id=selected_faculty_id)
+        faculty_subject_semester = Faculty_Subjects(
+            faculty = faculty,
+            subject_semester = subject_semester,
+        )
+        faculty_subject_semester.save()
+        messages.success(request, 'Faculty, Subject & Session Entry Successful ')
+        return redirect('view_faculty_subject_semester')
+    subject_semester = Subject_Semester.objects.all()
+    faculties = Faculty.objects.all()
+    context = {
+        'faculties' : faculties,
+        'subject_semester' : subject_semester,
+    }
+    return render(request,'hod/add_faculty_subject_semester.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_FACULTY_SUBJECT_SEMESTER(request):
+    faculty_subject_semester = Faculty_Subjects.objects.all()
+    context = {
+        'faculty_subject_semester' : faculty_subject_semester,
+    }
+    return render(request,'hod/view_faculty_subject_semester.html',context)
 

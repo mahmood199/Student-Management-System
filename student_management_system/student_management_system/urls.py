@@ -79,6 +79,10 @@ urlpatterns = [
                        name='reply_student_feedback'),
                   path('hod/assign_exam_roles', hod_views.ASSIGN_EXAM_ROLE, name='assign_exam_roles'),
                   path('hod/view_all_exam_roles', hod_views.VIEW_ALL_EXAM_ROLES, name='view_all_exam_roles'),
+                  path('hod/add_subject_semester', hod_views.ADD_SUBJECT_SEMESTER, name='add_subject_semester'),
+                  path('hod/view_subject_semester', hod_views.VIEW_SUBJECT_SEMESTER, name='view_subject_semester'),
+                  path('hod/add_faculty_subject_semester', hod_views.ADD_FACULTY_SUBJECT_SEMESTER, name='add_faculty_subject_semester'),
+                  path('hod/view_faculty_subject_semester', hod_views.VIEW_FACULTY_SUBJECT_SEMESTER, name='view_faculty_subject_semester'),
 
 
                   ## Semesters
