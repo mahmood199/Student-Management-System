@@ -4,26 +4,26 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="{% url 'update_course' %}">
+                <form method="post" action="{% url 'add_course_v2' %}">
                     {% csrf_token %}
                     <div class="col-12">
-                        <h5 class="form-title"><span>Edit Course</span></h5>
+                        <h5 class="form-title"><span>Add CourseV2</span></h5>
                     </div>
                     {% include 'includes/messages.html' %}
-                    <div class="col-sm-11">
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label>Course Name</label>
-                            <input type="text" class="form-control" name="name" value="{{course.name}}" required>
-                            <input type="text" class="form-control" name="course_id" value="{{course.id}}" hidden>
+                            <input type="text" class="form-control" name="course_name_v2" required>
                         </div>
+                    </div>
+                    <div class="col-sm-5">
                         <div class="form-group">
                             <label>Duration (in years)</label>
-                            <input type="number" class="form-control" name="duration" value="{{course.duration}}" required>
+                            <input type="number" class="form-control" name="duration" required>
                         </div>
-
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Update Course</button>
+                        <button type="submit" class="btn btn-primary">Add Course</button>
                     </div>
                 </form>
             </div>

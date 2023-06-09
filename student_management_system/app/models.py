@@ -218,7 +218,7 @@ class CourseV2(models.Model):
 
 # Refer notes for usage. Lines 3-15.
 class SessionV2(models.Model):
-    courseV2 = models.ForeignKey(CourseV2, on_delete=models.DO_NOTHING)
+    courseV2 = models.ForeignKey(CourseV2, on_delete=models.DO_NOTHING, null=True)
     session_start = models.DateTimeField(max_length=100)
     session_end = models.DateTimeField(max_length=100)
 
@@ -239,7 +239,7 @@ class Subject_Semester(models.Model):
     semester = models.ForeignKey(Semester, on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
     session = models.ForeignKey(SessionV2, on_delete=models.DO_NOTHING)
-    credits = models.IntegerField()
+    credits = models.IntegerField(default=0)
 
     def __str__(self):
         subject_str = str(self.subject) if self.subject.name else "N/A"
@@ -258,7 +258,7 @@ class Exam_Type(models.Model):
 
 class Faculty_Designation(models.Model):
     name = models.CharField(max_length=100)
-    level = models.IntegerField()
+    level = models.CharField(max_length=10)
 
     def __str__(self):
         return str(self.name) + "_" + str(self.level)
