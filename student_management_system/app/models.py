@@ -239,7 +239,7 @@ class Subject_Semester(models.Model):
     semester = models.ForeignKey(Semester, on_delete=models.DO_NOTHING)
     department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
     session = models.ForeignKey(SessionV2, on_delete=models.DO_NOTHING)
-    credits = models.IntegerField()
+    credits = models.IntegerField(default=0)
 
     def __str__(self):
         subject_str = str(self.subject) if self.subject.name else "N/A"

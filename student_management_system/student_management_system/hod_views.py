@@ -727,6 +727,32 @@ def ADD_SEMESTER(request):
 
 
 @login_required(login_url='/')
+def EDIT_SEMESTER(request, id):
+    semester = Semester.objects.get(id=id)
+
+    context = {
+        'semester': semester
+    }
+
+    return render(request, 'hod/edit_semester.html', context)
+
+
+@login_required(login_url='/')
+def UPDATE_SEMESTER(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        semester_id = request.POST.get('semester_id')
+
+        semester = Semester.objects.get(id=semester_id)
+        semester.name = name
+        semester.save()
+        messages.success(request, 'Semester Successfully Updated ')
+        return redirect('view_semester')
+
+    return render(request, 'hod/edit_semester.html')
+
+
+@login_required(login_url='/')
 def VIEW_SEMESTER(request):
     semester = Semester.objects.all()
     context = {
@@ -862,3 +888,4 @@ def VIEW_FACULTY(request):
         'faculty_designations': faculty_designations
     }
     return render(request, 'hod/view_faculty.html', context)
+

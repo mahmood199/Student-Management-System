@@ -89,8 +89,16 @@ urlpatterns = [
                        name='reply_student_feedback'),
                   path('hod/assign_exam_roles', hod_views.ASSIGN_EXAM_ROLE, name='assign_exam_roles'),
                   path('hod/view_all_exam_roles', hod_views.VIEW_ALL_EXAM_ROLES, name='view_all_exam_roles'),
+
+
+                  ## Semesters
                   path('hod/add_semester', hod_views.ADD_SEMESTER, name='add_semester'),
+                  path('hod/edit_semester/<str:id>', hod_views.EDIT_SEMESTER, name='edit_semester'),
                   path('hod/view_semester', hod_views.VIEW_SEMESTER, name='view_semester'),
+                  path("hod/semester/Update", hod_views.UPDATE_SEMESTER, name="update_semester"),
+
+
+
                   path('hod/add_department', hod_views.ADD_DEPARTMENT, name='add_department'),
                   path('hod/view_department', hod_views.VIEW_DEPARTMENT, name='view_department'),
                   path('hod/add_exam_type', hod_views.ADD_EXAM_TYPE, name='add_exam_type'),
