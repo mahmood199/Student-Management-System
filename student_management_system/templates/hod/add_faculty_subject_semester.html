@@ -35,10 +35,10 @@
                             <br>
                             <div class="col-12 col-sm-6">
                                 <label>Faculty</label>
-                                <select class="form-control" name="faculty" required>
+                                <select class="form-control" name="faculty_id" required>
                                     <option disabled selected>Select Faculty</option>
                                     {% for i in faculties %}
-                                    <option value="{{i.id}}">{{i.name}}</option>
+                                    <option value="{{i.id}}">{{i.admin.first_name}}&nbsp{{i.admin.last_name}} </option>
                                     {% endfor %}
                                 </select>
                             </div>
