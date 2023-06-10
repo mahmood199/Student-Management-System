@@ -27,11 +27,12 @@
                      <thead>
                         <tr>
                            <th>Subject Code</th>
-                           <th>Subject Department</th>
-                           <th>Subject Code</th>
-                           <th>Subject Code</th>
-                           <th>Subject Code</th>
-                           <th>Subject Code</th>
+                           <th>Subject Name</th>
+                           <th>Department</th>
+                           <th>Semester</th>
+                           <th>Session Start</th>
+                           <th>Session End</th>
+                           <th>Exam Type</th>
                            <th>Setter</th>
                            <th>Moderator</th>
                            <th>Examiner</th>
@@ -42,13 +43,18 @@
                      <tbody>
                         {% for i in exams %}
                         <tr>
-                           <td>{{i.id}}</td>
+                           <td>{{i.subjectSemester.subject.code}}</td>
+                           <td>{{i.subjectSemester.subject.name}}</td>
                            <td>{{i.subjectSemester.department.name}}</td>
-                           <td>{{i.admin.email}}</td>
-                           <td>{{i.gender}}</td>
-                           <td>{{i.address}}</td>
-                           <td>{{i.created_at}}</td>
-                           <td>{{i.updated_at}}</td>
+                           <td>{{i.subjectSemester.semester.name}}</td>
+                           <td>{{i.subjectSemester.session.session_start}}</td>
+                           <td>{{i.subjectSemester.session.session_end}}</td>
+                           <td>{{i.exam_type.name}}</td>
+                           <td>{{i.paper_setter_faculty.admin.first_name}} {{i.paper_setter_faculty.admin.last_name}}</td>
+                           <td>{{i.moderator_faculty.admin.first_name}} {{i.moderator_faculty.admin.last_name}}</td>
+                           <td>{{i.examiner_faculty.admin.first_name}} {{i.examiner_faculty.admin.last_name}}</td>
+                           <td>{{i.scrutinizer_faculty.admin.first_name}} {{i.scrutinizer_faculty.admin.last_name}}</td>
+                           <td>{{i.head_examiner_faculty.admin.first_name}} {{i.head_examiner_faculty.admin.last_name}}</td>
                         </tr>
                         {% endfor %}
                      </tbody>
