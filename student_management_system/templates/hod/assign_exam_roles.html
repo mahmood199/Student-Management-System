@@ -5,144 +5,91 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="{% url 'add_staff' %}" enctype="multipart/form-data">
+                <form method="post" action="{% url 'assign_exam_roles' %}" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="col-12">
-                        <h5 class="form-title"><span>Assign Staffs to their Examination Roles</span></h5>
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Assign Staffs to their Examination Roles</span></h5>
+                        </div>
+                        {% include 'includes/messages.html' %}
+                        <div class="col-12 col-sm-6">
+                            <label>Select Subject Semester</label>
+                            <select class="form-control" name="subject_semester_id" required>
+                                <option disabled selected>Select Subject Semester</option>
+                                {% for i in subject_semesters %}
+                                <option value="{{i.id}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-sm-6">
+                            <label>Select Exam Type</label>
+                            <select class="form-control" name="exam_type_id" required>
+                                <option disabled selected>Select Exam Type</option>
+                                {% for i in exam_types %}
+                                <option value="{{i.id}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Select Setter</label>
+                            <select class="form-control" name="setter_faculty_id" required>
+                                <option disabled selected>Setter Faculty</option>
+                                {% for i in faculties %}
+                                <option value="{{i.id}}">{{i.admin.first_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Select Moderator</label>
+                            <select class="form-control" name="moderator_faculty_id" required>
+                                <option disabled selected>Moderator Faculty</option>
+                                {% for i in faculties %}
+                                <option value="{{i.id}}">{{i.admin.first_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Select Examiner</label>
+                            <select class="form-control" name="examiner_faculty_id" required>
+                                <option disabled selected>Examiner Faculty</option>
+                                {% for i in faculties %}
+                                <option value="{{i.id}}">{{i.admin.first_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Select Scrutinizer</label>
+                            <select class="form-control" name="scrutinizer_faculty_id" required>
+                                <option disabled selected>Scrutinizer Faculty</option>
+                                {% for i in faculties %}
+                                <option value="{{i.id}}">{{i.admin.first_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Select Head Examiner</label>
+                            <select class="form-control" name="head_examiner_faculty_id" required>
+                                <option disabled selected>Head Examiner Faculty</option>
+                                {% for i in faculties %}
+                                <option value="{{i.id}}">{{i.admin.first_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Total Marks</label>
+                            <input type="text" class="form-control" name="total_marks" required>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
                     </div>
-
-                    {% include 'includes/messages.html' %}
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Session Year</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>From  ||  To</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Department</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Dept.</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Semester</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Sem</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Subject</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Subject</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Setter</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Name_Staff_id</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Setter</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Name_Staff_id</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Setter</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Name_Staff_id</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Moderator</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Name_Staff_id</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Examiner</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Name_Staff_id</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Scrutinizer</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Name_Staff_id</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-                    <div class="col-12 col-sm-6">
-                        <label>Select Head Examiner</label>
-                        <select class="form-control" name="course_id" required>
-                            <option>Name_Staff_id</option>
-                            {% for i in course %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <br>
-
-
-
-                    <br>
-                    <br>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-
                 </form>
             </div>
         </div>

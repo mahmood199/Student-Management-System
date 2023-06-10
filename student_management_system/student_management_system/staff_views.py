@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from app.models import Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report, \
-    StudentResult, Faculty
+    StudentResult, Faculty, Exam
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
@@ -441,28 +441,47 @@ def DOWNLOAD_QUESTION_PAPER_PDF(request, id):
         return HttpResponseNotFound("Question paper not found")
 
 
-
-
-
 # this staff will set ques paper
 @login_required(login_url='/')
 def STAFF_SETTER(request):
     return render(request, 'staff/staff_setter.html')
 
+
 @login_required(login_url='/')
 def STAFF_MODERATOR(request):
     return render(request, 'staff/staff_moderator.html')
 
+
 @login_required(login_url='/')
 def STAFF_EXAMINER(requesrt):
-    return render(requesrt,'staff/staff_examiner.html')
+    return render(requesrt, 'staff/staff_examiner.html')
 
 
 @login_required(login_url='/')
 def STAFF_SCRUTINIZER(requesrt):
-    return render(requesrt,'staff/staff_scrutinizer.html')
+    return render(requesrt, 'staff/staff_scrutinizer.html')
 
 
 @login_required(login_url='/')
 def STAFF_HEAD_EXAMINER(requesrt):
-    return render(requesrt,'staff/staff_head_examiner.html')
+    return render(requesrt, 'staff/staff_head_examiner.html')
+
+
+@login_required(login_url='/')
+def VIEW_MY_EXAM_ROLES(request):
+    logged_in_user = Faculty.objects.get(admin=request.user.id)
+
+    exams = Exam.objects.filter(
+        Q(paper_setter_faculty=logged_in_user) |
+        Q(examiner_faculty=logged_in_user) |
+        Q(moderator_faculty=logged_in_user) |
+        Q(scrutinizer_faculty=logged_in_user) |
+        Q(head_examiner_faculty=logged_in_user)
+    )
+
+    context = {
+        'exams': exams,
+        'logged_in_user': logged_in_user
+    }
+
+    return render(request, 'staff/view_my_exam_roles.html', context)
