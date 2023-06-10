@@ -66,6 +66,15 @@
                         </select>
                     </div>
                     <br>
+                    <div class="col-12 col-sm-6">
+                        <label>Designation</label>
+                        <select class="form-control" name="designation" required>
+                            <option disabled selected>Select Designation</option>
+                            {% for i in designations %}
+                            <option value="{{i.id}}">{{i.name}}&nbsp;(Level-{{i.level}})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <br>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">Add Staff</button>

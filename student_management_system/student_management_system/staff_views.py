@@ -1,9 +1,9 @@
-from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, QuestionPaper
+from app.models import Course, Session_Year, CustomUser, Student, Subject, QuestionPaper
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from app.models import Staff, Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report, \
-    StudentResult
+from app.models import Staff_Notifications, Staff_leave, Staff_Feedback, Attendance, Attendance_Report, \
+    StudentResult, Faculty
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
@@ -18,7 +18,7 @@ def HOME(request):
 
 @login_required(login_url='/')
 def NOTIFICATIONS(request):
-    staff = Staff.objects.filter(admin=request.user.id)
+    staff = Faculty.objects.filter(admin=request.user.id)
     for i in staff:
         staff_id = i.id
 
@@ -40,7 +40,7 @@ def STAFF_NOTIFICATION_MARK_AS_DONE(request, status):
 
 @login_required(login_url='/')
 def STAFF_APPLY_LEAVE(request):
-    staff = Staff.objects.filter(admin=request.user.id)
+    staff = Faculty.objects.filter(admin=request.user.id)
     for i in staff:
         staff_id = i.id
 
@@ -58,7 +58,7 @@ def STAFF_APPLY_LEAVE_SAVE(request):
         leave_date = request.POST.get('leave_date')
         leave_message = request.POST.get('leave_message')
 
-        staff = Staff.objects.get(admin=request.user.id)
+        staff = Faculty.objects.get(admin=request.user.id)
 
         leave = Staff_leave(
             staff_id=staff,
@@ -73,7 +73,7 @@ def STAFF_APPLY_LEAVE_SAVE(request):
 
 @login_required(login_url='/')
 def STAFF_FEEDBACK(request):
-    staff_id = Staff.objects.get(admin=request.user.id)
+    staff_id = Faculty.objects.get(admin=request.user.id)
 
     feedback_history = Staff_Feedback.objects.filter(staff_id=staff_id)
 
@@ -88,7 +88,7 @@ def STAFF_FEEDBACK_SAVE(request):
     if request.method == "POST":
         feedback = request.POST.get('feedback')
 
-        staff = Staff.objects.get(admin=request.user.id)
+        staff = Faculty.objects.get(admin=request.user.id)
         feedback = Staff_Feedback(
             staff_id=staff,
             feedback=feedback,
@@ -100,7 +100,7 @@ def STAFF_FEEDBACK_SAVE(request):
 
 @login_required(login_url='/')
 def STAFF_TAKE_ATTENDANCE(request):
-    staff_id = Staff.objects.get(admin=request.user.id)
+    staff_id = Faculty.objects.get(admin=request.user.id)
     subject = Subject.objects.filter(staff=staff_id)
     session_year = Session_Year.objects.all()
     action = request.GET.get('action')
@@ -168,7 +168,7 @@ def STAFF_SAVE_ATTENDANCE(request):
 
 @login_required(login_url='/')
 def STAFF_VIEW_ATTENDANCE(request):
-    staff_id = Staff.objects.get(admin=request.user.id)
+    staff_id = Faculty.objects.get(admin=request.user.id)
 
     subject = Subject.objects.filter(staff_id=staff_id)
     session_year = Session_Year.objects.all()
@@ -208,7 +208,7 @@ def STAFF_VIEW_ATTENDANCE(request):
 
 @login_required(login_url='/')
 def STAFF_ADD_RESULT(request):
-    staff = Staff.objects.get(admin=request.user.id)
+    staff = Faculty.objects.get(admin=request.user.id)
 
     subjects = Subject.objects.filter(staff_id=staff)
     session_year = Session_Year.objects.all()
@@ -277,7 +277,7 @@ def STAFF_SAVE_RESULT(request):
 @login_required(login_url='/')
 def STAFF_ADD_QUESTION_PAPER(request):
     subjects = Subject.objects.all()
-    staff = Staff.objects.exclude(admin=request.user.id)
+    staff = Faculty.objects.exclude(admin=request.user.id)
     session_years = Session_Year.objects.all()
 
     if request.method == "POST":
@@ -287,12 +287,12 @@ def STAFF_ADD_QUESTION_PAPER(request):
         session_year_id = request.POST.get('session_year_id')
         session_year = Session_Year.objects.get(id=session_year_id)
 
-        question_setter_staff = Staff.objects.get(admin=request.user.id)
+        question_setter_staff = Faculty.objects.get(admin=request.user.id)
 
         reviewer_staff_id = request.POST.get('reviewer_staff_id')
         print(reviewer_staff_id)
 
-        reviewer_staff = Staff.objects.get(id=reviewer_staff_id)
+        reviewer_staff = Faculty.objects.get(id=reviewer_staff_id)
         print(reviewer_staff.admin.first_name)
         print(reviewer_staff.admin.last_name)
 
@@ -323,7 +323,7 @@ def STAFF_ADD_QUESTION_PAPER(request):
 
 @login_required(login_url='/')
 def VIEW_ALL_QUESTION_PAPERS(request):
-    logged_in_user = Staff.objects.get(admin=request.user.id)
+    logged_in_user = Faculty.objects.get(admin=request.user.id)
 
     if logged_in_user is not None:
         print("Debugging starts here")

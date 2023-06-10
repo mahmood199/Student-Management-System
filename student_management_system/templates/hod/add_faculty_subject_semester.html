@@ -22,35 +22,22 @@
                                 <h5 class="form-title"><span>Faculty, Subject & Semester Information</span></h5>
                             </div>
 
-
                             <br>
                             <div class="col-12 col-sm-6">
-                                <label>Subject</label>
-                                <select class="form-control" name="subject" required>
-                                    <option disabled selected>Select Subject</option>
-                                    {% for i in subjects %}
-                                    <option value="{{i.id}}">{{i.name}}</option>
+                                <label>Subject Semester</label>
+                                <select class="form-control" name="subject_semester" required>
+                                    <option disabled selected>Select Subject Semester</option>
+                                    {% for i in subject_semester %}
+                                    <option value="{{i.id}}">{{i.department.name}}&nbsp;{{i.session.courseV2.name}}&nbsp;{{i.session.session_start}}&nbsp;{{i.subject.name}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <br>
-                            <br>
-                            <div class="col-12 col-sm-6">
-                                <label>Semester</label>
-                                <select class="form-control" name="semester" required>
-                                    <option disabled selected>Select Semester</option>
-                                    {% for i in semesters %}
-                                    <option value="{{i.id}}">{{i.name}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <br>
                             <br>
                             <div class="col-12 col-sm-6">
                                 <label>Faculty</label>
-                                <select class="form-control" name="faculties" required>
+                                <select class="form-control" name="faculty" required>
                                     <option disabled selected>Select Faculty</option>
-                                    {% for i in departments %}
+                                    {% for i in faculties %}
                                     <option value="{{i.id}}">{{i.name}}</option>
                                     {% endfor %}
                                 </select>
@@ -58,7 +45,7 @@
                             <br>
 
                             <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-primary">Add Subject_Session</button>
+                                <button type="submit" class="btn btn-primary">Add Faculty for a Subject Session</button>
                             </div>
                         </div>
                     </form>
