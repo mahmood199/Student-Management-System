@@ -485,3 +485,39 @@ def VIEW_MY_EXAM_ROLES(request):
     }
 
     return render(request, 'staff/view_my_exam_roles.html', context)
+
+
+@login_required(login_url='/')
+def SETTER_ADD_QUESTION_PAPER(request, id):
+    if request.method == "POST":
+        exam_id = request.POST.get('exam_id')
+        exam = Exam.objects.get(id=exam_id)
+        question_paper_pdf = request.FILES.get('question_paper_pdf')
+        exam.question_paper_from_paper_setter = question_paper_pdf
+        exam.save()
+        messages.success(request, 'Added question paper for setter')
+        return redirect('setter_add_question_paper')
+
+    exam = Exam.objects.get(id=id)
+    context = {
+        'exam': exam
+    }
+    return render(request, 'staff/setter_question_paper_for_exam', context)
+
+
+@login_required(login_url='/')
+def MODERATOR_ADD_QUESTION_PAPER(request, id):
+    if request.method == "POST":
+        exam_id = request.POST.get('exam_id')
+        exam = Exam.objects.get(id=exam_id)
+        question_paper_pdf = request.FILES.get('question_paper_pdf')
+        exam.question_paper_from_moderator = question_paper_pdf
+        exam.save()
+        messages.success(request, 'Added for question paper  for setter')
+        return redirect('moderator_add_question_paper')
+
+    exam = Exam.objects.get(id=id)
+    context = {
+        'exam': exam
+    }
+    return render(request, 'staff/moderator_question_paper_for_exam', context)
