@@ -38,6 +38,7 @@
                            <th>Examiner</th>
                            <th>Scrutinizer</th>
                            <th>Head Examiner</th>
+                           <th>Total Marks</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -55,6 +56,7 @@
                            <td>{{i.examiner_faculty.admin.first_name}} {{i.examiner_faculty.admin.last_name}}</td>
                            <td>{{i.scrutinizer_faculty.admin.first_name}} {{i.scrutinizer_faculty.admin.last_name}}</td>
                            <td>{{i.head_examiner_faculty.admin.first_name}} {{i.head_examiner_faculty.admin.last_name}}</td>
+                           <td>{{i.marks_total}}</td>
                         </tr>
                         {% endfor %}
                      </tbody>
