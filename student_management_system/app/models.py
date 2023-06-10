@@ -47,25 +47,28 @@ class Student(models.Model):
         return self.admin.first_name + " " + self.admin.last_name
 
 
-# Not a good practice
+class Faculty_Designation(models.Model):
+    name = models.CharField(max_length=100)
+    level = models.CharField(max_length=10)
 
-class Staff(models.Model):
+    def __str__(self):
+        return str(self.name) + "_" + str(self.level)
+
+
+class Faculty(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     address = models.TextField()
     gender = models.CharField(max_length=100)
-
-    # these 2 Not required.Add designation, joining date etc etc
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    faculty_designation = models.ForeignKey(Faculty_Designation, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return self.admin.username
+        return self.admin.first_name + " " + self.admin.last_name
 
 
 class Subject(models.Model):
     name = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    staff = models.ForeignKey(Faculty, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -74,7 +77,7 @@ class Subject(models.Model):
 
 
 class Staff_Notifications(models.Model):
-    staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    staff_id = models.ForeignKey(Faculty, on_delete=models.CASCADE)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(null=True, default=0)
@@ -94,7 +97,7 @@ class Student_Notification(models.Model):
 
 
 class Staff_leave(models.Model):
-    staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    staff_id = models.ForeignKey(Faculty, on_delete=models.CASCADE)
     data = models.CharField(max_length=100)
     message = models.TextField()
     status = models.IntegerField(default=0)
@@ -118,7 +121,7 @@ class Student_leave(models.Model):
 
 
 class Staff_Feedback(models.Model):
-    staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    staff_id = models.ForeignKey(Faculty, on_delete=models.CASCADE)
     feedback = models.TextField()
     feedback_reply = models.TextField()
     status = models.IntegerField(default=0)
@@ -177,9 +180,9 @@ class StudentResult(models.Model):
 class QuestionPaper(models.Model):
     subject_id = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
     session_year_id = models.ForeignKey(Session_Year, on_delete=models.DO_NOTHING)
-    question_setter_staff_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING,
+    question_setter_staff_id = models.ForeignKey(Faculty, on_delete=models.DO_NOTHING,
                                                  related_name="question_setter_staff_id")
-    reviewer_staff_id = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, related_name="reviewer_staff_id")
+    reviewer_staff_id = models.ForeignKey(Faculty, on_delete=models.DO_NOTHING, related_name="reviewer_staff_id")
     status = models.IntegerField()
     pdf = models.FileField(upload_to='pdf.files/')
     review_comments = models.TextField()
@@ -254,24 +257,6 @@ class Exam_Type(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Faculty_Designation(models.Model):
-    name = models.CharField(max_length=100)
-    level = models.CharField(max_length=10)
-
-    def __str__(self):
-        return str(self.name) + "_" + str(self.level)
-
-
-class Faculty(models.Model):
-    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    address = models.TextField()
-    gender = models.CharField(max_length=10)
-    faculty_designation = models.ForeignKey(Faculty_Designation, on_delete=models.DO_NOTHING)
-
-    def __str__(self):
-        return str(self.admin.first_name) + "_" + str(self.address) + "_" + str(self.gender) + "_" + str(self.faculty_designation.name)
 
 
 class Exam(models.Model):

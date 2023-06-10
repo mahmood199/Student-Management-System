@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">View Faculty</h3>
+
+            </div>
+            <div class="col-auto text-right float-right ml-auto">
+                <!--            <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>-->
+                <!--            <a href="add-student.html" class="btn btn-primary"><i class="fas fa-plus"></i></a>-->
+            </div>
+        </div>
+    </div>
+    {% include 'includes/messages.html' %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="table_id" class="table table-hover table-center mb-0">
+                            <thead>
+                            <tr>
+                                <th>Serial No.</th>
+                                <th>Faculty Designation</th>
+                                <th>Faculty Level</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in faculty_designations %}
+                            <tr>
+                                <td>{{i.id}}</td>
+                                <td>{{i.name}}</td>
+                                <td>{{i.level}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

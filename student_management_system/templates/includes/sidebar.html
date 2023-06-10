@@ -38,7 +38,7 @@
                     </ul>
                 </li>
                 <li class="submenu {% active_link 'add_staff' 'active' %} {% active_link 'view_staff' 'active' %}">
-                    <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Staff</span> <span
+                    <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span>Faculty</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="{% url 'add_staff' %}">Add Staff</a></li>
@@ -46,11 +46,11 @@
                     </ul>
                 </li>
 
-                <li class="submenu {% active_link 'add_faculty' 'active' %} {% active_link 'view_faculty' 'active' %}">
-                    <a href="#"><i class="fas fa-clock"></i> <span> Faculty</span> <span class="menu-arrow"></span></a>
+                <li class="submenu {% active_link 'add_faculty_designation' 'active' %} {% active_link 'view_faculty_designations' 'active' %}">
+                    <a href="#"><i class="fas fa-clock"></i> <span>Faculty Designation</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{% url 'add_faculty' %}">Add Faculty </a></li>
-                        <li><a href="{% url 'view_faculty' %}">View Faculty </a></li>
+                        <li><a href="{% url 'add_faculty_designation' %}">Add Faculty Designation</a></li>
+                        <li><a href="{% url 'view_faculty_designations' %}">View Faculty Designations</a></li>
                     </ul>
                 </li>
 

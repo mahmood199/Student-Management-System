@@ -117,8 +117,8 @@ urlpatterns = [
 
 
 
-                  path('hod/add_faculty', hod_views.ADD_FACULTY, name='add_faculty'),
-                  path('hod/view_faculty', hod_views.VIEW_FACULTY, name='view_faculty'),
+                  path('hod/add_faculty_designation', hod_views.ADD_FACULTY_DESIGNATIONS, name='add_faculty_designation'),
+                  path('hod/view_faculty_designations', hod_views.VIEW_FACULTY_DESIGNATIONS, name='view_faculty_designations'),
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
