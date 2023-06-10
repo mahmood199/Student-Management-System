@@ -81,11 +81,12 @@
                     </ul>
                 </li>
 
-                <li class="submenu {% active_link 'add_exam_type' 'active' %} {% active_link 'view_exam_type' 'active' %}">
+                <li class="submenu {% active_link 'add_exam_type' 'active' %} {% active_link 'view_exam_types' 'active' %}">
                     <a href="#"><i class="fas fa-text-height"></i> <span> Exam Type</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="{% url 'add_exam_type' %}">Add Exam Type</a></li>
+                        <li><a href="{% url 'view_exam_types' %}">View Exam Types</a></li>
                     </ul>
                 </li>
 
@@ -111,29 +112,10 @@
                     <a href="#"><i class="fas fa-clock"></i> <span>Exam Roles</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{% url 'assign_exam_roles' %}">Assign Exam Roles </a></li>
-                        <li><a href="{% url 'view_all_exam_roles' %}">View all Exam Roles </a></li>
+                        <li><a href="{% url 'assign_exam_roles' %}">Assign Exam Roles</a></li>
+                        <li><a href="{% url 'view_all_exam_roles' %}">View All Exam Roles</a></li>
                     </ul>
                 </li>
-
-<!--                <li class="{% active_link 'assign_exam_roles' 'active' %}">-->
-<!--                    <a href="{% url 'assign_exam_roles' %}"><i class="fa fa-bell"></i>-->
-<!--                        <span>Assign Exam Roles</span></a>-->
-<!--                </li>-->
-<!--                <li class="{% active_link 'view_all_exam_roles' 'active' %}">-->
-<!--                    <a href="{% url 'view_all_exam_roles' %}"><i class="fa fa-bell"></i>-->
-<!--                        <span> View all Exam Roles</span></a>-->
-<!--                </li>-->
-
-                <!--
-                                <li class="submenu {% active_link 'staff_view_all_question_papers' 'active' %}">
-                                    <a href="#"><i class="fas fa-clock"></i> <span>Question Paper</span> <span
-                                            class="menu-arrow"></span></a>
-                                    <ul>
-                                        <li><a href="{% url 'staff_view_all_question_papers' %}">View All Question Papers</a></li>
-                                    </ul>
-                                </li>
-                -->
                 <li class="{% active_link 'staff_send_notification' 'active' %}">
                     <a href="{% url 'staff_send_notification' %}"><i class="fa fa-bell"></i> <span> Send Staff Notification</span></a>
                 </li>

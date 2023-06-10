@@ -273,7 +273,7 @@ class Exam(models.Model):
     # Exam Papers
     question_paper_from_paper_setter = models.FileField(upload_to='pdf.files/', null=True)
     question_paper_from_moderator = models.FileField(upload_to='pdf.files/', null=True)
-    status = models.IntegerField()
+    status = models.IntegerField(default=0)
     marks_total = models.IntegerField()
 
     def __str__(self):

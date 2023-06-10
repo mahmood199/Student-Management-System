@@ -1,7 +1,7 @@
 from app.models import Course, Session_Year, CustomUser, Student, Subject, Staff_Notifications, Staff_leave, \
     Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report, CourseV2, \
     QuestionPaper, Faculty, \
-    Semester, Department, Exam_Type, SessionV2, SubjectV2, Faculty_Designation, Subject_Semester, Faculty_Subjects
+    Semester, Department, Exam, Exam_Type, SessionV2, SubjectV2, Faculty_Designation, Subject_Semester, Faculty_Subjects
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -693,12 +693,75 @@ def PROFILE(request):
 
 @login_required(login_url='/')
 def VIEW_ALL_EXAM_ROLES(request):
-    return render(request, 'hod/view_all_exam_roles.html')
+    exams = Exam.objects.all()
+    print(str(exams.count()))
+    context = {
+        'exams': exams
+    }
+    return render(request, 'hod/view_all_exam_roles.html', context)
 
 
 @login_required(login_url='/')
 def ASSIGN_EXAM_ROLE(request):
-    return render(request, 'hod/assign_exam_roles.html')
+    if request.method == 'POST':
+        subject_semester_id = request.POST.get('subject_semester_id')
+        print(str(subject_semester_id))
+        subject_semester = Subject_Semester.objects.get(id=subject_semester_id)
+
+        exam_type_id = request.POST.get('exam_type_id')
+        print(str(exam_type_id))
+        exam_type = Exam_Type.objects.get(id=exam_type_id)
+
+        setter_faculty_id = request.POST.get('setter_faculty_id')
+        print(str(setter_faculty_id))
+        setter_faculty = Faculty.objects.get(id=setter_faculty_id)
+
+        moderator_faculty_id = request.POST.get('moderator_faculty_id')
+        print(str(moderator_faculty_id))
+        moderator_faculty = Faculty.objects.get(id=moderator_faculty_id)
+
+        examiner_faculty_id = request.POST.get('examiner_faculty_id')
+        print(str(examiner_faculty_id))
+        examiner_faculty = Faculty.objects.get(id=examiner_faculty_id)
+
+        scrutinizer_faculty_id = request.POST.get('scrutinizer_faculty_id')
+        print(str(scrutinizer_faculty_id))
+        scrutinizer_faculty = Faculty.objects.get(id=scrutinizer_faculty_id)
+
+        head_examiner_faculty_id = request.POST.get('head_examiner_faculty_id')
+        print(str(head_examiner_faculty_id))
+        head_examiner_faculty = Faculty.objects.get(id=head_examiner_faculty_id)
+
+        total_marks = request.POST.get('total_marks')
+        print(str(total_marks))
+
+        exam = Exam(
+            subjectSemester=subject_semester,
+            exam_type=exam_type,
+
+            paper_setter_faculty=setter_faculty,
+            examiner_faculty=examiner_faculty,
+            moderator_faculty=moderator_faculty,
+            scrutinizer_faculty=scrutinizer_faculty,
+            head_examiner_faculty=head_examiner_faculty,
+
+            marks_total=total_marks
+        )
+        exam.save()
+        messages.success(request, 'Exam added successfully')
+        return redirect('view_all_exam_roles')
+
+    subject_semesters = Subject_Semester.objects.all()
+    faculties = Faculty.objects.all()
+    exam_types = Exam_Type.objects.all()
+
+    context = {
+        'subject_semesters': subject_semesters,
+        'faculties': faculties,
+        'exam_types': exam_types,
+    }
+
+    return render(request, 'hod/assign_exam_roles.html', context)
 
 
 @login_required(login_url='/')
@@ -781,8 +844,18 @@ def ADD_EXAM_TYPE(request):
             name=name,
         )
         exam_type.save()
-        messages.success(request, 'Exam Type Entry Successful ')
+        messages.success(request, 'New exam type added')
+        return redirect('view_exam_types')
     return render(request, 'hod/add_exam_type.html')
+
+
+@login_required(login_url='/')
+def VIEW_EXAM_TYPES(request):
+    exam_types = Exam_Type.objects.all()
+    context = {
+        'exam_types': exam_types
+    }
+    return render(request, 'hod/view_exam_types.html', context)
 
 
 @login_required(login_url='/')
@@ -874,6 +947,7 @@ def ADD_SUBJECT_SEMESTER(request):
         selected_semester_id = request.POST.get('semester')
         selected_department_id = request.POST.get('department')
         selected_session_id = request.POST.get('session')
+        credits = request.POST.get('credits')
         subject = SubjectV2.objects.get(id=selected_subject_id)
         semester = Semester.objects.get(id=selected_semester_id)
         department = Department.objects.get(id=selected_department_id)
@@ -883,6 +957,7 @@ def ADD_SUBJECT_SEMESTER(request):
             semester=semester,
             department=department,
             session=session,
+            credits=credits,
         )
         subject_semester.save()
         messages.success(request, 'Subject_Session Entry Successful ')

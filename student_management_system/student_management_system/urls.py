@@ -75,8 +75,13 @@ urlpatterns = [
                   path('hod/Student/feedback', hod_views.STUDENT_FEEDBACK, name='get_student_feedback'),
                   path('hod/Student/feedback/reply/save', hod_views.REPLY_STUDENT_FEEDBACK,
                        name='reply_student_feedback'),
+
+
                   path('hod/assign_exam_roles', hod_views.ASSIGN_EXAM_ROLE, name='assign_exam_roles'),
                   path('hod/view_all_exam_roles', hod_views.VIEW_ALL_EXAM_ROLES, name='view_all_exam_roles'),
+
+
+
                   path('hod/add_subject_semester', hod_views.ADD_SUBJECT_SEMESTER, name='add_subject_semester'),
                   path('hod/view_subject_semester', hod_views.VIEW_SUBJECT_SEMESTER, name='view_subject_semester'),
                   path('hod/add_faculty_subject_semester', hod_views.ADD_FACULTY_SUBJECT_SEMESTER,
@@ -92,7 +97,10 @@ urlpatterns = [
 
                   path('hod/add_department', hod_views.ADD_DEPARTMENT, name='add_department'),
                   path('hod/view_department', hod_views.VIEW_DEPARTMENT, name='view_department'),
+
                   path('hod/add_exam_type', hod_views.ADD_EXAM_TYPE, name='add_exam_type'),
+                  path('hod/view_exam_type', hod_views.VIEW_EXAM_TYPES, name='view_exam_types'),
+
                   path('hod/add_session_v2', hod_views.ADD_SESSION_V2, name='add_session_v2'),
                   path('hod/view_session_v2', hod_views.VIEW_SESSION_V2, name='view_session_v2'),
 

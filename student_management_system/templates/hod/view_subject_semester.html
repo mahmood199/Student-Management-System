@@ -27,6 +27,7 @@
                            <th>Subject</th>
                            <th>Semester</th>
                            <th>Department</th>
+                           <th>Credits</th>
                            <th>Session Start</th>
                            <th>Session End</th>
                         </tr>
@@ -37,7 +38,8 @@
                            <td>{{forloop.counter}}</td>
                            <td>{{i.subject}}</td>
                            <td>{{i.semester}}</td>
-                           <td>{{i.department}}</td>
+                           <td>{{i.department.abbreviation}}</td>
+                           <td>{{i.credits}}</td>
                            <td>{{i.session.session_start}}</td>
                            <td>{{i.session.session_end}}</td>
                         </tr>
