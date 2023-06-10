@@ -466,3 +466,7 @@ def STAFF_SCRUTINIZER(requesrt):
 @login_required(login_url='/')
 def STAFF_HEAD_EXAMINER(requesrt):
     return render(requesrt,'staff/staff_head_examiner.html')
+
+@login_required(login_url='/')
+def VIEW_MY_EXAM_ROLES(request):
+    return render(request, 'staff/view_my_exam_roles.html')

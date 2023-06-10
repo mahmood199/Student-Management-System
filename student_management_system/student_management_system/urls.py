@@ -35,13 +35,11 @@ urlpatterns = [
                   path('hod/student/Update', hod_views.UPDATE_STUDENT, name='update_student'),
                   path('hod/student/Delete/<str:admin>', hod_views.DELETE_STUDENT, name='delete_student'),
 
-
                   path("hod/staff/Add", hod_views.ADD_STAFF, name="add_staff"),
                   path("hod/staff/View", hod_views.VIEW_STAFF, name="view_staff"),
                   path("hod/staff/Edit/<str:id>", hod_views.EDIT_STAFF, name="edit_staff"),
                   path("hod/staff/Update", hod_views.UPDATE_STAFF, name="update_staff"),
                   path("hod/staff/Delete/<str:admin>", hod_views.DELETE_STAFF, name="delete_staff"),
-
 
                   path("hod/session/Add", hod_views.ADD_SESSION, name="add_session"),
                   path("hod/session/View", hod_views.VIEW_SESSION, name="view_session"),
@@ -81,9 +79,10 @@ urlpatterns = [
                   path('hod/view_all_exam_roles', hod_views.VIEW_ALL_EXAM_ROLES, name='view_all_exam_roles'),
                   path('hod/add_subject_semester', hod_views.ADD_SUBJECT_SEMESTER, name='add_subject_semester'),
                   path('hod/view_subject_semester', hod_views.VIEW_SUBJECT_SEMESTER, name='view_subject_semester'),
-                  path('hod/add_faculty_subject_semester', hod_views.ADD_FACULTY_SUBJECT_SEMESTER, name='add_faculty_subject_semester'),
-                  path('hod/view_faculty_subject_semester', hod_views.VIEW_FACULTY_SUBJECT_SEMESTER, name='view_faculty_subject_semester'),
-
+                  path('hod/add_faculty_subject_semester', hod_views.ADD_FACULTY_SUBJECT_SEMESTER,
+                       name='add_faculty_subject_semester'),
+                  path('hod/view_faculty_subject_semester', hod_views.VIEW_FACULTY_SUBJECT_SEMESTER,
+                       name='view_faculty_subject_semester'),
 
                   ## Semesters
                   path('hod/add_semester', hod_views.ADD_SEMESTER, name='add_semester'),
@@ -91,22 +90,16 @@ urlpatterns = [
                   path('hod/view_semester', hod_views.VIEW_SEMESTER, name='view_semester'),
                   path("hod/semester/Update", hod_views.UPDATE_SEMESTER, name="update_semester"),
 
-
-
                   path('hod/add_department', hod_views.ADD_DEPARTMENT, name='add_department'),
                   path('hod/view_department', hod_views.VIEW_DEPARTMENT, name='view_department'),
                   path('hod/add_exam_type', hod_views.ADD_EXAM_TYPE, name='add_exam_type'),
                   path('hod/add_session_v2', hod_views.ADD_SESSION_V2, name='add_session_v2'),
                   path('hod/view_session_v2', hod_views.VIEW_SESSION_V2, name='view_session_v2'),
 
-
                   path('hod/course/View', hod_views.VIEW_COURSE, name='view_course_v2'),
                   path('hod/add_course_v2', hod_views.ADD_COURSE_V2, name='add_course_v2'),
                   path('hod/course/Edit/<str:id>', hod_views.EDIT_COURSE, name='edit_course'),
                   path('hod/course/Update', hod_views.UPDATE_COURSE, name='update_course'),
-
-
-
 
                   path('hod/add_subject_v2', hod_views.ADD_SUBJECT_V2, name='add_subject_v2'),
                   path('hod/view_subject_v2', hod_views.VIEW_SUBJECT_V2, name='view_subject_v2'),
@@ -114,11 +107,10 @@ urlpatterns = [
                   path("hod/update_subject_v2", hod_views.UPDATE_SUBJECT, name="update_subject"),
                   path("hod/delete_subject_v2/<str:id>", hod_views.DELETE_SUBJECT, name="delete_subject"),
 
-
-
-
-                  path('hod/add_faculty_designation', hod_views.ADD_FACULTY_DESIGNATIONS, name='add_faculty_designation'),
-                  path('hod/view_faculty_designations', hod_views.VIEW_FACULTY_DESIGNATIONS, name='view_faculty_designations'),
+                  path('hod/add_faculty_designation', hod_views.ADD_FACULTY_DESIGNATIONS,
+                       name='add_faculty_designation'),
+                  path('hod/view_faculty_designations', hod_views.VIEW_FACULTY_DESIGNATIONS,
+                       name='view_faculty_designations'),
 
                   # Staff
                   path("staff/home", staff_views.HOME, name="staff_home"),
@@ -175,6 +167,9 @@ urlpatterns = [
 
                   path('staff/staff_head_examiner', staff_views.STAFF_HEAD_EXAMINER,
                        name='staff_head_examiner'),
+
+                    #roles that is assigned to loggedin staff
+                  path('staff/view_my_exam_roles', staff_views.VIEW_MY_EXAM_ROLES, name='view_my_exam_roles'),
 
                   # Student urls
 
