@@ -27,6 +27,11 @@
                      <thead>
                         <tr>
                            <th>Subject Code</th>
+                           <th>Subject Department</th>
+                           <th>Subject Code</th>
+                           <th>Subject Code</th>
+                           <th>Subject Code</th>
+                           <th>Subject Code</th>
                            <th>Setter</th>
                            <th>Moderator</th>
                            <th>Examiner</th>
@@ -38,12 +43,7 @@
                         {% for i in exams %}
                         <tr>
                            <td>{{i.id}}</td>
-                           <td>
-                              <h2 class="table-avatar">
-                                 <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="/{{i.admin.profile_pic}}" alt="User Image"></a>
-                                 <a>{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</a>
-                              </h2>
-                           </td>
+                           <td>{{i.subjectSemester.department.name}}</td>
                            <td>{{i.admin.email}}</td>
                            <td>{{i.gender}}</td>
                            <td>{{i.address}}</td>
