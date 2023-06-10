@@ -9,7 +9,7 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-12">
-                            <h5 class="form-title"><span>Assign Staffs to their Examination Roles</span></h5>
+                            <h5 class="form-title"><span>Add Question Paper for exam</span></h5>
                         </div>
                         {% include 'includes/messages.html' %}
                         <div class="col-12 col-sm-6">
@@ -85,10 +85,18 @@
                             <label>Total Marks</label>
                             <input type="text" class="form-control" name="total_marks" required>
                         </div>
+                        <div class="col-12 col-sm-6 mt-4">
+                            <div class="form-group">
+                                <label>Question Paper</label> <br>
+                                <a href="{{ pdf_file_url }}" target="_blank">Download PDF file</a>
+                                <small class="form-text text-muted">Approved Question Paper.</small>
+                            </div>
+                        </div>
 
                         <div class="col-12 mt-4">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
+
                     </div>
                 </form>
             </div>
