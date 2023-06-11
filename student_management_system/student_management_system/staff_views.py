@@ -490,13 +490,16 @@ def VIEW_MY_EXAM_ROLES(request):
 @login_required(login_url='/')
 def SETTER_ADD_QUESTION_PAPER(request, id):
     if request.method == "POST":
-        exam_id = request.POST.get('exam_id')
+        exam_id = request.POST.get('id')
+        print(str(exam_id))
+
         exam = Exam.objects.get(id=exam_id)
         question_paper_pdf = request.FILES.get('question_paper_pdf')
         exam.question_paper_from_paper_setter = question_paper_pdf
+        exam.status = 1
         exam.save()
         messages.success(request, 'Added question paper for setter')
-        return redirect('setter_add_question_paper')
+        return redirect('setter_add_question_paper', id=exam_id)
 
     exam = Exam.objects.get(id=id)
     context = {
@@ -508,13 +511,14 @@ def SETTER_ADD_QUESTION_PAPER(request, id):
 @login_required(login_url='/')
 def MODERATOR_ADD_QUESTION_PAPER(request, id):
     if request.method == "POST":
-        exam_id = request.POST.get('exam_id')
+        exam_id = request.POST.get('id')
         exam = Exam.objects.get(id=exam_id)
         question_paper_pdf = request.FILES.get('question_paper_pdf')
         exam.question_paper_from_moderator = question_paper_pdf
+        exam.status = 2
         exam.save()
-        messages.success(request, 'Added for question paper  for setter')
-        return redirect('moderator_add_question_paper')
+        messages.success(request, 'Added for question paper  for moderator')
+        return redirect('moderator_add_question_paper', id=exam_id)
 
     exam = Exam.objects.get(id=id)
     context = {
