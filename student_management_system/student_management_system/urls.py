@@ -179,8 +179,8 @@ urlpatterns = [
                     #roles that is assigned to loggedin staff
                   path('staff/view_my_exam_roles', staff_views.VIEW_MY_EXAM_ROLES, name='view_my_exam_roles'),
 
-                  path('staff/view_my_exam_roles/<str:id>', staff_views.SETTER_ADD_QUESTION_PAPER, name='setter_add_question_paper'),
-                  path('staff/view_my_exam_roles/<str:id>', staff_views.MODERATOR_ADD_QUESTION_PAPER, name='moderator_add_question_paper'),
+                  path('staff/question_paper_setter/<str:id>', staff_views.SETTER_ADD_QUESTION_PAPER, name='setter_add_question_paper'),
+                  path('staff/question_paper_moderator/<str:id>', staff_views.MODERATOR_ADD_QUESTION_PAPER, name='moderator_add_question_paper'),
 
 
 
