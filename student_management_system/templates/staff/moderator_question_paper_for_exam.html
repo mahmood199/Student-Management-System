@@ -10,7 +10,7 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-12">
-                            <h5 class="form-title"><span>Add question paper as Paper setter</span></h5>
+                            <h5 class="form-title"><span>Add question paper as Paper Moderator</span></h5>
                         </div>
                         <input type="hidden" name="id" value="{{ exam.id }}">
 
@@ -58,18 +58,18 @@
 
                         <div class="col-12 col-sm-6 mt-4">
                             <label>Total Marks</label>
-                            <input type="text" class="form-control" name="total_marks" required>
+                            <input type="text" class="form-control" name="total_marks"
+                                   value="{{ exam.marks_total }}" required>
                         </div>
 
                         <div class="col-12 col-sm-6 mt-4">
                             <div class="form-group">
                                 <label>Question Paper</label>
-                                <input type="file" class="form-control" name="question_paper" accept=".pdf"
+                                <input type="file" class="form-control" name="question_paper_pdf" accept=".pdf"
                                        required>
                                 <small class="form-text text-muted">Please upload a PDF file.</small>
                             </div>
                         </div>
-
 
                         <div class="col-12 mt-4">
                             <button type="submit" class="btn btn-primary">Submit</button>

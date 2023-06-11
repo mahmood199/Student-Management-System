@@ -159,7 +159,7 @@ urlpatterns = [
                   path('staff/approve_question_paper/<str:id>', staff_views.APPROVE_QUESTION_PAPER,
                        name='staff_approve_question_paper'),
 
-                  path('staff/view_question_paper/<str:id>', staff_views.VIEW_QUESTION_PAPER,
+                  path('staff/view_question_paper/<str:id>', staff_views.VIEW_ALL_QUESTION_PAPER,
                        name='staff_view_question_paper'),
 
                   path('staff/view_question_paper_pdf/<str:id>', staff_views.DOWNLOAD_QUESTION_PAPER_PDF,
@@ -182,6 +182,7 @@ urlpatterns = [
 
                   path('staff/question_paper_setter/<str:id>', staff_views.SETTER_ADD_QUESTION_PAPER, name='setter_add_question_paper'),
                   path('staff/question_paper_moderator/<str:id>', staff_views.MODERATOR_ADD_QUESTION_PAPER, name='moderator_add_question_paper'),
+                  path('staff/view_exam_question_paper/<str:id>', staff_views.VIEW_QUESTION_PAPER, name='view_exam_question_paper'),
 
 
 

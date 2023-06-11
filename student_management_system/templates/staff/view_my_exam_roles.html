@@ -118,22 +118,19 @@
                                 <td>{{i.subjectSemester.session.session_end}}</td>
                                 <td class="text-right">
                                     <div class="actions">
-                                        {% if i.status == 0 %}
-                                        <div>
-                                            <a href="{% url 'setter_add_question_paper' i.id %}"
-                                               class="btn btn-sm bg-warning mr-2">
-                                                <i class="fas fa-pen"></i>
-                                            </a>
-                                        </div>
-                                        {% elif i.status == 1 %}
-                                        <div>
-                                            <a href="{% url 'moderator_add_question_paper' i.id %}"
-                                               class="btn btn-sm bg-warning mr-2">
-                                                <i class="fas fa-pen"></i>
-                                            </a>
-                                        </div>
+                                        <a href="{% url 'setter_add_question_paper' i.id %}"
+                                           class="btn btn-sm bg-warning mr-2">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a href="{% url 'moderator_add_question_paper' i.id %}"
+                                           class="btn btn-sm bg-warning mr-2">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a href="{% url 'view_exam_question_paper' id=i.id %}"
+                                           class="btn btn-sm bg-warning mr-2">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
 
-                                        {% endif %}
                                     </div>
                                 </td>
                             </tr>

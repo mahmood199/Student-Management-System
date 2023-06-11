@@ -354,23 +354,6 @@ def EDIT_QUESTION_PAPER(request, id):
 
 
 @login_required(login_url='/')
-def UPDATE_QUESTION_PAPER(request):
-    if request.method == "POST":
-        id = request.POST.get('id')
-        question_paper_pdf_file = request.POST.get('question_paper')
-
-        question_paper = QuestionPaper.objects.get(id=id)
-        question_paper.pdf = question_paper_pdf_file
-
-        question_paper.save()
-        messages.get_messages(request).consume()
-        messages.success(request, 'Question paper updated successfully')
-        return redirect('view_all_question_papers')
-
-    return render(request, 'staff/edit_question_paper.html')
-
-
-@login_required(login_url='/')
 def REVIEW_QUESTION_PAPER(request, id):
     question_paper = QuestionPaper.objects.get(id=id)
     context = {
@@ -416,29 +399,12 @@ def ADD_COMMENTS_ON_QUESTION_PAPER(request):
 
 
 @login_required(login_url='/')
-def VIEW_QUESTION_PAPER(request, id):
+def VIEW_ALL_QUESTION_PAPER(request, id):
     question_paper = QuestionPaper.objects.get(id=id)
     context = {
         'question_paper': question_paper,
     }
     return render(request, 'staff/view_question_paper.html', context)
-
-
-@login_required(login_url='/')
-def DOWNLOAD_QUESTION_PAPER_PDF(request, id):
-    try:
-        question_paper = QuestionPaper.objects.get(id=id)
-        file_path = question_paper.pdf.path
-        subject_name = question_paper.subject_id.name
-        session_year_name = question_paper.session_year_id.session_start + "_to_" + question_paper.session_year_id.session_end
-        file_name = subject_name + "_" + session_year_name + "_" + str(id) + ".pdf"
-
-        with open(file_path, 'rb') as file:
-            response = HttpResponse(file.read(), content_type='application/pdf')
-            response['Content-Disposition'] = f'inline; filename="{file_name}"'
-            return response
-    except QuestionPaper.DoesNotExist:
-        return HttpResponseNotFound("Question paper not found")
 
 
 # this staff will set ques paper
@@ -488,14 +454,31 @@ def VIEW_MY_EXAM_ROLES(request):
 
 
 @login_required(login_url='/')
+def UPDATE_QUESTION_PAPER(request):
+    if request.method == "POST":
+        id = request.POST.get('id')
+        question_paper_pdf_file = request.POST.get('question_paper')
+
+        question_paper = QuestionPaper.objects.get(id=id)
+        question_paper.pdf = question_paper_pdf_file
+
+        question_paper.save()
+        messages.get_messages(request).consume()
+        messages.success(request, 'Question paper updated successfully')
+        return redirect('view_all_question_papers')
+
+    return render(request, 'staff/edit_question_paper.html')
+
+
+@login_required(login_url='/')
 def SETTER_ADD_QUESTION_PAPER(request, id):
     if request.method == "POST":
         exam_id = request.POST.get('id')
-        print(str(exam_id))
-
         exam = Exam.objects.get(id=exam_id)
         question_paper_pdf = request.FILES.get('question_paper_pdf')
-        exam.question_paper_from_paper_setter = question_paper_pdf
+
+        exam.question_paper_from_paper_setter.save(question_paper_pdf.name, question_paper_pdf)
+
         exam.status = 1
         exam.save()
         messages.success(request, 'Added question paper for setter')
@@ -514,7 +497,9 @@ def MODERATOR_ADD_QUESTION_PAPER(request, id):
         exam_id = request.POST.get('id')
         exam = Exam.objects.get(id=exam_id)
         question_paper_pdf = request.FILES.get('question_paper_pdf')
-        exam.question_paper_from_moderator = question_paper_pdf
+
+        exam.question_paper_from_moderator.save(question_paper_pdf.name, question_paper_pdf)
+
         exam.status = 2
         exam.save()
         messages.success(request, 'Added for question paper  for moderator')
@@ -525,3 +510,38 @@ def MODERATOR_ADD_QUESTION_PAPER(request, id):
         'exam': exam
     }
     return render(request, 'staff/moderator_question_paper_for_exam.html', context)
+
+
+@login_required(login_url='/')
+def DOWNLOAD_QUESTION_PAPER_PDF(request, id):
+    try:
+        question_paper = QuestionPaper.objects.get(id=id)
+        file_path = question_paper.pdf.path
+        subject_name = question_paper.subject_id.name
+        session_year_name = question_paper.session_year_id.session_start + "_to_" + question_paper.session_year_id.session_end
+        file_name = subject_name + "_" + session_year_name + "_" + str(id) + ".pdf"
+
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'inline; filename="{file_name}"'
+            return response
+    except QuestionPaper.DoesNotExist:
+        return HttpResponseNotFound("Question paper not found")
+
+
+@login_required(login_url='/')
+def VIEW_QUESTION_PAPER(request, id):
+    try:
+        exam = Exam.objects.get(id=id)
+        print(str(exam.question_paper_from_moderator))
+        file_path = exam.question_paper_from_moderator.path
+        subject_name = exam.subjectSemester.subject.name
+        session_year_name = str(exam.subjectSemester.session.session_start) + "_to_" + str(exam.subjectSemester.session.session_end)
+        file_name = subject_name + "_" + session_year_name + "_" + str(id) + ".pdf"
+
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'inline; filename="{file_name}"'
+            return response
+    except Exam.DoesNotExist:
+        return HttpResponseNotFound("Question paper not found")
