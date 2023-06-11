@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'update_semester' %}">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <h5 class="form-title"><span>Update Semester</span></h5>
+                    </div>
+
+                    {% include 'includes/messages.html' %}
+
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label>Semester</label>
+                            <input type="text" class="form-control" name="name" value="{{semester.name}}" required>
+                            <input type="text" class="form-control" name="semester_id" value="{{semester.id}}" hidden>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,5 +1,7 @@
-from app.models import Course, Session_Year, CustomUser, Student, Staff, Subject, Staff_Notifications, Staff_leave, \
-    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report, QuestionPaper
+from app.models import Course, Session_Year, CustomUser, Student, Subject, Staff_Notifications, Staff_leave, \
+    Staff_Feedback, Student_Notification, Student_Feedback, Student_leave, Attendance, Attendance_Report, CourseV2, \
+    QuestionPaper, Faculty, \
+    Semester, Department, Exam, Exam_Type, SessionV2, SubjectV2, Faculty_Designation, Subject_Semester, Faculty_Subjects
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -10,11 +12,11 @@ from django.db.models import Q
 def HOME(request):
     student_count = Student.objects.all().count()
     print("student_count = " + str(student_count))
-    staff_count = Staff.objects.all().count()
+    staff_count = Faculty.objects.all().count()
     print("staff_count = " + str(staff_count))
-    course_count = Course.objects.all().count()
+    course_count = CourseV2.objects.all().count()
     print("course_count = " + str(course_count))
-    subject_count = Subject.objects.all().count()
+    subject_count = SubjectV2.objects.all().count()
     print("subject_count = " + str(subject_count))
 
     student_gender_male = Student.objects.filter(gender='Male').count()
@@ -170,24 +172,23 @@ def DELETE_STUDENT(request, admin):
 
 
 @login_required(login_url='/')
-def ADD_COURSE(request):
+def ADD_COURSE_V2(request):
     if request.method == "POST":
-        course_name = request.POST.get('course_name')
-
-        course = Course(
-            name=course_name,
+        name = request.POST.get('course_name_v2')
+        duration = request.POST.get('duration')
+        course = CourseV2(
+            name=name,
+            duration=duration,
         )
         course.save()
-        messages.success(request, 'Course Are Successfully Created ')
-
-        return redirect('view_course')
-
-    return render(request, 'hod/add_course.html')
+        messages.success(request, 'Course Entry Successful ')
+        return redirect('view_course_v2')
+    return render(request, 'hod/add_course_v2.html')
 
 
 @login_required(login_url='/')
 def VIEW_COURSE(request):
-    course = Course.objects.all()
+    course = CourseV2.objects.all()
     context = {
         'course': course,
     }
@@ -196,7 +197,7 @@ def VIEW_COURSE(request):
 
 @login_required(login_url='/')
 def EDIT_COURSE(request, id):
-    course = Course.objects.get(id=id)
+    course = CourseV2.objects.get(id=id)
     context = {
         'course': course,
     }
@@ -208,23 +209,16 @@ def UPDATE_COURSE(request):
     if request.method == "POST":
         name = request.POST.get('name')
         course_id = request.POST.get('course_id')
+        duration = request.POST.get('duration')
 
-        course = Course.objects.get(id=course_id)
+        course = CourseV2.objects.get(id=course_id)
         course.name = name
+        course.duration = duration
         course.save()
         messages.success(request, 'Course Are Successfully Updated ')
-        return redirect('view_course')
+        return redirect('view_course_v2')
 
     return render(request, 'hod/edit_course.html')
-
-
-@login_required(login_url='/')
-def DELETE_COURSE(request, id):
-    course = Course.objects.get(id=id)
-    course.delete()
-    messages.success(request, 'Course are Successfully Deleted')
-
-    return redirect('view_course')
 
 
 @login_required(login_url='/')
@@ -238,6 +232,8 @@ def ADD_STAFF(request):
         password = request.POST.get('password')
         address = request.POST.get('address')
         gender = request.POST.get('gender')
+        designation_id = request.POST.get('designation')
+        faculty_designation = Faculty_Designation.objects.get(id=designation_id)
 
         print(profile_pic, first_name, last_name, email, username, password, address, gender)
 
@@ -255,21 +251,26 @@ def ADD_STAFF(request):
             user.set_password(password)
             user.save()
 
-            staff = Staff(
+            staff = Faculty(
                 admin=user,
                 address=address,
-                gender=gender
+                gender=gender,
+                faculty_designation=faculty_designation,
             )
             staff.save()
             messages.success(request, "Staff is successfully added !")
             return redirect("view_staff")
-
-    return render(request, "hod/add_staff.html")
+    designations = Faculty_Designation.objects.all()
+    context = {
+        'designations': designations
+    }
+    return render(request, "hod/add_staff.html", context)
 
 
 @login_required(login_url='/')
 def VIEW_STAFF(request):
-    staff = Staff.objects.all()
+    staff = Faculty.objects.all()
+    print("Staff count ---->" + str(staff.count()))
 
     context = {
         'staff': staff,
@@ -279,7 +280,7 @@ def VIEW_STAFF(request):
 
 @login_required(login_url='/')
 def EDIT_STAFF(request, id):
-    staff = Staff.objects.get(id=id)
+    staff = Faculty.objects.get(id=id)
 
     context = {
         'staff': staff
@@ -315,7 +316,7 @@ def UPDATE_STAFF(request):
             user.profile_pic = profile_pic
         user.save()
 
-        staff = Staff.objects.get(admin=staff_id)
+        staff = Faculty.objects.get(admin=staff_id)
         staff.gender = gender
         staff.address = address
 
@@ -340,7 +341,7 @@ def DELETE_STAFF(request, admin):
 @login_required(login_url='/')
 def ADD_SUBJECT(request):
     course = Course.objects.all()
-    staff = Staff.objects.all()
+    staff = Faculty.objects.all()
 
     if request.method == "POST":
         subject_name = request.POST.get('subject_name')
@@ -348,7 +349,7 @@ def ADD_SUBJECT(request):
         staff_id = request.POST.get('staff_id')
 
         course = Course.objects.get(id=course_id)
-        staff = Staff.objects.get(id=staff_id)
+        staff = Faculty.objects.get(id=staff_id)
 
         subject = Subject(
             name=subject_name,
@@ -379,17 +380,13 @@ def VIEW_SUBJECT(request):
 
 @login_required(login_url='/')
 def EDIT_SUBJECT(request, id):
-    subject = Subject.objects.get(id=id)
-    course = Course.objects.all()
-    staff = Staff.objects.all()
+    subject = SubjectV2.objects.get(id=id)
 
     context = {
         'subject': subject,
-        'course': course,
-        'staff': staff,
     }
 
-    return render(request, 'edit_subject.html', context)
+    return render(request, 'hod/edit_subject.html', context)
 
 
 @login_required(login_url='/')
@@ -397,22 +394,15 @@ def UPDATE_SUBJECT(request):
     if request.method == "POST":
         subject_id = request.POST.get('subject_id')
         subject_name = request.POST.get('subject_name')
-        course_id = request.POST.get('course_id')
-        staff_id = request.POST.get('staff_id')
+        subject_code = request.POST.get('subject_code')
 
-        course = Course.objects.get(id=course_id)
-        staff = Staff.objects.get(id=staff_id)
-
-        subject = Subject(
-            id=subject_id,
-            name=subject_name,
-            course=course,
-            staff=staff
-        )
-
+        subject = SubjectV2.objects.get(id=subject_id)
+        subject.name = subject_name
+        subject.code = subject_code
         subject.save()
+
         messages.success(request, 'Subject updated successfully')
-        return redirect('view_subject')
+        return redirect('view_subject_v2')
 
     return None
 
@@ -497,7 +487,7 @@ def DELETE_SESSION(request, id):
 
 @login_required(login_url='/')
 def STAFF_SEND_NOTIFICATION(request):
-    staff = Staff.objects.all()
+    staff = Faculty.objects.all()
     see_notification = Staff_Notifications.objects.all().order_by('-id')[0:5]
 
     context = {
@@ -513,7 +503,7 @@ def SAVE_STAFF_NOTIFICATION(request):
         staff_id = request.POST.get('staff_id')
         message = request.POST.get('message')
 
-        staff = Staff.objects.get(admin=staff_id)
+        staff = Faculty.objects.get(admin=staff_id)
         notification = Staff_Notifications(
             staff_id=staff,
             message=message,
@@ -659,7 +649,7 @@ def VIEW_ATTENDANCE(request):
     print(request)
     print(request.user)
     print(request.user.id)
-    staff_id = Staff.objects.get(admin=request.user.id)
+    staff_id = Faculty.objects.get(admin=request.user.id)
 
     subject = Subject.objects.filter(staff_id=staff_id)
     session_year = Session_Year.objects.all()
@@ -701,11 +691,330 @@ def PROFILE(request):
     return render(request, 'hod/profile.html')
 
 
-
 @login_required(login_url='/')
 def VIEW_ALL_EXAM_ROLES(request):
-    return render(request,'hod/view_all_exam_roles.html')
+    exams = Exam.objects.all()
+    print(str(exams.count()))
+    context = {
+        'exams': exams
+    }
+    return render(request, 'hod/view_all_exam_roles.html', context)
+
 
 @login_required(login_url='/')
 def ASSIGN_EXAM_ROLE(request):
-    return render(request,'hod/assign_exam_roles.html')
+    if request.method == 'POST':
+        subject_semester_id = request.POST.get('subject_semester_id')
+        print(str(subject_semester_id))
+        subject_semester = Subject_Semester.objects.get(id=subject_semester_id)
+
+        exam_type_id = request.POST.get('exam_type_id')
+        print(str(exam_type_id))
+        exam_type = Exam_Type.objects.get(id=exam_type_id)
+
+        setter_faculty_id = request.POST.get('setter_faculty_id')
+        print(str(setter_faculty_id))
+        setter_faculty = Faculty.objects.get(id=setter_faculty_id)
+
+        moderator_faculty_id = request.POST.get('moderator_faculty_id')
+        print(str(moderator_faculty_id))
+        moderator_faculty = Faculty.objects.get(id=moderator_faculty_id)
+
+        examiner_faculty_id = request.POST.get('examiner_faculty_id')
+        print(str(examiner_faculty_id))
+        examiner_faculty = Faculty.objects.get(id=examiner_faculty_id)
+
+        scrutinizer_faculty_id = request.POST.get('scrutinizer_faculty_id')
+        print(str(scrutinizer_faculty_id))
+        scrutinizer_faculty = Faculty.objects.get(id=scrutinizer_faculty_id)
+
+        head_examiner_faculty_id = request.POST.get('head_examiner_faculty_id')
+        print(str(head_examiner_faculty_id))
+        head_examiner_faculty = Faculty.objects.get(id=head_examiner_faculty_id)
+
+        total_marks = request.POST.get('total_marks')
+        print(str(total_marks))
+
+        exam = Exam(
+            subjectSemester=subject_semester,
+            exam_type=exam_type,
+
+            paper_setter_faculty=setter_faculty,
+            examiner_faculty=examiner_faculty,
+            moderator_faculty=moderator_faculty,
+            scrutinizer_faculty=scrutinizer_faculty,
+            head_examiner_faculty=head_examiner_faculty,
+
+            marks_total=total_marks
+        )
+        exam.save()
+        messages.success(request, 'Exam added successfully')
+        return redirect('view_all_exam_roles')
+
+    subject_semesters = Subject_Semester.objects.all()
+    faculties = Faculty.objects.all()
+    exam_types = Exam_Type.objects.all()
+
+    context = {
+        'subject_semesters': subject_semesters,
+        'faculties': faculties,
+        'exam_types': exam_types,
+    }
+
+    return render(request, 'hod/assign_exam_roles.html', context)
+
+
+@login_required(login_url='/')
+def ADD_SEMESTER(request):
+    if request.method == "POST":
+        name = request.POST.get('semester')
+        semester = Semester(
+            name=name,
+        )
+        semester.save()
+        messages.success(request, 'Semester Entry Successful ')
+        return redirect('view_semester')
+    return render(request, 'hod/add_semester.html')
+
+
+@login_required(login_url='/')
+def EDIT_SEMESTER(request, id):
+    semester = Semester.objects.get(id=id)
+
+    context = {
+        'semester': semester
+    }
+
+    return render(request, 'hod/edit_semester.html', context)
+
+
+@login_required(login_url='/')
+def UPDATE_SEMESTER(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        semester_id = request.POST.get('semester_id')
+
+        semester = Semester.objects.get(id=semester_id)
+        semester.name = name
+        semester.save()
+        messages.success(request, 'Semester Successfully Updated ')
+        return redirect('view_semester')
+
+    return render(request, 'hod/edit_semester.html')
+
+
+@login_required(login_url='/')
+def VIEW_SEMESTER(request):
+    semester = Semester.objects.all()
+    context = {
+        'semester': semester,
+    }
+    return render(request, 'hod/view_semester.html', context)
+
+
+@login_required(login_url='/')
+def ADD_DEPARTMENT(request):
+    if request.method == "POST":
+        name = request.POST.get('department_name')
+        abbreviation = request.POST.get('department_abbreviation')
+        department = Department(
+            name=name,
+            abbreviation=abbreviation,
+        )
+        department.save()
+        messages.success(request, 'Department Entry Successful ')
+        return redirect('view_department')
+    return render(request, 'hod/add_department.html')
+
+
+@login_required(login_url='/')
+def VIEW_DEPARTMENT(request):
+    department = Department.objects.all()
+    context = {
+        'department': department,
+    }
+    return render(request, 'hod/view_department.html', context)
+
+
+@login_required(login_url='/')
+def ADD_EXAM_TYPE(request):
+    if request.method == "POST":
+        name = request.POST.get('exam_type')
+        exam_type = Exam_Type(
+            name=name,
+        )
+        exam_type.save()
+        messages.success(request, 'New exam type added')
+        return redirect('view_exam_types')
+    return render(request, 'hod/add_exam_type.html')
+
+
+@login_required(login_url='/')
+def VIEW_EXAM_TYPES(request):
+    exam_types = Exam_Type.objects.all()
+    context = {
+        'exam_types': exam_types
+    }
+    return render(request, 'hod/view_exam_types.html', context)
+
+
+@login_required(login_url='/')
+def ADD_SESSION_V2(request):
+    if request.method == "POST":
+        session_start = request.POST.get('session_start')
+        session_end = request.POST.get('session_end')
+        selected_course_id = request.POST.get('course_v2')
+        course = CourseV2.objects.get(id=selected_course_id)
+
+        session_v2 = SessionV2(
+            session_start=session_start,
+            session_end=session_end,
+            courseV2=course,
+        )
+        session_v2.save()
+        messages.success(request, 'Session Entry Successful ')
+        return redirect('view_session_v2')
+    courses = CourseV2.objects.all()
+    context = {
+        'course': courses
+    }
+    return render(request, 'hod/add_session_v2.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_SESSION_V2(request):
+    sessions = SessionV2.objects.all()
+    context = {
+        'sessions': sessions,
+    }
+    return render(request, 'hod/view_session_v2.html', context)
+
+
+@login_required(login_url='/')
+def ADD_SUBJECT_V2(request):
+    if request.method == "POST":
+        code = request.POST.get('code')
+        name = request.POST.get('name')
+        subject_v2 = SubjectV2(
+            code=code,
+            name=name,
+        )
+        subject_v2.save()
+        messages.success(request, 'Subject Entry Successful ')
+        return redirect('view_subject_v2')
+    return render(request, 'hod/add_subject_v2.html')
+
+
+@login_required(login_url='/')
+def VIEW_SUBJECT_V2(request):
+    subjects = SubjectV2.objects.all()
+    context = {
+        'subjects': subjects,
+    }
+    return render(request, 'hod/view_subject_v2.html', context)
+
+
+@login_required(login_url='/')
+def ADD_FACULTY_DESIGNATIONS(request):
+    if request.method == "POST":
+        name = request.POST.get('faculty_designation_name')
+        level = request.POST.get('faculty_designation_level')
+        print("Name:" + str(name))
+        print("Level:" + str(level))
+        faculty = Faculty_Designation(
+            name=name,
+            level=level,
+        )
+        faculty.save()
+        messages.success(request, 'Faculty Entry Successful ')
+        return redirect('view_faculty_designations')
+    return render(request, 'hod/add_faculty_designation.html')
+
+
+@login_required(login_url='/')
+def VIEW_FACULTY_DESIGNATIONS(request):
+    faculty_designations = Faculty_Designation.objects.all()
+    context = {
+        'faculty_designations': faculty_designations
+    }
+    return render(request, 'hod/view_faculty_designation.html', context)
+
+
+@login_required(login_url='/')
+def ADD_SUBJECT_SEMESTER(request):
+    if request.method == "POST":
+        selected_subject_id = request.POST.get('subject')
+        selected_semester_id = request.POST.get('semester')
+        selected_department_id = request.POST.get('department')
+        selected_session_id = request.POST.get('session')
+        credits = request.POST.get('credits')
+        subject = SubjectV2.objects.get(id=selected_subject_id)
+        semester = Semester.objects.get(id=selected_semester_id)
+        department = Department.objects.get(id=selected_department_id)
+        session = SessionV2.objects.get(id=selected_session_id)
+        subject_semester = Subject_Semester(
+            subject=subject,
+            semester=semester,
+            department=department,
+            session=session,
+            credits=credits,
+        )
+        subject_semester.save()
+        messages.success(request, 'Subject_Session Entry Successful ')
+        return redirect('view_subject_semester')
+    subjects = SubjectV2.objects.all()
+    semesters = Semester.objects.all()
+    departments = Department.objects.all()
+    sessions = SessionV2.objects.all()
+    context = {
+        'subjects': subjects,
+        'semesters': semesters,
+        'departments': departments,
+        'sessions': sessions,
+    }
+    return render(request, 'hod/add_subject_semester.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_SUBJECT_SEMESTER(request):
+    subject_semester = Subject_Semester.objects.all()
+    context = {
+        'subject_semester': subject_semester,
+    }
+    return render(request, 'hod/view_subject_semester.html', context)
+
+
+@login_required(login_url='/')
+def ADD_FACULTY_SUBJECT_SEMESTER(request):
+    if request.method == "POST":
+        subject_semester_id = request.POST.get('subject_semester')
+        subject_semester = Subject_Semester.objects.get(id=subject_semester_id)
+
+        faculty_id = request.POST.get('faculty_id')
+        faculty = Faculty.objects.get(id=faculty_id)
+
+        faculty_semester = Faculty_Subjects(
+            faculty=faculty,
+            subject_semester=subject_semester,
+        )
+        faculty_semester.save()
+
+        messages.success(request, 'Faculty, Subject & Session Entry Successful ')
+        return redirect('view_faculty_subject_semester')
+
+    subject_semester = Subject_Semester.objects.all()
+    faculties = Faculty.objects.all()
+    context = {
+        'faculties': faculties,
+        'subject_semester': subject_semester,
+    }
+    return render(request, 'hod/add_faculty_subject_semester.html', context)
+
+
+@login_required(login_url='/')
+def VIEW_FACULTY_SUBJECT_SEMESTER(request):
+    faculty_subject_semester = Faculty_Subjects.objects.all()
+    context = {
+        'faculty_subject_semester': faculty_subject_semester,
+    }
+    return render(request, 'hod/view_faculty_subject_semester.html', context)

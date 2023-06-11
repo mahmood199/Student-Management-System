@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'add_department' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <h5 class="form-title"><span>Add Department</span></h5>
+                    </div>
+
+                    {% include 'includes/messages.html' %}
+
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label>Department Name</label>
+                            <input type="text" class="form-control" name="department_name" required>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Department Abbreviation</label>
+                            <input type="text" class="form-control" name="department_abbreviation" required>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

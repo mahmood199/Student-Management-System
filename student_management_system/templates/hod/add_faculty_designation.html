@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'add_faculty_designation' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <h5 class="form-title"><span>Add Designation for Faculty</span></h5>
+                    </div>
+
+                    {% include 'includes/messages.html' %}
+
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label>Faculty Designation Name</label>
+                            <input type="text" class="form-control" name="faculty_designation_name" required>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Faulty Designation</label>
+                            <input type="text" class="form-control" name="faculty_designation_level" required>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

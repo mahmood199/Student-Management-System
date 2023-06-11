@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                {% include 'includes/messages.html' %}
+                <form method="post" action="moderator_add_question_paper" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Add question paper as Paper Moderator</span></h5>
+                        </div>
+                        <input type="hidden" name="id" value="{{ exam.id }}">
+
+                        <div class="col-12 col-sm-6">
+                            <label>Subject Semester</label>
+                            <input type="text" class="form-control" name="subject_name"
+                                   value="{{ exam.subjectSemester }}" disabled readonly>
+                        </div>
+
+                        <div class="col-12 col-sm-6">
+                            <label>Exam Type</label>
+                            <input type="text" class="form-control" name="subject_name"
+                                   value="{{ exam.exam_type }}" disabled readonly>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Paper Setter</label>
+                            <input type="text" class="form-control" name="subject_name"
+                                   value="{{ exam.paper_setter_faculty }}" disabled readonly>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Paper Moderator</label>
+                            <input type="text" class="form-control" name="subject_name"
+                                   value="{{ exam.moderator_faculty }}" disabled readonly>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Paper Examiner</label>
+                            <input type="text" class="form-control" name="subject_name"
+                                   value="{{ exam.examiner_faculty }}" disabled readonly>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Paper Scrutinizer</label>
+                            <input type="text" class="form-control" name="subject_name"
+                                   value="{{ exam.scrutinizer_faculty }}" disabled readonly>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Paper Head Examiner</label>
+                            <input type="text" class="form-control" name="subject_name"
+                                   value="{{ exam.head_examiner_faculty }}" disabled readonly>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <label>Total Marks</label>
+                            <input type="text" class="form-control" name="total_marks"
+                                   value="{{ exam.marks_total }}" required>
+                        </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <div class="form-group">
+                                <label>Question Paper</label>
+                                <input type="file" class="form-control" name="question_paper_pdf" accept=".pdf"
+                                       required>
+                                <small class="form-text text-muted">Please upload a PDF file.</small>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -5,11 +5,8 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Edit Subject</h3>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="subjects.html">Subject</a></li>
-                    <li class="breadcrumb-item active">Edit Subject</li>
-                </ul>
+                <h3 class="page-title">Add SubjectV2</h3>
+
             </div>
         </div>
     </div>
@@ -18,7 +15,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{% url 'update_subject' %}" method="post">
+                    <form action="{% url 'add_subject_v2' %}" method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
@@ -27,18 +24,20 @@
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label>Subject Name</label>
-                                    <input type="text" class="form-control" name="subject_name" value="{{subject.name}}" required>
-                                    <input type="text" class="form-control" name="subject_id" value="{{subject.id}}" required hidden>
+                                    <input type="text" class="form-control" name="name" required>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label>Subject Code</label>
-                                    <input type="text" class="form-control" name="subject_code" value="{{subject.code}}" required>
+                                    <input type="text" class="form-control" name="code" required>
                                 </div>
                             </div>
+
+
+                            <br>
                             <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-primary">Update Subject</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </form>
