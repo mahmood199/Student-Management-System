@@ -5,15 +5,14 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="{% url 'setter_add_question_paper' exam.id %}"
-                      enctype="multipart/form-data">
+                {% include 'includes/messages.html' %}
+                <form method="post" action="setter_add_question_paper" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-12">
                             <h5 class="form-title"><span>Add question paper as Paper setter</span></h5>
                         </div>
-                        {% include 'includes/messages.html' %}
-                        <input type="hidden" name="id" value="{{ question_paper.id }}">
+                        <input type="hidden" name="id" value="{{ exam.id }}">
 
                         <div class="col-12 col-sm-6">
                             <label>Subject Semester</label>
@@ -61,6 +60,16 @@
                             <label>Total Marks</label>
                             <input type="text" class="form-control" name="total_marks" required>
                         </div>
+
+                        <div class="col-12 col-sm-6 mt-4">
+                            <div class="form-group">
+                                <label>Question Paper</label>
+                                <input type="file" class="form-control" name="question_paper" accept=".pdf"
+                                       required>
+                                <small class="form-text text-muted">Please upload a PDF file.</small>
+                            </div>
+                        </div>
+
 
                         <div class="col-12 mt-4">
                             <button type="submit" class="btn btn-primary">Submit</button>
