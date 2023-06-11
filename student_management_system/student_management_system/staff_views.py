@@ -502,7 +502,7 @@ def SETTER_ADD_QUESTION_PAPER(request, id):
     context = {
         'exam': exam
     }
-    return render(request, 'staff/setter_question_paper_for_exam', context)
+    return render(request, 'staff/setter_question_paper_for_exam.html', context)
 
 
 @login_required(login_url='/')
@@ -520,4 +520,4 @@ def MODERATOR_ADD_QUESTION_PAPER(request, id):
     context = {
         'exam': exam
     }
-    return render(request, 'staff/moderator_question_paper_for_exam', context)
+    return render(request, 'staff/moderator_question_paper_for_exam.html', context)
